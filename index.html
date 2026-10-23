@@ -302,6 +302,103 @@
       }
       .toast.show{opacity:1;transform:translate(-50%,0)}
 
+      /* ---------- Pixel quest ---------- */
+      .pxgame{padding-top:46px}
+      .pxgame h2{font-size:23px;font-weight:900;margin:0 0 6px}
+      .px-new{
+        font-size:11.5px;font-weight:700;vertical-align:3px;margin-left:6px;
+        background:var(--green);color:#fff;border-radius:999px;padding:2px 9px;letter-spacing:.04em;
+      }
+      .pxgame .px-lede{color:var(--ink-soft);margin:0 0 18px;font-size:15px;max-width:720px}
+      .pxgame .px-lede b{color:var(--ink)}
+      .px-panel{
+        background:var(--term-bg);border:1px solid var(--term-line);
+        border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
+      }
+      .px-topbar{
+        display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;
+        background:var(--term-bg-2);border-bottom:1px solid var(--term-line);
+        padding:10px 16px;color:var(--term-dim);font-size:13px;
+        font-family:"JetBrains Mono",monospace;
+      }
+      .px-topbar .px-lvname{color:var(--term-ink);font-weight:700}
+      .px-dots{letter-spacing:3px;color:var(--green)}
+      .px-dots .off{color:var(--term-line)}
+      .px-hearts{color:#f0645e;letter-spacing:2px;margin-left:auto}
+      .px-star-total{color:var(--amber);letter-spacing:1px}
+      .px-side-total{color:#7ec8e3;letter-spacing:1px}
+      .px-stage{position:relative;background:#0c0e11;line-height:0}
+      #pxCanvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
+      .px-stage.shake #pxCanvas{animation:pxshake .32s linear}
+      @keyframes pxshake{
+        0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
+        40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}
+      }
+      .px-overlay{
+        position:absolute;inset:0;display:flex;flex-direction:column;
+        align-items:center;justify-content:center;gap:9px;text-align:center;
+        background:rgba(8,10,12,.74);color:var(--term-ink);padding:18px;line-height:1.5;
+      }
+      .px-overlay[hidden ]{display:none}
+      .px-overlay h3{margin:0;font-size:23px;font-weight:900}
+      .px-overlay p{margin:0;color:var(--term-dim);font-size:14.5px;max-width:420px}
+      .px-ov-stars{color:var(--amber);font-size:24px;letter-spacing:7px}
+      .px-btn{
+        font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+        background:var(--green);color:#fff;border:1px solid var(--green);
+        border-radius:8px;padding:8px 20px;margin-top:4px;
+      }
+      .px-btn:hover{background:var(--green-deep);border-color:var(--green-deep)}
+      .px-objective{padding:13px 16px 0;color:var(--term-ink);font-size:14.5px;line-height:1.6}
+      .px-objective .px-obj-label{color:var(--green);font-weight:700;font-size:12px;letter-spacing:.06em;display:block}
+      .px-objective .px-obj-label.side{color:#7ec8e3}
+      .px-dialog{
+        margin:10px 16px 0;background:var(--term-bg-2);border:1px solid var(--term-line);
+        border-radius:8px;padding:10px 13px;color:var(--term-ink);font-size:14px;line-height:1.65;
+      }
+      .px-dialog[hidden ]{display:none}
+      .px-dialog .px-npc-name{color:var(--amber);font-weight:700;font-size:12.5px;letter-spacing:.05em;display:block;margin-bottom:2px}
+      .px-dialog p{margin:0}
+      .px-choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+      .px-choice-btn{
+        font:inherit;font-size:13px;cursor:pointer;font-weight:600;
+        background:transparent;color:#7ec8e3;
+        border:1px solid var(--term-line);border-radius:8px;padding:5px 12px;
+      }
+      .px-choice-btn:hover{border-color:#7ec8e3}
+      .px-hintline{
+        margin:9px 16px 0;background:var(--term-bg-2);border:1px solid var(--term-line);
+        border-radius:8px;padding:8px 12px;color:var(--term-dim);font-size:13.5px;
+        display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+      }
+      .px-hintline[hidden ]{display:none}
+      .px-hintline code{color:var(--green);font-family:"JetBrains Mono",monospace;font-size:14px}
+      .px-log{
+        padding:8px 16px 0;min-height:26px;color:var(--term-dim);
+        font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.6;
+      }
+      .px-log .ok{color:var(--green)}
+      .px-log .bad{color:#f0645e}
+      .px-inputrow{
+        display:flex;align-items:baseline;gap:8px;padding:8px 16px 6px;
+        font-family:"JetBrains Mono",monospace;font-size:14px;
+      }
+      #pxInput{
+        flex:1;min-width:0;background:transparent;border:0;outline:0;
+        color:var(--term-ink);font:inherit;caret-color:var(--green);padding:0;
+      }
+      #pxInput::placeholder{color:#5c6169}
+      .px-actions{display:flex;gap:8px;padding:4px 16px 14px}
+      .px-act-btn{
+        font:inherit;font-size:13px;cursor:pointer;font-weight:500;
+        background:transparent;color:var(--term-dim);
+        border:1px solid var(--term-line);border-radius:8px;padding:6px 13px;
+      }
+      .px-act-btn:hover{color:var(--green);border-color:var(--green)}
+      @media (prefers-reduced-motion: reduce){
+        .px-stage.shake #pxCanvas{animation:none}
+      }
+
       /* ---------- Game mode ---------- */
       .hud{
         display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;
@@ -397,8 +494,48 @@
           <span>模拟机配置 <b>2 核 CPU · 4 GB 内存 · 20 GB 磁盘</b></span>
           <span>命令总数 <b id="totalCount">—</b></span>
           <span>玩法 <b>做任务 → 攒经验 → 升级通关</b></span>
+          <span>新玩法 <b>像素远征 · 敲命令操控骑士过 5 关</b></span>
         </div>
       </header>
+
+      <section class="pxgame" aria-label="像素远征小游戏">
+        <h2>像素远征：敲命令，救世界<span class="px-new">新玩法</span></h2>
+        <p class="px-lede">一位像素骑士被困在服务器世界里，他的每一步都由<b>你敲下的真实 Linux 命令</b>驱动：用 <b>rm</b> 砍掉挡路的木桩、用 <b>chmod</b> 打开上锁的石门、用 <b>kill</b> 终结失控的进程怪……在下面的游戏终端里输入命令、回车执行，打通 5 个关卡。敲错命令骑士会被弹回来，还会掉一颗心。每关路上还站着一位 <b>NPC</b>：走过去输入 <b>talk</b> 就能和他对话、接下<b>支线任务</b>（大多和 Python 有关，比如 <b>python3 --version</b>、<b>pip list</b>），办成能回血、攒支线之星 ✦；不想接就输入 <b>go</b> 继续赶路，不掉心、不影响通关。</p>
+        <div class="px-panel">
+          <div class="px-topbar">
+            <span class="px-lvname" id="pxLvName">第 1 / 5 关</span>
+            <span class="px-dots" id="pxDots" aria-label="本关障碍进度"></span>
+            <span class="px-hearts" id="pxHearts" aria-label="剩余生命">♥♥♥</span>
+            <span class="px-star-total" id="pxStarTotal">★ 0 / 15</span>
+            <span class="px-side-total" id="pxSideTotal">支线 ✦ 0 / 5</span>
+          </div>
+          <div class="px-stage" id="pxStage">
+            <canvas id="pxCanvas" width="480" height="270" aria-label="像素游戏画面：骑士在关卡中前进，障碍上方有木牌写着它的名字"></canvas>
+            <div class="px-overlay" id="pxOverlay" hidden>
+              <div class="px-ov-stars" id="pxOvStars"></div>
+              <h3 id="pxOvTitle"></h3>
+              <p id="pxOvText"></p>
+              <button type="button" class="px-btn" id="pxOvBtn">开始</button>
+            </div>
+          </div>
+          <div class="px-objective"><span class="px-obj-label" id="pxObjLabel">当前目标</span><span id="pxObjective">…</span></div>
+          <div class="px-dialog" id="pxDialog" hidden>
+            <span class="px-npc-name" id="pxNpcName"></span>
+            <p id="pxNpcText"></p>
+            <div class="px-choices" id="pxChoices"></div>
+          </div>
+          <div class="px-hintline" id="pxHintLine" hidden><span>照着敲：</span><code id="pxHintCmd"></code></div>
+          <div class="px-log" id="pxLog" aria-live="polite"></div>
+          <div class="px-inputrow">
+            <span class="prompt">hero@pixel<span class="path">:~</span>$</span>
+            <input id="pxInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="在这里输入命令，回车执行（比如 rm stump）" aria-label="在像素游戏终端中输入命令" />
+          </div>
+          <div class="px-actions">
+            <button type="button" class="px-act-btn" id="pxHintBtn">显示命令</button>
+            <button type="button" class="px-act-btn" id="pxRestartBtn">重开本关</button>
+          </div>
+        </div>
+      </section>
 
       <div class="hud" aria-label="游戏进度">
         <div class="hud-level">
@@ -2031,6 +2168,873 @@
       printGame("游戏模式已开启：看左侧任务单，在终端里敲对命令即可过关。第一关很简单——", "game-task");
       activateMission();
 
+    </script>
+    <script>
+      /* ================= Pixel quest: type commands, drive the knight ================= */
+      (function(){
+        var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var canvas = document.getElementById("pxCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = false;
+        var W = 480, H = 270, GROUND = 216, DOOR_X = 434;
+
+        var elLvName = document.getElementById("pxLvName");
+        var elDots = document.getElementById("pxDots");
+        var elHearts = document.getElementById("pxHearts");
+        var elStarTotal = document.getElementById("pxStarTotal");
+        var elObjective = document.getElementById("pxObjective");
+        var elHintLine = document.getElementById("pxHintLine");
+        var elHintCmd = document.getElementById("pxHintCmd");
+        var elLog = document.getElementById("pxLog");
+        var elInput = document.getElementById("pxInput");
+        var elStage = document.getElementById("pxStage");
+        var elOverlay = document.getElementById("pxOverlay");
+        var elOvStars = document.getElementById("pxOvStars");
+        var elOvTitle = document.getElementById("pxOvTitle");
+        var elOvText = document.getElementById("pxOvText");
+        var elOvBtn = document.getElementById("pxOvBtn");
+        var elHintBtn = document.getElementById("pxHintBtn");
+        var elSideTotal = document.getElementById("pxSideTotal");
+        var elObjLabel = document.getElementById("pxObjLabel");
+        var elDialog = document.getElementById("pxDialog");
+        var elNpcName = document.getElementById("pxNpcName");
+        var elNpcText = document.getElementById("pxNpcText");
+        var elChoices = document.getElementById("pxChoices");
+
+        /* ---------- palettes & sprites ---------- */
+        var PAL = {
+          k:"#23262d", h:"#b9c2cc", H:"#828c98", s:"#f0c08a", e:"#23262d",
+          b:"#3f9e4d", B:"#2b6e36", g:"#e8b13c", w:"#eef2f5", p:"#54493a", o:"#33302a",
+          r:"#d64541", y:"#ffd94a", u:"#a678e8", U:"#7a4fc0", f:"#eef0ea",
+          n:"#7a4a21", t:"#9c6b30", l:"#7ed491", L:"#4da45e", m:"#e8862c", M:"#c25e1e",
+          q:"#9aa1ab", Q:"#6d747e"
+        };
+        var ZOMBIE_PAL = {
+          k:"#23262d", h:"#6a7280", H:"#4c545e", s:"#9fb86a", e:"#d64541",
+          b:"#5b6470", B:"#454c56", g:"#5b6470", w:"#eef2f5", p:"#3c4149", o:"#23262d"
+        };
+        var HERO_TOP = [
+          "................",
+          "......gggg......",
+          ".....hhhhhh.....",
+          "....hhhhhhhh....",
+          "....hhhhhhhh....",
+          "....ssssssss....",
+          "....sesssses....",
+          ".....ssssss.....",
+          "....bbbbbbbb....",
+          "...bbbbbbbbbb...",
+          "...bb.bbbb.bb...",
+          "....bbbbbbbb....",
+          ".....pppppp....."
+        ];
+        var LEGS_A = [".....pp..pp.....", ".....pp..pp.....", "....ooo..ooo...."];
+        var LEGS_B = ["....pp....pp....", "....pp....pp....", "...ooo....ooo..."];
+        var SPRITES = {
+          stump: { pal: PAL, map: [
+            "..............",
+            "....tttttt....",
+            "..tttttttttt..",
+            "..tnttttttnt..",
+            "..tttttttttt..",
+            "..tttttttttt..",
+            "...tttttttt...",
+            "...tttttttt...",
+            "..tttttttttt..",
+            "..tttttttttt.."
+          ]},
+          thorn: { pal: PAL, map: [
+            "......ll......",
+            "......ll......",
+            ".....llll.....",
+            ".....llll.....",
+            "....llllll....",
+            "..l.llllll.l..",
+            "..ll.llll.ll..",
+            "..lll.lll.ll..",
+            "...llllllll...",
+            "....llllll....",
+            "..llllllllll.."
+          ]},
+          ghost: { pal: PAL, map: [
+            "..............",
+            ".....ffff.....",
+            "..ffffffffff..",
+            ".ffffffffffff.",
+            ".ffkffffffkff.",
+            ".ffffffffffff.",
+            ".ffffffffffff.",
+            ".ffffffffffff.",
+            ".ffffffffffff.",
+            "..f..f..f..f.."
+          ]},
+          slime: { pal: PAL, map: [
+            "................",
+            "......llll......",
+            "....llllllll....",
+            "...llllllllll...",
+            "..lllkllllklll..",
+            "..llllllllllll..",
+            ".llllllllllllll.",
+            ".LLLLLLLLLLLLLL."
+          ]},
+          lavaSlime: { pal: { k:"#23262d", l:"#e8862c", L:"#c25e1e" }, map: [
+            "................",
+            "......llll......",
+            "....llllllll....",
+            "...llllllllll...",
+            "..lllkllllklll..",
+            "..llllllllllll..",
+            ".llllllllllllll.",
+            ".LLLLLLLLLLLLLL."
+          ]},
+          chest: { pal: PAL, map: [
+            "................",
+            "...tttttttttt...",
+            "..tttttttttttt..",
+            "..tttttttttttt..",
+            "..nnnnnggnnnnn..",
+            "..nnnnnggnnnnn..",
+            "..nnnnnnnnnnnn..",
+            "...nnnnnnnnnn..."
+          ]},
+          ironbox: { pal: PAL, map: [
+            "..qqqqqqqqqqqq..",
+            ".qQQqqqqqqqqQQq.",
+            ".qqqqqqqqqqqqqq.",
+            ".qqqqqqqqqqqqqq.",
+            ".qqqqqqqqqqqqqq.",
+            "..qqqqqqqqqqqq.."
+          ]},
+          tomb: { pal: PAL, map: [
+            ".....qqqq.....",
+            "...qqqqqqqq...",
+            "..qqqqqqqqqq..",
+            "..qqQqqqqQqq..",
+            "..qqqqqqqqqq..",
+            "..qqQqqqqqqq..",
+            "..qqqqqqqqqq..",
+            "..qqqqqqqqqq..",
+            "..qqqqqqqqqq..",
+            ".qqqqqqqqqqqq."
+          ]},
+          seal: { pal: PAL, map: [
+            ".....uu.....",
+            "....uUUu....",
+            "...uUUUUu...",
+            "..uUUuuUUu..",
+            "..uUUUUUUu..",
+            "..uUUUUUUu..",
+            "...uUUUUu...",
+            "....uUUu....",
+            ".....uu....."
+          ]},
+          npc: { pal: PAL, map: [
+            "................",
+            ".....uuuuuu.....",
+            "....uuuuuuuu....",
+            "....ussssssu....",
+            "....sesssses....",
+            ".....ssssss.....",
+            "...rrrrrrrrrr...",
+            "..rrrrrrrrrrrr..",
+            "..rr.rrrrrr.rr..",
+            "..rrrrggggrrrr..",
+            "..rrrrrrrrrrrr..",
+            "...rrrrrrrrrr...",
+            "...rrrr..rrrr...",
+            "...rrr....rrr...",
+            "...oo......oo...",
+            "................"
+          ]},
+          boss: { pal: PAL, map: [
+            "........................",
+            "rr....................rr",
+            "rrr..................rrr",
+            ".rrr................rrr.",
+            "..rrrrrrrrrrrrrrrrrrrr..",
+            ".rrrrrrrrrrrrrrrrrrrrrr.",
+            ".rryyrrrrrrrrrrrryyrr.",
+            ".rryyrrrrrrrrrrrryyrr.",
+            ".rrrrrrrrrrrrrrrrrrrrrr.",
+            "..rrrrrrrrrrrrrrrrrrrr..",
+            "..rrwwrrwwrrwwrrwwrr....",
+            "..rrrrrrrrrrrrrrrrrrrr..",
+            "...rrrrrrrrrrrrrrrrrr...",
+            "....rrrr..rrrr..rrrr....",
+            "....rrr....rr....rrr...."
+          ]}
+        };
+        function drawSprite(spr, x, y, alpha){
+          var map = spr.map, pal = spr.pal;
+          ctx.save();
+          if (alpha !== undefined) ctx.globalAlpha = alpha;
+          for (var r = 0; r < map.length; r++){
+            var row = map[r];
+            for (var c = 0; c < row.length; c++){
+              var ch = row.charAt(c);
+              if (ch === "." || ch === " ") continue;
+              ctx.fillStyle = pal[ch] || "#f0f";
+              ctx.fillRect(x + c * 2, y + r * 2, 2, 2);
+            }
+          }
+          ctx.restore();
+        }
+        function drawHero(x, y, opts){
+          var pal = opts.zombie ? ZOMBIE_PAL : PAL;
+          if (opts.flash){
+            pal = {};
+            Object.keys(PAL).forEach(function(k2){ pal[k2] = "#e05550"; });
+          }
+          var spr = { pal: pal, map: HERO_TOP.concat(opts.legsB ? LEGS_B : LEGS_A) };
+          drawSprite(spr, x, y, opts.alpha);
+          if (opts.zombie) return;
+          ctx.save();
+          if (opts.alpha !== undefined) ctx.globalAlpha = opts.alpha;
+          if (opts.pose === "slash"){
+            ctx.fillStyle = PAL.g; ctx.fillRect(x + 28, y + 13, 6, 3);
+            ctx.fillStyle = PAL.w; ctx.fillRect(x + 34, y + 13, 16, 3);
+            ctx.fillStyle = "rgba(255,255,255,.55)";
+            ctx.fillRect(x + 38, y + 8, 12, 2);
+            ctx.fillRect(x + 42, y + 20, 10, 2);
+          } else if (opts.pose === "cast"){
+            ctx.fillStyle = PAL.g; ctx.fillRect(x + 28, y + 8, 6, 3);
+            ctx.fillStyle = PAL.w; ctx.fillRect(x + 30, y - 6, 3, 14);
+            ctx.fillStyle = PAL.y;
+            ctx.fillRect(x + 26, y - 10, 2, 2); ctx.fillRect(x + 36, y - 8, 2, 2);
+            ctx.fillRect(x + 31, y - 13, 2, 2);
+          } else {
+            ctx.fillStyle = PAL.g; ctx.fillRect(x + 27, y + 16, 5, 3);
+            ctx.fillStyle = PAL.w; ctx.fillRect(x + 29, y + 19, 3, 10);
+          }
+          ctx.restore();
+        }
+
+        /* ---------- level data ---------- */
+        var LEVELS = [
+          { name: "翡翠森林", sky: ["#79b5e0", "#cfe9f7"], ground: "#6d4c2f", groundTop: "#58a24b", decor: "forest",
+            npc: { x: 58, name: "守林人 · 老茶", pal: { r: "#3f7d44" },
+              greet: "年轻人，头一回进林子吧？我这气象站的小电脑最近闹脾气，脚本都不肯跑了，我正发愁呢。",
+              ask: "帮我看看这台机器的 Python 还在不在：在下面终端输入 python3 --version，能打印出版本号，我这心就踏实了。办成了，给你补一颗心。",
+              goal: "支线：帮老茶检查 Python 版本——输入 python3 --version（敲错不掉心，NPC 会提醒你）。",
+              cmd: "python3 --version",
+              test: /^python3\s+(--version|-v)$/,
+              done: "老茶眯眼一看：「Python 3.11.2，好着呢！是我昨晚没睡醒看错了。」",
+              fail: "老茶摆摆手：「不对不对，我要看的是 Python 的版本号——照着敲 python3 --version 就行，敲错不扣你的心。」",
+              skip: "老茶挥挥手：「忙你的去吧，路上小心木桩。」" },
+            obs: [
+              { x: 118, kind: "stump", label: "stump", goal: "一根木桩挡住了路——它就是个多余文件，用 rm 把它删掉。", cmd: "rm stump",
+                test: /^rm\s+(-\w+\s+)?stump$/, act: "slash", msg: "木桩被砍成碎片，路通了！" },
+              { x: 224, kind: "gate", label: "gate", goal: "石门锁得死死的：用 chmod 给它加上执行权限（+x），门才会开。", cmd: "chmod +x gate",
+                test: /^chmod\s+(\+x|u\+x|755|777)\s+gate$/, act: "cast", msg: "石门轰隆隆地打开了！" },
+              { x: 330, kind: "chest", label: "chest", goal: "路边放着个宝箱，用 cat 看看里面藏了什么。", cmd: "cat chest",
+                test: /^cat\s+chest$/, act: "cast", msg: "宝箱里是一把金钥匙，和一张字条：「权限在手，天下我有。」" }
+            ]},
+          { name: "幽暗洞穴", sky: ["#241f33", "#17141f"], ground: "#3a3644", groundTop: "#57506a", decor: "cave",
+            npc: { x: 56, name: "矿工 · 阿蟒", pal: { r: "#7a5a2e" },
+              greet: "哎哟，洞里黑吧？我这盏矿灯是脚本控制的，可我手笨，敲不对命令，只能摸黑站着。",
+              ask: "灯的开关脚本叫 lamp.py，你帮我运行它：在下面终端输入 python3 lamp.py。灯一亮，我请你看我家小青——它可是条真蟒蛇。",
+              goal: "支线：帮阿蟒点亮矿灯——运行脚本 python3 lamp.py（敲错不掉心）。",
+              cmd: "python3 lamp.py",
+              test: /^python3\s+lamp\.py$/,
+              done: "灯亮了！阿蟒肩上的小青探出头，冲你吐了吐信子。",
+              fail: "阿蟒挠头：「脚本名是 lamp.py，前面得加 python3 才能跑起来，再试一次。」",
+              skip: "阿蟒叹口气：「那我继续摸黑挖吧，你注意脚下荆棘。」" },
+            obs: [
+              { x: 118, kind: "thorn", label: "???", goal: "洞里太黑，前方好像藏着什么：用 ls 并带上 -a 参数，把隐藏的东西也列出来。", cmd: "ls -a",
+                test: /^ls\s+(-\w*a\w*|--all)(\s+\.)?$/, act: "cast", msg: "荆棘显形了！骑士纵身一跃跳了过去。" },
+              { x: 224, kind: "ghost", label: "PID 404", goal: "一只幽灵进程（PID 404）在洞里游荡，用 kill 结束它。", cmd: "kill 404",
+                test: /^kill\s+(-9\s+)?404$/, act: "slash", msg: "幽灵进程被终止，化作一缕青烟。" },
+              { x: 330, kind: "plog", label: "poison.log", goal: "地上有一摊毒雾，是文件 poison.log 在冒烟，用 rm 删掉它。", cmd: "rm poison.log",
+                test: /^rm\s+(-\w+\s+)?poison\.log$/, act: "slash", msg: "毒雾散去，空气一下清新了。" }
+            ]},
+          { name: "熔岩地牢", sky: ["#3a1710", "#200d08"], ground: "#4a3428", groundTop: "#6e4a2f", decor: "lava",
+            npc: { x: 54, name: "铁匠 · 派森大婶", pal: { r: "#2f6db3" },
+              greet: "小伙子，我这炉子烧的是 Python 之火！锻造之前，得先把工具清点清楚。",
+              ask: "用 pip list 看看这台机器都装了哪些 Python 包，少了 flask，我可打不出好剑。",
+              goal: "支线：帮派森大婶清点 Python 包——输入 pip list（敲错不掉心）。",
+              cmd: "pip list",
+              test: /^(pip3?|python3\s+-m\s+pip)\s+list$/,
+              done: "大婶扫了一眼清单：「flask、requests、numpy 都在，好！这把剑稳了。」",
+              fail: "大婶摇头：「清点包就一条命令 pip list，简单得很，再试试。」",
+              skip: "大婶耸耸肩：「不清点也行，炉子可不等人。」" },
+            obs: [
+              { x: 172, kind: "gap", label: "断桥", goal: "前面的桥断了：用 cp 把木板 plank 复制一份，搭成一座桥（目标名 bridge）。", cmd: "cp plank bridge",
+                test: /^cp\s+plank\s+bridge$/, act: "cast", msg: "木板桥搭好了，骑士小心翼翼地走了过去。" },
+              { x: 288, kind: "lavaSlime", label: "PID 999", goal: "熔岩史莱姆其实是失控进程 PID 999，用 kill 终结它。", cmd: "kill 999",
+                test: /^kill\s+(-9\s+)?999$/, act: "slash", msg: "史莱姆进程被杀死，熔岩平静下来。" },
+              { x: 366, kind: "ironbox", label: "ironbox", goal: "沉重的铁箱 ironbox 堵住通道：用 mv 把它挪到角落 corner。", cmd: "mv ironbox corner",
+                test: /^mv\s+ironbox\s+corner$/, act: "slash", msg: "铁箱被推到角落，通路露出来了。" }
+            ]},
+          { name: "进程墓地", sky: ["#252a38", "#14161f"], ground: "#3d4438", groundTop: "#55604c", decor: "grave",
+            npc: { x: 50, name: "守墓人 · 无名", pal: { r: "#5a6068" },
+              greet: "嘘——小声点，别吵醒底下那些进程。我找 Python 的住处，找了整整一夜了。",
+              ask: "用 which python3 查一查 Python 到底住在哪条路上。查到了，这片墓地就归你管一半。",
+              goal: "支线：帮守墓人找 Python 的路径——输入 which python3（敲错不掉心）。",
+              cmd: "which python3",
+              test: /^which\s+python3$/,
+              done: "守墓人点点头：「/usr/bin/python3——原来它一直住在正道上。」",
+              fail: "守墓人压低声音：「用 which 问路，它会告诉你 python3 住在哪，再试一次。」",
+              skip: "守墓人摆摆手：「罢了，我自己慢慢找。」" },
+            obs: [
+              { x: 104, kind: "tomb", label: "tomb", goal: "墓碑上刻着字：用 cat 读一读碑文，看看这片墓地的秘密。", cmd: "cat tomb",
+                test: /^cat\s+tomb$/, act: "cast", msg: "碑文写着：「此地葬着僵尸进程 666 与 667，kill 掉它们，墓门自开。」" },
+              { x: 196, kind: "zombie", label: "PID 666", goal: "僵尸进程 PID 666 爬了出来，用 kill 送它回坟里。", cmd: "kill 666",
+                test: /^kill\s+(-9\s+)?666$/, act: "slash", msg: "僵尸进程 666 倒下了。" },
+              { x: 282, kind: "zombie", label: "PID 667", goal: "又一只僵尸进程，PID 667，同样用 kill 解决。", cmd: "kill 667",
+                test: /^kill\s+(-9\s+)?667$/, act: "slash", msg: "僵尸进程 667 也倒下了，墓地安静了。" },
+              { x: 362, kind: "gate", label: "gate", goal: "墓地大门 gate 锈死了：用 chmod 把权限直接拉满（777），强行开门。", cmd: "chmod 777 gate",
+                test: /^chmod\s+777\s+gate$/, act: "cast", msg: "大门吱呀一声开了，冷风灌了进来。" }
+            ]},
+          { name: "Root 王座", sky: ["#241a3d", "#140f22"], ground: "#463d55", groundTop: "#6a5a8c", decor: "throne",
+            npc: { x: 54, name: "王座管家 · 塞叔", pal: { r: "#8c3038" },
+              greet: "能走到王座跟前，你是头一个。老仆守了一辈子门，就差最后一道手续。",
+              ask: "王座的通行令牌由脚本 key.py 生成，你运行它：在下面终端输入 python3 key.py。令牌到手，魔王见了你都得客气三分。",
+              goal: "支线：帮塞叔生成通行令牌——运行 python3 key.py（敲错不掉心）。",
+              cmd: "python3 key.py",
+              test: /^python3\s+key\.py$/,
+              done: "令牌在塞叔手里化作金光：「去吧，王座在等它的新主人。」",
+              fail: "塞叔提醒：「脚本叫 key.py，用 python3 运行它，就这一条。」",
+              skip: "塞叔也不勉强：「手续免了，直接上吧。」" },
+            obs: [
+              { x: 118, kind: "seal", label: "seal", goal: "王座前浮着紫色结界 seal：权限不够，先用 sudo 提权，再用 rm 破除它。", cmd: "sudo rm seal",
+                test: /^sudo\s+rm\s+(-\w+\s+)?seal$/, act: "cast", msg: "结界碎成紫色光点——魔王就在前方！" },
+              { x: 238, kind: "boss", label: "魔王进程", hits: 3, goal: "魔王进程有 3 点血！轮流用这三招攻击它：kill 1、rm boss、chmod 000 boss，每敲对一条掉 1 点血。", cmd: "kill 1 / rm boss / chmod 000 boss",
+                test: /^(kill\s+(-9\s+)?1|rm\s+(-\w+\s+)?boss|chmod\s+000\s+boss)$/, act: "slash", msg: "魔王被击碎，化作一地退出码！" },
+              { x: 352, kind: "gate", gold: true, label: "胜利之门", goal: "最后一步：用 echo 喊出你的胜利宣言（echo 后面随便写一句话），推开胜利之门。", cmd: "echo 我通关了",
+                test: /^echo\s+\S/, act: "cast", msg: "大门打开，阳光洒了进来！" }
+            ]}
+        ];
+
+        /* ---------- state ---------- */
+        var S = null;
+        var bestStars = [0, 0, 0, 0, 0];
+        var sideDone = [false, false, false, false, false];
+        function sideCount(){ return sideDone.filter(Boolean).length; }
+        function curNpc(){ return curLevel().npc || null; }
+        var particles = [];
+        function curLevel(){ return LEVELS[S.level]; }
+        function curObs(){ return curLevel().obs[S.obsIdx]; }
+        function stopX(ob){ return Math.max(8, ob.x - 44); }
+        function loadLevel(idx){
+          S = {
+            level: idx, obsIdx: 0, hearts: 3, mistakes: 0,
+            heroX: 10, phase: "walk", phaseT: 0, bossHp: 0,
+            hintOn: false, finished: false, doorOpen: false, heroAlpha: 1,
+            actDone: false, cleared: {},
+            npcStage: LEVELS[idx].npc ? "pending" : "none"
+          };
+          var ob = curObs();
+          if (ob.hits) S.bossHp = ob.hits;
+          particles = [];
+          elOverlay.hidden = true;
+          elDialog.hidden = true;
+          elInput.disabled = false;
+          var lvNpc = curNpc();
+          setLog("进入第 " + (idx + 1) + " 关 · " + curLevel().name + "。" +
+            (lvNpc ? "路边站着「" + lvNpc.name + "」，走过去和他聊聊，可能有支线任务。" : "看清目标，在下面输入命令。"), "");
+          renderPanel();
+        }
+        function totalStars(){
+          return bestStars.reduce(function(a, b){ return a + b; }, 0);
+        }
+        function renderPanel(){
+          var lv = curLevel();
+          elLvName.textContent = "第 " + (S.level + 1) + " / " + LEVELS.length + " 关 · " + lv.name;
+          var dots = "";
+          lv.obs.forEach(function(ob, i){
+            if (i < S.obsIdx) dots += "●";
+            else if (i === S.obsIdx && !S.finished) dots += "●";
+            else dots += '<span class="off">●</span>';
+          });
+          elDots.innerHTML = dots;
+          var hearts = "";
+          for (var i = 0; i < 3; i++) hearts += i < S.hearts ? "♥" : "♡";
+          elHearts.textContent = hearts;
+          elStarTotal.textContent = "★ " + totalStars() + " / 15";
+          elSideTotal.textContent = "支线 ✦ " + sideCount() + " / 5";
+          var npc = curNpc();
+          var inNpc = npc && (S.npcStage === "greet" || S.npcStage === "quest" || S.npcStage === "cleared");
+          elObjLabel.textContent = inNpc ? "支线 · NPC" : "当前目标";
+          elObjLabel.classList.toggle("side", !!inNpc);
+          if (S.finished){
+            elObjective.textContent = "本关已通关！";
+          } else if (S.npcStage === "pending" && npc){
+            elObjective.textContent = "先往前走——路边的「" + npc.name + "」好像有话要说。";
+          } else if (inNpc && S.npcStage === "greet"){
+            elObjective.textContent = "「" + npc.name + "」在看着你：输入 talk 和他聊聊，或输入 go 继续赶路。";
+            elHintCmd.textContent = "talk";
+          } else if (inNpc && S.npcStage === "quest"){
+            elObjective.textContent = npc.goal;
+            elHintCmd.textContent = npc.cmd;
+          } else if (inNpc && S.npcStage === "cleared"){
+            elObjective.textContent = "支线办成了！输入 go（或点对话框里的按钮）继续前进。";
+            elHintCmd.textContent = "go";
+          } else if (S.obsIdx >= lv.obs.length){
+            elObjective.textContent = "障碍全部清除——骑士正走向出口大门！";
+          } else {
+            var ob = curObs();
+            elObjective.textContent = "（第 " + (S.obsIdx + 1) + " / " + lv.obs.length + " 个障碍）" + ob.goal;
+            elHintCmd.textContent = ob.cmd;
+          }
+          elHintLine.hidden = !S.hintOn || S.finished || S.obsIdx >= lv.obs.length;
+          elHintBtn.textContent = S.hintOn ? "收起命令" : "显示命令";
+        }
+        function setLog(html, cls){
+          elLog.innerHTML = cls ? '<span class="' + cls + '">' + html + "</span>" : html;
+        }
+        function logOk(msg){ setLog("✓ " + msg, "ok"); }
+        function logBad(msg){ setLog("✗ " + msg, "bad"); }
+
+        /* ---------- NPC dialogue & side quests ---------- */
+        function showDialog(text, choices){
+          var npc = curNpc();
+          if (!npc) return;
+          elNpcName.textContent = npc.name;
+          elNpcText.textContent = text;
+          elChoices.innerHTML = "";
+          (choices || []).forEach(function(ch){
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "px-choice-btn";
+            b.textContent = ch.label;
+            b.addEventListener("click", function(){ handleNpcCmd(ch.cmd); elInput.focus(); });
+            elChoices.appendChild(b);
+          });
+          elDialog.hidden = false;
+        }
+        function arriveNpc(){
+          var npc = curNpc();
+          S.npcStage = "greet";
+          setPhase("npc");
+          showDialog(npc.greet, [
+            { label: "和他聊聊（talk）", cmd: "talk" },
+            { label: "继续赶路（go）", cmd: "go" }
+          ]);
+          setLog("「" + npc.name + "」向你招了招手。", "");
+          renderPanel();
+        }
+        function proceedNpc(){
+          S.npcStage = "passed";
+          elDialog.hidden = true;
+          setPhase("walk");
+          renderPanel();
+          elInput.focus();
+        }
+        function skipNpc(){
+          var npc = curNpc();
+          setLog(npc.name + "：" + npc.skip, "");
+          proceedNpc();
+        }
+        function completeSide(){
+          var npc = curNpc();
+          S.npcStage = "cleared";
+          if (!sideDone[S.level]) sideDone[S.level] = true;
+          var healed = false;
+          if (S.hearts < 3){ S.hearts++; healed = true; }
+          spawnParticles(npc.x + 16, GROUND - 20, ["#7ec8e3", "#ffd94a", "#7ed491", "#eef2f5"]);
+          showDialog(npc.done, [{ label: "继续前进 →", cmd: "go" }]);
+          logOk("支线完成 ✦" + (healed ? " 奖励：回复 1 颗心（现在 " + S.hearts + " 颗）。" : " 奖励：支线之星 +1（已集 " + sideCount() + " / 5）。"));
+          renderPanel();
+        }
+        function handleNpcCmd(c){
+          var npc = curNpc();
+          if (!npc) return;
+          if (S.npcStage === "greet"){
+            if (c === "talk"){
+              S.npcStage = "quest";
+              showDialog(npc.ask, [{ label: "放弃支线，继续赶路（go）", cmd: "go" }]);
+              setLog(npc.name + " 托你办件事——在下面终端里照目标输入命令就行。", "");
+              renderPanel();
+            } else if (c === "go" || c === "leave" || c === "skip"){
+              skipNpc();
+            } else {
+              setLog("没听懂？输入 talk 和他聊聊，或输入 go 继续赶路。", "");
+            }
+          } else if (S.npcStage === "quest"){
+            if (c === "go" || c === "leave" || c === "skip"){
+              skipNpc();
+            } else if (npc.test.test(c)){
+              completeSide();
+            } else {
+              setLog(npc.fail, "");
+            }
+          } else if (S.npcStage === "cleared"){
+            if (c === "go" || c === "leave" || c === "skip") proceedNpc();
+            else setLog("支线已经办完啦——输入 go 继续前进。", "");
+          }
+        }
+
+        /* ---------- drawing ---------- */
+        function rnd(seed){ var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+        function lerpColor(a, b, t){
+          var pa = [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16)];
+          var pb = [parseInt(b.slice(1, 3), 16), parseInt(b.slice(3, 5), 16), parseInt(b.slice(5, 7), 16)];
+          return "rgb(" + pa.map(function(v, i){ return Math.round(v + (pb[i] - v) * t); }).join(",") + ")";
+        }
+        function drawBG(lv){
+          for (var i = 0; i < 6; i++){
+            ctx.fillStyle = lerpColor(lv.sky[0], lv.sky[1], i / 5);
+            ctx.fillRect(0, Math.floor(GROUND * i / 6), W, Math.ceil(GROUND / 6) + 1);
+          }
+          var seed = S.level * 31 + 7;
+          if (lv.decor === "forest"){
+            ctx.fillStyle = "rgba(255,255,255,.92)";
+            for (var c = 0; c < 3; c++){
+              var cx = 30 + rnd(seed + c) * 380, cy = 22 + rnd(seed + c + 9) * 36;
+              ctx.fillRect(cx, cy, 34, 8); ctx.fillRect(cx + 8, cy - 6, 20, 6); ctx.fillRect(cx + 6, cy + 8, 24, 5);
+            }
+            ctx.fillStyle = "#3d7a3a";
+            for (var t = 0; t < 7; t++){
+              var tx = rnd(seed + t + 20) * 470, th = 22 + rnd(seed + t + 30) * 20;
+              ctx.fillRect(tx + 8, GROUND - th, 4, th);
+              ctx.fillRect(tx + 4, GROUND - th - 8, 12, 8);
+              ctx.fillRect(tx, GROUND - th - 16, 20, 9);
+            }
+          } else if (lv.decor === "cave"){
+            ctx.fillStyle = "#4c465e";
+            for (var s2 = 0; s2 < 9; s2++){
+              var sx = rnd(seed + s2) * 470, sl = 14 + rnd(seed + s2 + 40) * 30;
+              ctx.fillRect(sx, 0, 10, sl - 10); ctx.fillRect(sx + 2, sl - 10, 6, 6); ctx.fillRect(sx + 4, sl - 4, 2, 4);
+            }
+            ctx.fillStyle = "#7a4fc0";
+            for (var k2 = 0; k2 < 4; k2++){
+              var kx = 20 + rnd(seed + k2 + 50) * 430;
+              ctx.fillRect(kx, GROUND - 8, 3, 8); ctx.fillRect(kx + 4, GROUND - 5, 2, 5);
+            }
+          } else if (lv.decor === "lava"){
+            ctx.fillStyle = "#59331f";
+            for (var r2 = 0; r2 < 6; r2++){
+              var rx = rnd(seed + r2) * 460, rh = 12 + rnd(seed + r2 + 60) * 22;
+              ctx.fillRect(rx, GROUND - rh, 22, rh); ctx.fillRect(rx + 4, GROUND - rh - 5, 14, 5);
+            }
+            ctx.fillStyle = "rgba(232,134,44,.16)";
+            ctx.fillRect(0, GROUND - 46, W, 46);
+          } else if (lv.decor === "grave"){
+            ctx.fillStyle = "#e8e4cf";
+            ctx.fillRect(404, 20, 26, 26); ctx.fillRect(410, 14, 14, 38); ctx.fillRect(398, 26, 38, 14);
+            ctx.fillStyle = lv.sky[0]; ctx.fillRect(398, 16, 12, 12);
+            ctx.fillStyle = "#2c332a";
+            for (var g2 = 0; g2 < 5; g2++){
+              var gx = 16 + rnd(seed + g2 + 70) * 420;
+              ctx.fillRect(gx, GROUND - 14, 12, 14); ctx.fillRect(gx + 2, GROUND - 18, 8, 4);
+            }
+            ctx.fillStyle = "#23262d";
+            ctx.fillRect(52, GROUND - 52, 5, 52); ctx.fillRect(30, GROUND - 46, 26, 4); ctx.fillRect(52, GROUND - 38, 22, 4);
+          } else if (lv.decor === "throne"){
+            [56, 396].forEach(function(px){
+              ctx.fillStyle = "#57496e"; ctx.fillRect(px, 58, 26, GROUND - 58);
+              ctx.fillStyle = PAL.g; ctx.fillRect(px, 58, 26, 5); ctx.fillRect(px, GROUND - 10, 26, 5);
+              ctx.fillStyle = "#463a5c"; ctx.fillRect(px + 5, 70, 3, GROUND - 84); ctx.fillRect(px + 18, 70, 3, GROUND - 84);
+            });
+            ctx.fillStyle = "#7a2e35"; ctx.fillRect(150, 30, 20, 44); ctx.fillRect(300, 30, 20, 44);
+            ctx.fillStyle = PAL.g; ctx.fillRect(150, 30, 20, 4); ctx.fillRect(300, 30, 20, 4);
+          }
+          ctx.fillStyle = lv.ground; ctx.fillRect(0, GROUND, W, H - GROUND);
+          ctx.fillStyle = lv.groundTop; ctx.fillRect(0, GROUND, W, 6);
+          ctx.fillStyle = "rgba(0,0,0,.18)";
+          for (var d = 0; d < 26; d++){
+            ctx.fillRect(rnd(seed + d + 90) * 470, GROUND + 12 + rnd(seed + d + 99) * 36, 5, 3);
+          }
+          if (lv.decor === "lava"){
+            ctx.fillStyle = "#e8862c"; ctx.fillRect(0, H - 8, W, 8);
+            ctx.fillStyle = "#ffd94a"; ctx.fillRect(0, H - 8, W, 2);
+          }
+          if (lv.decor === "throne"){
+            ctx.fillStyle = "#8c3038"; ctx.fillRect(340, GROUND + 2, 140, H - GROUND - 2);
+          }
+        }
+        function drawGate(x, gold, open){
+          var y = GROUND - 56;
+          ctx.fillStyle = gold ? "#8a6d1f" : "#6d747e"; ctx.fillRect(x - 3, y - 4, 46, 60);
+          ctx.fillStyle = gold ? PAL.g : "#9aa1ab"; ctx.fillRect(x - 3, y - 4, 46, 5);
+          if (open){
+            ctx.fillStyle = "#0d0d12"; ctx.fillRect(x + 3, y + 4, 34, 52);
+            ctx.fillStyle = gold ? "#c49a2e" : "#7a4a21"; ctx.fillRect(x + 3, y + 4, 9, 52);
+          } else {
+            ctx.fillStyle = gold ? "#a87f24" : "#7a4a21"; ctx.fillRect(x + 3, y + 4, 34, 52);
+            ctx.fillStyle = "rgba(0,0,0,.25)";
+            ctx.fillRect(x + 13, y + 4, 2, 52); ctx.fillRect(x + 25, y + 4, 2, 52);
+            ctx.fillStyle = PAL.g;
+            ctx.fillRect(x + 17, y + 26, 6, 6); ctx.fillRect(x + 19, y + 32, 2, 5);
+          }
+        }
+        function drawSign(ob, isCurrent){
+          var label = ob.label;
+          ctx.font = "9px 'JetBrains Mono', monospace";
+          var tw = ctx.measureText(label).width;
+          var bw = tw + 12, bx = ob.x + 16 - bw / 2, by = GROUND - 86;
+          ctx.fillStyle = "#5d3717"; ctx.fillRect(ob.x + 15, by + 14, 3, 18);
+          ctx.fillStyle = isCurrent ? "#8a5a2b" : "#6e4a2f";
+          ctx.fillRect(bx, by, bw, 15);
+          ctx.fillStyle = "rgba(0,0,0,.3)"; ctx.fillRect(bx, by + 13, bw, 2);
+          ctx.fillStyle = "#f7ead2";
+          ctx.textAlign = "center";
+          ctx.fillText(label, ob.x + 16, by + 11);
+          ctx.textAlign = "left";
+        }
+        function drawObstacle(ob, idx, t){
+          var done = !!S.cleared[idx];
+          var isCurrent = idx === S.obsIdx && !S.finished;
+          if (ob.kind === "gate"){
+            if (!done) drawSign(ob, isCurrent);
+            drawGate(ob.x, ob.gold, done);
+            return;
+          }
+          if (ob.kind === "gap"){
+            if (!done){
+              ctx.fillStyle = curLevel().sky[1]; ctx.fillRect(ob.x, GROUND, 56, H - GROUND);
+              ctx.fillStyle = "#e8862c"; ctx.fillRect(ob.x, H - 10, 56, 10);
+              ctx.fillStyle = "#ffd94a"; ctx.fillRect(ob.x, H - 10, 56, 2);
+              drawSign(ob, isCurrent);
+            } else {
+              ctx.fillStyle = "#9c6b30"; ctx.fillRect(ob.x - 4, GROUND - 2, 64, 6);
+              ctx.fillStyle = "#7a4a21";
+              ctx.fillRect(ob.x + 6, GROUND - 2, 3, 6); ctx.fillRect(ob.x + 26, GROUND - 2, 3, 6); ctx.fillRect(ob.x + 46, GROUND - 2, 3, 6);
+            }
+            return;
+          }
+          if (done) return;
+          drawSign(ob, isCurrent);
+          var bob = 0;
+          if (ob.kind === "ghost") bob = Math.sin(t / 420) * 3 - 6;
+          if (ob.kind === "slime" || ob.kind === "lavaSlime") bob = Math.sin(t / 300) * 1.5;
+          if (ob.kind === "boss") bob = Math.sin(t / 500) * 2;
+          var spr = SPRITES[ob.kind] || SPRITES.stump;
+          var wpx = spr.map[0].length * 2, hpx = spr.map.length * 2;
+          var ox = ob.x + 16 - wpx / 2, oy = GROUND - hpx + bob;
+          if (ob.kind === "seal"){
+            ctx.fillStyle = "rgba(166,120,232,.18)";
+            ctx.beginPath(); ctx.arc(ob.x + 16, GROUND - 22 + bob, 24, 0, 7); ctx.fill();
+          }
+          if (ob.kind === "thorn") drawSprite(spr, ox, oy, isCurrent ? 0.95 : 0.4);
+          else if (ob.kind === "zombie") drawHero(ox - 2, GROUND - 32 + bob, { zombie: true, legsB: (Math.floor(t / 400) % 2 === 0) });
+          else drawSprite(spr, ox, oy);
+          if (ob.kind === "plog"){
+            ctx.fillStyle = "#4da45e";
+            ctx.fillRect(ob.x + 6, GROUND - 12, 4, 10); ctx.fillRect(ob.x + 22, GROUND - 9, 4, 7);
+            ctx.fillRect(ob.x - 2, GROUND - 3, 38, 3);
+          }
+          if (ob.kind === "boss"){
+            ctx.fillStyle = "rgba(0,0,0,.45)"; ctx.fillRect(ob.x - 6, GROUND - 66, 44, 6);
+            ctx.fillStyle = "#d64541";
+            for (var hb = 0; hb < S.bossHp; hb++) ctx.fillRect(ob.x - 5 + hb * 15, GROUND - 65, 13, 4);
+          }
+        }
+        function spawnParticles(x, y, colors){
+          for (var i = 0; i < 16; i++){
+            particles.push({
+              x: x, y: y, vx: (rnd(i + S.level * 7 + Date.now() % 97) - 0.5) * 130,
+              vy: -40 - rnd(i + 3) * 90, life: 0.65, color: colors[i % colors.length], size: 2 + (i % 3)
+            });
+          }
+        }
+        function drawNpc(t){
+          var npc = curNpc();
+          if (!npc) return;
+          var pal = {};
+          Object.keys(PAL).forEach(function(k2){ pal[k2] = PAL[k2]; });
+          Object.keys(npc.pal || {}).forEach(function(k2){ pal[k2] = npc.pal[k2]; });
+          var bob = Math.sin(t / 520) * 1;
+          drawSprite({ pal: pal, map: SPRITES.npc.map }, npc.x, GROUND - 32 + bob);
+          if (S.npcStage === "pending" || S.npcStage === "greet" || S.npcStage === "quest"){
+            var bx = npc.x + 16, by = GROUND - 58 + Math.sin(t / 300) * 2;
+            ctx.fillStyle = "#f7ead2";
+            ctx.fillRect(bx - 7, by, 14, 13);
+            ctx.fillRect(bx - 2, by + 13, 4, 3);
+            ctx.fillStyle = "#b3541e";
+            ctx.font = "bold 10px 'JetBrains Mono', monospace";
+            ctx.textAlign = "center";
+            ctx.fillText("!", bx, by + 11);
+            ctx.textAlign = "left";
+          }
+        }
+        function draw(t){
+          var lv = curLevel();
+          drawBG(lv);
+          drawNpc(t);
+          lv.obs.forEach(function(ob, i){ if (ob.kind !== "gate") drawObstacle(ob, i, t); });
+          drawGate(DOOR_X, S.level === LEVELS.length - 1, S.doorOpen);
+          lv.obs.forEach(function(ob, i){ if (ob.kind === "gate") drawObstacle(ob, i, t); });
+          var walking = S.phase === "walk" || S.phase === "doorwalk";
+          var bobY = walking ? (Math.floor(t / 130) % 2 === 0 ? 0 : -1) : (Math.sin(t / 600) > 0.6 ? -1 : 0);
+          var pose = "idle";
+          if (S.phase === "act") pose = curObs() && curObs().act === "cast" ? "cast" : "slash";
+          drawHero(Math.round(S.heroX), GROUND - 32 + bobY, {
+            legsB: walking && Math.floor(t / 130) % 2 === 1,
+            pose: pose, alpha: S.heroAlpha, flash: S.phase === "hurt"
+          });
+          particles = particles.filter(function(p){ return p.life > 0; });
+          particles.forEach(function(p){
+            ctx.globalAlpha = Math.max(0, p.life / 0.65);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            ctx.globalAlpha = 1;
+          });
+        }
+
+        /* ---------- game flow ---------- */
+        function setPhase(p){ S.phase = p; S.phaseT = 0; }
+        function finishAct(){
+          var ob = curObs();
+          if (ob.kind === "boss" && S.bossHp > 0){
+            logOk("打中了！魔王还剩 " + S.bossHp + " 点血，继续攻击！");
+            setPhase("wait");
+            renderPanel();
+            return;
+          }
+          S.cleared[S.obsIdx] = true;
+          var spr = SPRITES[ob.kind];
+          var colors = spr ? Object.keys(spr.pal).map(function(k2){ return spr.pal[k2]; }) : ["#9aa1ab", "#7a4a21"];
+          spawnParticles(ob.x + 16, GROUND - 16, colors);
+          logOk(ob.msg);
+          setPhase("crumble");
+        }
+        function advance(){
+          S.obsIdx++;
+          if (S.obsIdx >= curLevel().obs.length){
+            setPhase("doorwalk");
+          } else {
+            var ob = curObs();
+            if (ob.hits) S.bossHp = ob.hits;
+            setPhase("walk");
+          }
+          renderPanel();
+        }
+        function levelComplete(){
+          S.finished = true;
+          var stars = S.mistakes === 0 ? 3 : S.mistakes <= 2 ? 2 : 1;
+          if (stars > bestStars[S.level]) bestStars[S.level] = stars;
+          renderPanel();
+          var last = S.level === LEVELS.length - 1;
+          elOvStars.textContent = "★".repeat(stars) + "☆".repeat(3 - stars);
+          elOvTitle.textContent = last ? "全部通关！骑士重获自由" : "第 " + (S.level + 1) + " 关通关！";
+          elOvText.textContent = last
+            ? "5 个关卡全部打通，一共收集 " + totalStars() + " / 15 颗星，支线任务完成 " + sideCount() + " / 5。一路上你用到的 rm、chmod、cat、ls、kill、cp、mv、sudo、echo，还有支线里的 python3、pip、which，都是真机上天天在用的命令——下面还有任务模式和 67 条命令手册等你继续练。"
+            : (S.mistakes === 0 ? "全程零失误，漂亮！" : "本关失误 " + S.mistakes + " 次。") +
+              (sideDone[S.level] ? "本关支线也办成了 ✦。" : "本关的支线没接也没关系，重开本关还能补。") +
+              " 下一关：" + LEVELS[S.level + 1].name + "。";
+          elOvBtn.textContent = last ? "再玩一遍" : "进入下一关";
+          elOvBtn.setAttribute("data-act", last ? "again" : "next");
+          elOverlay.hidden = false;
+          elInput.disabled = true;
+          elOvBtn.focus();
+        }
+        function levelFailed(){
+          setPhase("dead");
+          elOvStars.textContent = "";
+          elOvTitle.textContent = "骑士倒下了……";
+          elOvText.textContent = "三次敲错命令，本关挑战失败。别灰心：点目标上方的「显示命令」可以看到正确命令，照着敲一遍就能记住它。";
+          elOvBtn.textContent = "重开本关";
+          elOvBtn.setAttribute("data-act", "retry");
+          elOverlay.hidden = false;
+          elInput.disabled = true;
+          elOvBtn.focus();
+        }
+        elOvBtn.addEventListener("click", function(){
+          var act = elOvBtn.getAttribute("data-act");
+          if (act === "next") loadLevel(S.level + 1);
+          else if (act === "again"){ bestStars = [0, 0, 0, 0, 0]; sideDone = [false, false, false, false, false]; loadLevel(0); }
+          else loadLevel(S.level);
+          elInput.focus();
+        });
+        elHintBtn.addEventListener("click", function(){
+          if (S.finished || !curObs()) return;
+          S.hintOn = !S.hintOn;
+          renderPanel();
+          elInput.focus();
+        });
+        document.getElementById("pxRestartBtn").addEventListener("click", function(){
+          loadLevel(S.level);
+          elInput.focus();
+        });
+        elStage.addEventListener("click", function(e){
+          if (e.target.tagName !== "BUTTON") elInput.focus();
+        });
+
+        function submitCmd(){
+          var raw = elInput.value;
+          elInput.value = "";
+          if (!S || S.finished) return;
+          var c = raw.trim().replace(/\s+/g, " ");
+          if (!c) return;
+          if (S.phase === "npc"){ handleNpcCmd(c.toLowerCase()); return; }
+          if (S.phase !== "wait") return;
+          var ob = curObs();
+          if (ob.test.test(c.toLowerCase())){
+            if (ob.kind === "boss" && S.bossHp > 0){
+              S.bossHp--;
+              if (S.bossHp > 0){ setPhase("act"); return; }
+            }
+            setPhase("act");
+          } else {
+            S.mistakes++;
+            S.hearts--;
+            setPhase("hurt");
+            elStage.classList.remove("shake");
+            void elStage.offsetWidth;
+            if (!REDUCED) elStage.classList.add("shake");
+            if (S.hearts <= 0){
+              logBad("「" + c + "」没有打中目标，骑士的心碎了……");
+            } else {
+              logBad("「" + c + "」没有打中目标——骑士被弹了回来（还剩 " + S.hearts + " 颗心）。看清目标再敲，或点「显示命令」。");
+            }
+            renderPanel();
+          }
+        }
+        elInput.addEventListener("keydown", function(e){
+          if (e.key === "Enter") submitCmd();
+        });
+
+        /* ---------- main loop ---------- */
+        var lastT = 0;
+        function loop(t){
+          var dt = Math.min(0.05, (t - lastT) / 1000 || 0.016);
+          lastT = t;
+          if (S){
+            S.phaseT += dt;
+            var speed = REDUCED ? 190 : 95;
+            if (S.phase === "walk"){
+              var toNpc = S.npcStage === "pending" && curNpc();
+              var target = toNpc ? Math.max(8, curNpc().x - 34) : stopX(curObs());
+              if (S.heroX < target){ S.heroX = Math.min(target, S.heroX + speed * dt); }
+              else if (toNpc) arriveNpc();
+              else setPhase("wait");
+            } else if (S.phase === "act"){
+              if (S.phaseT > (REDUCED ? 0.15 : 0.48)) finishAct();
+            } else if (S.phase === "crumble"){
+              if (S.phaseT > (REDUCED ? 0.1 : 0.38)) advance();
+            } else if (S.phase === "hurt"){
+              if (S.phaseT > (REDUCED ? 0.12 : 0.4)){
+                if (S.hearts <= 0) levelFailed();
+                else setPhase("wait");
+              }
+            } else if (S.phase === "doorwalk"){
+              var front = DOOR_X - 40;
+              if (S.heroX < front){
+                S.heroX = Math.min(front, S.heroX + speed * dt);
+              } else {
+                S.doorOpen = true;
+                if (S.heroX < DOOR_X + 4){
+                  S.heroX = Math.min(DOOR_X + 4, S.heroX + speed * dt);
+                  S.heroAlpha = Math.max(0, 1 - (S.heroX - front) / 44);
+                } else if (S.phaseT > 0.2){
+                  levelComplete();
+                  setPhase("done");
+                }
+              }
+            }
+            particles.forEach(function(p){
+              p.life -= dt;
+              p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 320 * dt;
+            });
+            draw(t);
+          }
+          requestAnimationFrame(loop);
+        }
+        loadLevel(0);
+        requestAnimationFrame(loop);
+      })();
     </script>
   </body>
 </html>
