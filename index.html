@@ -102,6 +102,32 @@
       }
       .hero-meta span b{color:var(--ink-soft);font-weight:700}
 
+      /* ---------- Tabs ---------- */
+      .tabbar{
+        display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+        margin:28px 0 4px;
+      }
+      .tab-btn{
+        appearance:none;cursor:pointer;text-align:left;font-family:inherit;
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:13px 16px;box-shadow:var(--shadow);
+        transition:border-color .15s ease,background .15s ease;
+      }
+      .tab-btn .tab-name{display:block;font-size:17px;font-weight:900;color:var(--ink);line-height:1.3}
+      .tab-btn .tab-sub{display:block;font-size:12.5px;color:var(--ink-faint);margin-top:2px;line-height:1.45}
+      .tab-btn:hover{border-color:var(--ink-faint)}
+      .tab-btn.active{background:var(--ink);border-color:var(--ink)}
+      .tab-btn.active .tab-name{color:var(--bg)}
+      .tab-btn.active .tab-sub{color:var(--bg);opacity:.68}
+      .tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+      .tab-hidden{display:none!important}
+      @media (max-width:560px){
+        .tabbar{gap:8px}
+        .tab-btn{padding:11px 12px}
+        .tab-btn .tab-name{font-size:15px}
+        .tab-btn .tab-sub{display:none}
+      }
+
       /* ---------- Terminal demo ---------- */
       .term{
         margin-top:30px;background:var(--term-bg);border:1px solid var(--term-line);
@@ -228,6 +254,8 @@
       }
       .code-row code::-webkit-scrollbar{display:none}
       .code-row code .dollar{color:var(--green);user-select:none}
+      .code-row code .ccmt{color:#7ee787;opacity:.75;font-style:normal;white-space:nowrap}
+      .mp-hint-note{color:var(--ink-soft);font-size:13px}
       .copy-btn{
         flex:none;display:inline-flex;align-items:center;gap:5px;
         font:inherit;font-size:12px;cursor:pointer;
@@ -258,8 +286,8 @@
 
       /* ---------- Concepts ---------- */
       .concepts{padding-top:52px}
-      .concepts h2,.deploy h2{font-size:23px;font-weight:900;margin:0 0 6px}
-      .concepts>p,.deploy>p{color:var(--ink-soft);margin:0 0 18px;font-size:15px;max-width:720px}
+      .concepts h2{font-size:23px;font-weight:900;margin:0 0 6px}
+      .concepts>p{color:var(--ink-soft);margin:0 0 18px;font-size:15px;max-width:720px}
       .concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
       .concept{
         background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;
@@ -271,22 +299,6 @@
       }
       .concept p{margin:0;font-size:14px;color:var(--ink-soft)}
       .concept p code{background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12.5px;color:var(--ink)}
-
-      /* ---------- Deploy ---------- */
-      .deploy{padding:52px 0 30px}
-      .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;counter-reset:step}
-      .step{
-        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-        padding:16px;box-shadow:var(--shadow);
-      }
-      .step .n{
-        font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;
-        color:var(--green-deep);background:var(--accent-soft);
-        display:inline-block;border-radius:6px;padding:2px 9px;margin-bottom:9px;
-      }
-      .step h3{margin:0 0 5px;font-size:15.5px}
-      .step p{margin:0;font-size:13.5px;color:var(--ink-soft)}
-      .step code{background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12.5px}
 
       footer{
         border-top:1px solid var(--line);margin-top:26px;
@@ -373,6 +385,7 @@
       }
       .px-hintline[hidden ]{display:none}
       .px-hintline code{color:var(--green);font-family:"JetBrains Mono",monospace;font-size:14px}
+      .px-hintline .px-hint-note{color:var(--term-dim);font-size:13px}
       .px-log{
         padding:8px 16px 0;min-height:26px;color:var(--term-dim);
         font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.6;
@@ -470,6 +483,115 @@
       .handbook-head{padding-top:46px}
       .handbook-head h2{font-size:23px;font-weight:900;margin:0 0 6px}
       .handbook-head p{color:var(--ink-soft);margin:0;font-size:15px;max-width:720px}
+
+      /* ---------- Markdown school ---------- */
+      .mdschool{padding-top:52px}
+      .mdschool>h2{font-size:23px;font-weight:900;margin:0 0 6px}
+      .md-lede{color:var(--ink-soft);margin:0 0 6px;font-size:15px;max-width:760px}
+      .md-lede b{color:var(--ink)}
+      .md-sub{font-size:17px;font-weight:900;margin:28px 0 12px}
+      .md-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+      .md-card{
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:14px 16px;box-shadow:var(--shadow);
+        display:flex;flex-direction:column;gap:9px;
+      }
+      .md-card h4{margin:0;font-size:15px}
+      .md-src{
+        background:var(--term-bg);border:1px solid var(--term-line);border-radius:7px;
+        padding:9px 12px;margin:0;color:var(--term-ink);
+        font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.7;
+        white-space:pre-wrap;word-break:break-word;
+      }
+      .md-view{border-top:1px dashed var(--line);padding-top:9px}
+      .md-note{margin:0;font-size:13px;color:var(--ink-faint)}
+      .md-render{font-size:14.5px;line-height:1.7;color:var(--ink);overflow-wrap:break-word}
+      .md-render>*:first-child{margin-top:0}
+      .md-render>*:last-child{margin-bottom:0}
+      .md-render h1{font-size:21px;font-weight:900;margin:14px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+      .md-render h2{font-size:18px;font-weight:900;margin:13px 0 7px}
+      .md-render h3{font-size:16px;font-weight:700;margin:11px 0 6px}
+      .md-render h4,.md-render h5,.md-render h6{font-size:14.5px;font-weight:700;margin:10px 0 5px}
+      .md-render p{margin:7px 0}
+      .md-render ul,.md-render ol{margin:7px 0;padding-left:24px}
+      .md-render li{margin:2px 0}
+      .md-render ul.md-tasks{padding-left:4px}
+      .md-render li.md-task{list-style:none}
+      .md-box{color:var(--accent);margin-right:6px}
+      .md-render blockquote{
+        margin:9px 0;padding:8px 14px;background:var(--bg-soft);
+        border-left:3px solid var(--accent);border-radius:0 6px 6px 0;color:var(--ink-soft);
+      }
+      .md-render code{
+        background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;
+        padding:0 5px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink);
+      }
+      .md-render pre{
+        background:var(--term-bg);border:1px solid var(--term-line);border-radius:7px;
+        padding:10px 12px;overflow-x:auto;margin:9px 0;
+      }
+      .md-render pre code{background:transparent;border:0;padding:0;color:var(--term-ink);font-size:12.5px;line-height:1.7}
+      .md-tablewrap{overflow-x:auto}
+      .md-render table{border-collapse:collapse;margin:9px 0;font-size:13.5px}
+      .md-render th,.md-render td{border:1px solid var(--line);padding:5px 11px;text-align:left}
+      .md-render th{background:var(--panel-2);font-weight:700}
+      .md-render hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+      .md-render img{max-width:100%;height:auto;border-radius:6px}
+      .md-render a{color:var(--accent);font-weight:500}
+      .md-trainer{display:grid;grid-template-columns:340px 1fr;gap:16px;align-items:start}
+      .md-task-panel{
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        box-shadow:var(--shadow);padding:18px;
+      }
+      .md-tp-head{display:flex;justify-content:space-between;gap:10px;color:var(--ink-faint);font-size:12.5px;font-weight:700}
+      .md-tp-title{font-size:18px;font-weight:900;margin:6px 0 4px}
+      .md-tp-story{margin:0;font-size:14px;color:var(--ink-soft)}
+      .md-tp-goal{margin-top:11px;background:var(--accent-soft);border-radius:8px;padding:10px 12px}
+      .md-tp-goal span{font-size:11.5px;font-weight:700;color:var(--green-deep);letter-spacing:.06em}
+      .md-tp-goal p{margin:2px 0 0;font-size:14px;font-weight:500}
+      .md-tp-hint{margin-top:10px;background:var(--term-bg);border-radius:8px;padding:9px 12px;color:var(--term-dim);font-size:13px}
+      .md-tp-hint[hidden ]{display:none}
+      .md-tp-hint pre{
+        margin:4px 0 0;color:var(--green);font-family:"JetBrains Mono",monospace;
+        font-size:13px;white-space:pre-wrap;word-break:break-word;
+      }
+      .md-tp-hint .md-hint-note{margin:5px 0 0;color:var(--term-dim);font-size:13px}
+      .md-tp-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+      .md-list{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+      .md-item{
+        display:flex;gap:7px;align-items:baseline;width:100%;text-align:left;
+        font:inherit;font-size:13.5px;color:var(--ink-faint);
+        background:none;border:0;padding:2px 0;cursor:pointer;
+      }
+      .md-item:hover{color:var(--ink)}
+      .md-item .md-mark{width:14px;flex:none;text-align:center}
+      .md-item.done{color:var(--ink-soft)}
+      .md-item.done .md-mark{color:var(--green-deep);font-weight:700}
+      .md-item.current{color:var(--ink);font-weight:700}
+      .md-item.current .md-mark{color:var(--accent)}
+      .md-editor-wrap{display:flex;flex-direction:column;gap:18px;min-width:0}
+      .md-pane-label{font-size:12.5px;font-weight:700;color:var(--ink-faint);margin-bottom:7px}
+      #mdEditor{
+        width:100%;min-height:230px;resize:vertical;display:block;
+        background:var(--term-bg);border:1px solid var(--term-line);border-radius:10px;
+        color:var(--term-ink);font-family:"JetBrains Mono",monospace;
+        font-size:14px;line-height:1.75;padding:13px 15px;outline:0;caret-color:var(--green);
+      }
+      #mdEditor:focus{border-color:var(--green)}
+      .md-previewbox{
+        background:var(--panel);border:1px solid var(--line);border-radius:10px;
+        box-shadow:var(--shadow);padding:14px 16px;min-height:120px;
+      }
+      .md-feedback{border-radius:8px;padding:10px 13px;font-size:14px;display:none}
+      .md-feedback.show{display:block}
+      .md-feedback.ok{background:var(--accent-soft);color:var(--green-deep);font-weight:600}
+      .md-feedback.no{background:#fdf3e0;color:#9a6a08}
+      @media (prefers-color-scheme: dark){
+        .md-feedback.no{background:#2e2410;color:#e3a008}
+      }
+      @media (max-width:900px){
+        .md-trainer{grid-template-columns:1fr}
+      }
       @media (max-width:900px){
         .game-grid{grid-template-columns:1fr}
         .mission-panel{position:static;max-height:none}
@@ -482,32 +604,205 @@
         .term-hint{display:none}
         .count-badge{display:none}
       }
+
+      /* ---------- Mouse FX ---------- */
+      #fxCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:90}
+      #fxGlow{
+        position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;
+        border-radius:50%;pointer-events:none;z-index:1;opacity:0;
+        background:radial-gradient(circle,rgba(63,185,80,.13) 0%,rgba(63,185,80,.055) 34%,transparent 68%);
+        transition:opacity .45s ease;will-change:transform;
+      }
+      #fxGlow.on{opacity:1}
+      #fxRing{
+        position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;
+        border:1.5px solid rgba(63,185,80,.75);border-radius:50%;
+        pointer-events:none;z-index:91;opacity:0;will-change:transform;
+        transition:opacity .25s ease,width .18s ease,height .18s ease,margin .18s ease,background .18s ease,border-color .18s ease;
+      }
+      #fxRing.on{opacity:1}
+      #fxRing.hovering{width:52px;height:52px;margin:-26px 0 0 -26px;background:rgba(63,185,80,.08);border-color:rgba(63,185,80,.95)}
+      #fxRing.down{width:22px;height:22px;margin:-11px 0 0 -11px;background:rgba(63,185,80,.16)}
+      #fxDot{
+        position:fixed;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:2px;
+        background:var(--green);pointer-events:none;z-index:91;opacity:0;will-change:transform;
+        box-shadow:0 0 0 1px rgba(255,255,255,.35);
+      }
+      #fxDot.on{opacity:1}
+      #fxDot.blink{animation:fxblink 1.05s steps(1) infinite}
+      @keyframes fxblink{50%{opacity:.15}}
+      /* spotlight cards */
+      .card,.concept,.md-card,.tab-btn,.hud,.mission-panel,.md-task-panel{position:relative}
+      .card::after,.concept::after,.md-card::after,.tab-btn::after{
+        content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+        background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(63,185,80,.13),rgba(63,185,80,.045) 42%,transparent 68%);
+        opacity:0;transition:opacity .22s ease;z-index:0;
+      }
+      body.fx-spot-on .card:hover::after,body.fx-spot-on .concept:hover::after,body.fx-spot-on .md-card:hover::after,body.fx-spot-on .tab-btn:hover::after{opacity:1}
+      .card>*,.concept>*,.md-card>*{position:relative;z-index:1}
+      .fx-tilting{will-change:transform;transform-style:preserve-3d}
+      .fx-ripple{
+        position:fixed;border:1.5px solid rgba(63,185,80,.85);border-radius:50%;
+        pointer-events:none;z-index:90;transform:translate(-50%,-50%);
+        animation:fxripple .62s ease-out forwards;
+      }
+      @keyframes fxripple{from{width:10px;height:10px;opacity:.95}to{width:92px;height:92px;opacity:0}}
+      /* FX control bar */
+      .fx-panel{
+        position:fixed;right:16px;bottom:16px;z-index:80;
+        background:var(--term-bg);color:var(--term-ink);border:1px solid var(--term-line);
+        border-radius:12px;box-shadow:0 12px 32px -10px rgba(0,0,0,.45);
+        padding:10px 11px 9px;max-width:min(92vw,340px);
+        font-family:"JetBrains Mono",monospace;
+      }
+      .fx-panel-head{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--term-dim);margin-bottom:8px;letter-spacing:.02em}
+      .fx-panel-head b{color:var(--green);font-size:12.5px}
+      .fx-panel-head .fx-close{
+        margin-left:auto;background:transparent;border:1px solid var(--term-line);color:var(--term-dim);
+        width:22px;height:22px;border-radius:6px;cursor:pointer;line-height:1;font-family:inherit;
+      }
+      .fx-panel-head .fx-close:hover{color:var(--green);border-color:var(--green)}
+      .fx-chips{display:flex;flex-wrap:wrap;gap:6px}
+      .fx-chip{
+        font:inherit;font-size:12px;cursor:pointer;border-radius:999px;padding:5px 10px;
+        background:transparent;color:var(--term-dim);border:1px solid var(--term-line);
+        transition:all .15s;
+      }
+      .fx-chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+      .fx-chip:hover{border-color:var(--green);color:var(--green)}
+      .fx-chip[aria-pressed="true"]:hover{color:#fff}
+      .fx-hint{margin:7px 0 0;font-size:11px;line-height:1.5;color:#6f757e;font-family:"Noto Sans SC",sans-serif}
+      .fx-reopen{
+        position:fixed;right:16px;bottom:16px;z-index:80;display:none;
+        font-family:"JetBrains Mono",monospace;font-size:12px;cursor:pointer;
+        background:var(--term-bg);color:var(--green);border:1px solid var(--term-line);
+        border-radius:999px;padding:7px 12px;box-shadow:0 10px 24px -10px rgba(0,0,0,.4);
+      }
+      .fx-reopen.show{display:block}
+      body.fx-off #fxCanvas,body.fx-off #fxGlow,body.fx-off #fxRing,body.fx-off #fxDot{display:none!important}
+      @media (pointer:coarse){
+        #fxCanvas,#fxGlow,#fxRing,#fxDot{display:none!important}
+      }
+      @media (prefers-reduced-motion: reduce){
+        #fxDot.blink{animation:none}
+        .fx-ripple{animation:none;display:none}
+      }
+      @media (max-width:560px){
+        .fx-panel{right:10px;bottom:10px;left:10px;max-width:none}
+        .fx-reopen{right:10px;bottom:10px}
+      }
+
+      /* ---------- Music player ---------- */
+      .music-bar{
+        margin-top:26px;background:var(--term-bg);border:1px solid var(--term-line);
+        border-radius:12px;box-shadow:var(--shadow);color:var(--term-ink);
+        padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;
+      }
+      .music-toggle{
+        flex:none;display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+        font:inherit;font-size:15px;font-weight:700;
+        background:var(--green);color:#fff;border:1px solid var(--green);
+        border-radius:999px;padding:10px 20px;min-height:44px;
+        transition:background .15s,border-color .15s;
+      }
+      .music-toggle:hover{background:var(--green-deep);border-color:var(--green-deep)}
+      .music-toggle:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+      .music-toggle .mt-ico{font-size:13px;line-height:1}
+      .music-toggle.playing{background:transparent;color:#f0645e;border-color:#f0645e}
+      .music-info{flex:1 1 180px;min-width:160px}
+      .music-info b{display:block;font-size:15px;line-height:1.35}
+      .music-info span{display:block;font-size:12.5px;color:var(--term-dim);line-height:1.45;margin-top:1px}
+      .music-moods{display:flex;gap:6px;flex-wrap:wrap}
+      .mood-chip{
+        font:inherit;font-size:13px;cursor:pointer;border-radius:999px;padding:7px 14px;min-height:36px;
+        background:transparent;color:var(--term-dim);border:1px solid var(--term-line);transition:all .15s;
+      }
+      .mood-chip:hover{border-color:var(--green);color:var(--green)}
+      .mood-chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+      .music-vol{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--term-dim);flex:none}
+      .music-vol input[type="range"]{width:110px;accent-color:var(--green);cursor:pointer}
+      .music-vol .mv-val{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--term-ink);min-width:38px}
+      #musicViz{flex:none;width:72px;height:30px}
+      .music-eq{display:none;gap:3px;align-items:flex-end;height:18px;flex:none}
+      .music-bar.playing .music-eq{display:flex}
+      .music-eq i{width:4px;background:var(--green);border-radius:2px;height:6px;animation:eq .9s ease-in-out infinite alternate}
+      .music-eq i:nth-child(2){animation-delay:.18s}.music-eq i:nth-child(3){animation-delay:.36s}.music-eq i:nth-child(4){animation-delay:.1s}.music-eq i:nth-child(5){animation-delay:.28s}
+      @keyframes eq{from{height:5px}to{height:17px}}
+      @media (prefers-reduced-motion: reduce){ .music-eq i{animation:none;height:9px} }
+      @media (max-width:560px){
+        .music-bar{gap:10px 12px;padding:12px}
+        .music-toggle{width:100%;justify-content:center}
+        .music-info{flex-basis:100%}
+        .music-vol input[type="range"]{width:90px}
+        #musicViz{display:none}
+      }
     </style>
   </head>
-  <body>
+  <body class="fx-spot-on">
+    <canvas id="fxCanvas" aria-hidden="true"></canvas>
+    <div id="fxGlow" aria-hidden="true"></div>
+    <div id="fxRing" aria-hidden="true"></div>
+    <div id="fxDot" aria-hidden="true"></div>
     <div class="wrap">
       <header class="hero">
         <h1>Linux 命令闯关<span class="cursor" aria-hidden="true"></span></h1>
-        <p class="lede">学命令不用背——<b>照着任务清单，在模拟虚拟机里亲手敲一遍</b>。敲对了就过关、攒经验、升等级；五章 26 个任务全部通关，你就能独立管好一台 Debian 服务器。卡住随时查下面的命令手册。</p>
+        <p class="lede">学命令不用背——<b>照着任务清单，在模拟虚拟机里亲手敲一遍</b>。敲对了就过关、攒经验、升等级；十三章 79 个任务按一条完整的 Linux 学习路径排开——基础命令、文件与目录、权限与用户、文本三剑客、管道重定向、进程管理、软件包、系统监控、网络、写程序、脚本与计划任务，最后实战综合。全部通关，你不仅能独立管好一台 Debian 服务器，还能亲手写出小程序、用 git 管理版本、把项目打包发布。卡住随时查下面的命令手册。</p>
         <div class="hero-meta">
           <span>示例环境 <b>Debian 12 / Ubuntu 通用</b></span>
           <span>模拟机配置 <b>2 核 CPU · 4 GB 内存 · 20 GB 磁盘</b></span>
           <span>命令总数 <b id="totalCount">—</b></span>
           <span>玩法 <b>做任务 → 攒经验 → 升级通关</b></span>
-          <span>新玩法 <b>像素远征 · 敲命令操控骑士过 5 关</b></span>
+          <span>新玩法 <b>像素远征 · 敲命令操控骑士过 9 关</b></span>
+          <span>新功能 <b>Markdown 教学 + 12 道训练题</b></span>
         </div>
       </header>
 
-      <section class="pxgame" aria-label="像素远征小游戏">
+      <section class="music-bar" id="musicBar" aria-label="学习背景音乐">
+        <button type="button" class="music-toggle" id="musicToggle" aria-pressed="false">
+          <span class="mt-ico" id="musicToggleIco" aria-hidden="true">▶</span><span id="musicToggleText">播放背景音乐</span>
+        </button>
+        <div class="music-info">
+          <b>学习背景音乐</b>
+          <span id="musicStatus">已关闭 · 点播放才出声（Web Audio 现场合成，无音频文件、不用联网）</span>
+        </div>
+        <div class="music-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="music-moods" role="group" aria-label="氛围选择">
+          <button type="button" class="mood-chip" data-mood="focus" aria-pressed="true">专注</button>
+          <button type="button" class="mood-chip" data-mood="relax" aria-pressed="false">放松</button>
+          <button type="button" class="mood-chip" data-mood="night" aria-pressed="false">深夜</button>
+        </div>
+        <label class="music-vol">音量
+          <input type="range" id="musicVolume" min="0" max="100" value="60" aria-label="音乐音量" />
+          <span class="mv-val" id="musicVolVal">60%</span>
+        </label>
+        <canvas id="musicViz" width="144" height="60" aria-hidden="true"></canvas>
+      </section>
+
+      <nav class="tabbar" role="tablist" aria-label="三大功能切换">
+        <button type="button" class="tab-btn active" role="tab" data-target="missions" aria-selected="true">
+          <span class="tab-name">命令闯关</span>
+          <span class="tab-sub">十三章 79 个任务 · 模拟终端 · 命令手册</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" data-target="pixel" aria-selected="false" tabindex="-1">
+          <span class="tab-name">像素远征</span>
+          <span class="tab-sub">9 关冒险 · NPC 支线任务</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" data-target="markdown" aria-selected="false" tabindex="-1">
+          <span class="tab-name">Markdown 训练营</span>
+          <span class="tab-sub">语法速查卡 · 12 道训练题</span>
+        </button>
+      </nav>
+
+      <section class="pxgame" data-tab="pixel" aria-label="像素远征小游戏">
         <h2>像素远征：敲命令，救世界<span class="px-new">新玩法</span></h2>
-        <p class="px-lede">一位像素骑士被困在服务器世界里，他的每一步都由<b>你敲下的真实 Linux 命令</b>驱动：用 <b>rm</b> 砍掉挡路的木桩、用 <b>chmod</b> 打开上锁的石门、用 <b>kill</b> 终结失控的进程怪……在下面的游戏终端里输入命令、回车执行，打通 5 个关卡。敲错命令骑士会被弹回来，还会掉一颗心。每关路上还站着一位 <b>NPC</b>：走过去输入 <b>talk</b> 就能和他对话、接下<b>支线任务</b>（大多和 Python 有关，比如 <b>python3 --version</b>、<b>pip list</b>），办成能回血、攒支线之星 ✦；不想接就输入 <b>go</b> 继续赶路，不掉心、不影响通关。</p>
+        <p class="px-lede">一位像素骑士被困在服务器世界里，他的每一步都由<b>你敲下的真实 Linux 命令</b>驱动：用 <b>rm</b> 砍掉挡路的木桩、用 <b>chmod</b> 打开上锁的石门、用 <b>kill</b> 终结失控的进程怪……在下面的游戏终端里输入命令、回车执行，打通 9 个关卡（开发专场：写代码文件、运行程序、git 建仓、打包上线；最后两关是进阶专场：用 grep / sed / awk 处理日志、在钟楼里写 crontab 定时任务、kill -9 强杀假死进程）。敲错命令骑士会被弹回来，还会掉一颗心。每关路上还站着一位 <b>NPC</b>：走过去输入 <b>talk</b> 就能和他对话、接下<b>支线任务</b>（大多和 Python 有关，比如 <b>python3 --version</b>、<b>pip list</b>），办成能回血、攒支线之星 ✦；不想接就输入 <b>go</b> 继续赶路，不掉心、不影响通关。</p>
         <div class="px-panel">
           <div class="px-topbar">
-            <span class="px-lvname" id="pxLvName">第 1 / 5 关</span>
+            <span class="px-lvname" id="pxLvName">第 1 / 9 关</span>
             <span class="px-dots" id="pxDots" aria-label="本关障碍进度"></span>
             <span class="px-hearts" id="pxHearts" aria-label="剩余生命">♥♥♥</span>
-            <span class="px-star-total" id="pxStarTotal">★ 0 / 15</span>
-            <span class="px-side-total" id="pxSideTotal">支线 ✦ 0 / 5</span>
+            <span class="px-star-total" id="pxStarTotal">★ 0 / 27</span>
+            <span class="px-side-total" id="pxSideTotal">支线 ✦ 0 / 9</span>
           </div>
           <div class="px-stage" id="pxStage">
             <canvas id="pxCanvas" width="480" height="270" aria-label="像素游戏画面：骑士在关卡中前进，障碍上方有木牌写着它的名字"></canvas>
@@ -524,7 +819,7 @@
             <p id="pxNpcText"></p>
             <div class="px-choices" id="pxChoices"></div>
           </div>
-          <div class="px-hintline" id="pxHintLine" hidden><span>照着敲：</span><code id="pxHintCmd"></code></div>
+          <div class="px-hintline" id="pxHintLine" hidden><span>照着敲：</span><code id="pxHintCmd"></code> <span class="px-hint-note" id="pxHintNote"></span></div>
           <div class="px-log" id="pxLog" aria-live="polite"></div>
           <div class="px-inputrow">
             <span class="prompt">hero@pixel<span class="path">:~</span>$</span>
@@ -537,26 +832,26 @@
         </div>
       </section>
 
-      <div class="hud" aria-label="游戏进度">
+      <div class="hud" data-tab="missions" aria-label="游戏进度">
         <div class="hud-level">
           <span class="hud-lv mono" id="hudLv">Lv.1</span>
           <span class="hud-lvname" id="hudLvName">终端新手</span>
         </div>
         <div class="hud-xp">
-          <div class="hud-xp-top"><span>经验值</span><span><b id="hudXp">0</b> / 400 XP</span></div>
+          <div class="hud-xp-top"><span>经验值</span><span><b id="hudXp">0</b> / <span id="hudXpMax">2230</span> XP</span></div>
           <div class="hud-track"><div class="hud-fill" id="hudFill"></div></div>
         </div>
-        <div class="hud-stat"><b id="hudDone">0 / 26</b><span>已完成任务</span></div>
-        <div class="hud-stat"><b id="hudStars">☆☆☆☆☆</b><span>章节之星</span></div>
+        <div class="hud-stat"><b id="hudDone">0 / 79</b><span>已完成任务</span></div>
+        <div class="hud-stat"><b id="hudStars">☆☆☆☆☆☆☆</b><span>章节之星</span></div>
       </div>
 
-      <div class="game-grid">
+      <div class="game-grid" data-tab="missions">
         <aside class="mission-panel" aria-label="任务面板">
-          <div class="mp-head"><span id="mpChapter">第一章 · 初入终端</span><span id="mpCount">任务 1 / 26</span></div>
+          <div class="mp-head"><span id="mpChapter">第一章 · 初入终端</span><span id="mpCount">任务 1 / 79</span></div>
           <h2 class="mp-title" id="mpTitle"></h2>
           <p class="mp-story" id="mpStory"></p>
           <div class="mp-goal" id="mpGoalWrap"><span>目标</span><p id="mpGoal"></p></div>
-          <div class="mp-hint" id="mpHint" hidden><span>照着敲：</span><code id="mpHintCmd"></code></div>
+          <div class="mp-hint" id="mpHint" hidden><span>照着敲：</span><code id="mpHintCmd"></code> <span class="mp-hint-note" id="mpHintNote"></span></div>
           <div class="mp-actions" id="mpActions">
             <button type="button" class="mp-btn" id="mpHintBtn">查看提示</button>
             <button type="button" class="mp-btn ghost" id="mpSkipBtn">跳过这关</button>
@@ -580,7 +875,7 @@
       </div>
     </div>
 
-    <div class="toolbar">
+    <div class="toolbar" data-tab="missions">
       <div class="wrap toolbar-inner">
         <div class="search-row">
           <label class="search-box">
@@ -594,17 +889,17 @@
     </div>
 
     <div class="wrap">
-      <section class="handbook-head">
+      <section class="handbook-head" data-tab="missions">
         <h2>命令手册</h2>
-        <p>闯关卡住时来这里查：67 条常用命令按场景分成 11 类，每条都有讲解和可复制的示例。看完回到上面的终端里敲一遍，就能过关。</p>
+        <p>闯关卡住时来这里查：75 条常用命令按场景分成 12 类，每条都有讲解、带 # 注释的示例（可一键复制）。看完回到上面的终端里敲一遍，就能过关。</p>
       </section>
-      <main id="main"></main>
-      <div class="empty" id="emptyState">
+      <main id="main" data-tab="missions"></main>
+      <div class="empty" id="emptyState" data-tab="missions">
         <p class="mono">$ grep "???" 命令手册<br />未找到匹配的命令</p>
         <p>换个关键词试试，比如「文件」「网络」「内存」。</p>
       </div>
 
-      <section class="concepts">
+      <section class="concepts" data-tab="missions">
         <h2>先搞懂这几个概念，命令就通了</h2>
         <p>Linux 命令大多是「小工具拼装」：一个命令只做一件事，再用管道把它们串起来。下面四个概念是理解一切命令的钥匙。</p>
         <div class="concept-grid">
@@ -635,16 +930,42 @@
         </div>
       </section>
 
-      <section class="deploy">
-        <h2>把这一页部署到 Cloudflare Pages</h2>
-        <p>本页是单个静态 HTML 文件，没有后端、没有构建步骤，天然适合 Cloudflare Pages 的免费托管——和部署其他静态工具站的流程完全一样。</p>
-        <div class="steps">
-          <div class="step"><span class="n">STEP 1</span><h3>打开控制台</h3><p>登录 <code>dash.cloudflare.com</code>，左侧进入「Workers 和 Pages」。</p></div>
-          <div class="step"><span class="n">STEP 2</span><h3>创建 Pages 项目</h3><p>点「创建」→ 切到「Pages」页签 → 选择「上传资产」。</p></div>
-          <div class="step"><span class="n">STEP 3</span><h3>上传文件</h3><p>给项目起个名（如 <code>linux-cmd</code>），把 <code>index.html</code> 拖进上传区，点「保存并部署」。</p></div>
-          <div class="step"><span class="n">STEP 4</span><h3>访问站点</h3><p>几秒后即可通过 <code>项目名.pages.dev</code> 打开；之后想更新，重新上传新版文件即可。</p></div>
+      <section class="mdschool" data-tab="markdown" aria-label="Markdown 教学与训练">
+        <h2>Markdown 训练营：写文档的通用语言<span class="px-new">新功能</span></h2>
+        <p class="md-lede">Markdown 是写文档最通用的轻量标记语言：GitHub 的 README、博客文章、技术笔记、接口文档几乎都用它写。它不用记按钮，<b>全靠几个符号</b>——<b># 是标题、** 是加粗、- 是列表</b>，纯文本写完，渲染出来就是排版好的文档。先看下面的语法速查（上边是写法、下边是效果），再到训练场亲手写 12 道题：上面敲源码，下面实时出效果，写对了自动过关。学会它，你刚给项目写的 README 立刻就能排得漂漂亮亮。</p>
+
+        <h3 class="md-sub">语法速查：上边是写法，下边是效果</h3>
+        <div class="md-grid" id="mdGrid"></div>
+
+        <h3 class="md-sub">训练场：12 道题，边写边看效果</h3>
+        <div class="md-trainer">
+          <aside class="md-task-panel" aria-label="Markdown 训练题面板">
+            <div class="md-tp-head"><span id="mdTaskNo">第 1 题</span><span id="mdTaskCount">已完成 0 / 12</span></div>
+            <h4 class="md-tp-title" id="mdTaskTitle"></h4>
+            <p class="md-tp-story" id="mdTaskStory"></p>
+            <div class="md-tp-goal"><span>目标</span><p id="mdTaskGoal"></p></div>
+            <div class="md-tp-hint" id="mdHint" hidden><span>照着写：</span><pre id="mdHintSrc"></pre><p class="md-hint-note" id="mdHintNote"></p></div>
+            <div class="md-tp-actions">
+              <button type="button" class="mp-btn" id="mdCheckBtn">检查答案</button>
+              <button type="button" class="mp-btn ghost" id="mdHintBtn">查看提示</button>
+              <button type="button" class="mp-btn ghost" id="mdNextBtn" hidden>下一题 →</button>
+            </div>
+            <div class="md-list" id="mdList"></div>
+          </aside>
+          <div class="md-editor-wrap">
+            <div>
+              <div class="md-pane-label">编辑区 · 在这里写 Markdown 源码</div>
+              <textarea id="mdEditor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Markdown 编辑区"></textarea>
+            </div>
+            <div>
+              <div class="md-pane-label">预览区 · 渲染出来的样子（实时更新）</div>
+              <div class="md-previewbox md-render" id="mdPreview" aria-live="polite"></div>
+            </div>
+            <div class="md-feedback" id="mdFeedback" role="status"></div>
+          </div>
         </div>
       </section>
+
     </div>
 
     <footer>
@@ -653,6 +974,19 @@
         <span class="mono">rm -rf 之前，请先看三遍路径。</span>
       </div>
     </footer>
+
+    <div class="fx-panel" id="fxPanel" aria-label="鼠标特效控制">
+      <div class="fx-panel-head"><span aria-hidden="true">$</span><b>鼠标特效</b><span>移动 · 悬停 · 点击试试</span><button type="button" class="fx-close" id="fxClose" aria-label="收起特效面板">×</button></div>
+      <div class="fx-chips" role="group" aria-label="特效开关">
+        <button type="button" class="fx-chip" data-fx="trail" aria-pressed="true">$ 字符拖尾</button>
+        <button type="button" class="fx-chip" data-fx="cursor" aria-pressed="true">跟随光标</button>
+        <button type="button" class="fx-chip" data-fx="spot" aria-pressed="true">卡片聚光</button>
+        <button type="button" class="fx-chip" data-fx="tilt" aria-pressed="true">卡片倾斜</button>
+        <button type="button" class="fx-chip" data-fx="burst" aria-pressed="true">点击爆发</button>
+      </div>
+      <p class="fx-hint">滑动鼠标会撒下 $ &gt; _ 等终端符号；把鼠标停在卡片上看聚光与倾斜，点任意处有绿色波纹爆发。手机触屏自动关闭拖尾。</p>
+    </div>
+    <button type="button" class="fx-reopen" id="fxReopen">$ 鼠标特效</button>
 
     <div class="toast" id="toast" role="status"></div>
 
@@ -668,7 +1002,8 @@
         { id:"svc",    no:"08", name:"服务管理（systemd）", desc:"网站、数据库这类长期运行的程序由 systemd 托管。用 systemctl 启停它们，用 journalctl 看它们的日志。" },
         { id:"zip",    no:"09", name:"压缩与解压", desc:"Linux 世界最常见的压缩包是 .tar.gz。记住一组参数组合，上传下载、备份打包都够用。" },
         { id:"find",   no:"10", name:"查找与文本处理", desc:"在成百上千个文件里找东西、从日志里筛关键行——grep 和 find 是老手每天敲得最多的命令。" },
-        { id:"tips",   no:"11", name:"终端技巧", desc:"不是单独的命令，而是让终端用起来顺手的习惯：快捷键、历史搜索、别名。学会这些，效率翻倍。" }
+        { id:"tips",   no:"11", name:"终端技巧", desc:"不是单独的命令，而是让终端用起来顺手的习惯：快捷键、历史搜索、别名。学会这些，效率翻倍。" },
+        { id:"dev",    no:"12", name:"开发工具", desc:"从敲命令进阶到写程序：装好 Python、把代码写进文件、运行它,再用 git 把每一次改动都存档——这就是 Linux 开发的日常流程。" }
       ];
 
       // level: "base" 入门 / "mid" 进阶；tip 可选，点开看细节
@@ -738,6 +1073,7 @@
         { cat:"svc", cmd:"systemctl enable", zh:"设置开机自启", level:"base", desc:"让服务随开机自动启动。enable --now 表示同时立刻启动。服务装好后别忘了这步。", ex:"sudo systemctl enable --now nginx" },
         { cat:"svc", cmd:"journalctl", zh:"查看服务日志", level:"mid", desc:"systemd 的统一日志。-u 指定服务，-f 实时跟踪，-e 直接跳到最新。服务报错的真相都在这里。", ex:"journalctl -u nginx -e" },
         { cat:"svc", cmd:"systemctl list-units", zh:"列出所有服务", level:"mid", desc:"列出系统里所有服务单元及状态，配合 --failed 只看启动失败的服务。", ex:"systemctl --failed" },
+        { cat:"svc", cmd:"crontab", zh:"定时任务表", level:"mid", desc:"让命令在指定时间自动执行：crontab -e 编辑自己的任务表，crontab -l 查看现有任务。每天凌晨自动备份、定时巡检都靠它。", ex:"crontab -l", tip:"任务行的前五段是 分 时 日 月 周：0 3 * * * 表示每天凌晨 3:00；后面的部分就是要执行的命令。" },
 
         /* ---------- 压缩解压 ---------- */
         { cat:"zip", cmd:"tar -czvf", zh:"打包并压缩", level:"mid", desc:"把一堆文件打包成 .tar.gz。参数：c 创建、z 用 gzip 压缩、v 显示过程、f 指定文件名。", ex:"tar -czvf backup.tar.gz ~/site" },
@@ -753,6 +1089,7 @@
         { cat:"find", cmd:"sort / uniq", zh:"排序与去重", level:"mid", desc:"sort 把行排序，uniq 去掉相邻重复行。通常连用并加 -c 统计每行出现次数。", ex:"sort access.log | uniq -c | sort -rn" },
         { cat:"find", cmd:"sed", zh:"批量替换文本", level:"mid", desc:"流式编辑器，最常用的是替换：sed -i 's/旧/新/g' 直接改文件内容。批量改配置很高效。", ex:"sed -i 's/8080/80/g' config.conf", tip:"-i 表示直接修改原文件。重要文件替换前先 cp 一份备份，出错好回滚。" },
         { cat:"find", cmd:"awk", zh:"按列处理文本", level:"mid", desc:"把每行按空格切成列，用 $1、$2 取第几列。提取日志里的 IP、统计字段时很顺手。", ex:"awk '{print $1}' access.log | sort | uniq -c" },
+        { cat:"find", cmd:"tee", zh:"边显示边存文件", level:"mid", desc:"装在管道中间的「三通」：数据照常流向屏幕，同时抄一份存进文件。跑长命令、做巡检时留存一份输出证据常用。", ex:"ps aux | tee procs.txt", tip:"tee 默认覆盖目标文件；加 -a 是追加。常和重定向对比记忆：> 只存不显示，tee 既显示又存。" },
 
         /* ---------- 终端技巧 ---------- */
         { cat:"tips", cmd:"Tab 补全", zh:"少打一半字", level:"base", desc:"输入命令或路径的前几个字母后按 Tab，终端自动补全；补不全时按两下列出所有候选。", ex:"cd /va<Tab> → /var/" },
@@ -760,7 +1097,15 @@
         { cat:"tips", cmd:"alias", zh:"给命令起别名", level:"mid", desc:"把一长串常用命令缩成短名字，写进 ~/.bashrc 就能永久生效。用终端久了，人人都有自己的一套。", ex:"alias ll='ls -lah'" },
         { cat:"tips", cmd:"&& 与 ;", zh:"连着执行多条命令", level:"mid", desc:"&& 表示前一条成功了才执行下一条；; 表示不管成败都接着执行。更新一条龙就是这么写出来的。", ex:"sudo apt update && sudo apt upgrade" },
         { cat:"tips", cmd:"clear", zh:"清屏", level:"base", desc:"把终端画面清干净（快捷键 Ctrl+L）。历史输出还在，往上滚还能看到，只是眼不见为净。", ex:"clear" },
-        { cat:"tips", cmd:"man", zh:"查看完整手册", level:"base", desc:"man 命令名 打开该命令的完整说明书：空格翻页、q 退出。记不住参数时，这是比搜网页更靠谱的答案。", ex:"man tar" }
+        { cat:"tips", cmd:"man", zh:"查看完整手册", level:"base", desc:"man 命令名 打开该命令的完整说明书：空格翻页、q 退出。记不住参数时，这是比搜网页更靠谱的答案。", ex:"man tar" },
+
+        /* ---------- 开发工具 ---------- */
+        { cat:"dev", cmd:"python3", zh:"运行 Python 程序", level:"base", desc:"写好的 .py 脚本用它运行；python3 --version 先确认版本。学编程、写自动化小脚本都从它开始。", ex:"python3 hello.py", tip:"Debian 默认可能没装 Python，先 sudo apt install python3；装第三方库用 pip。" },
+        { cat:"dev", cmd:"pip", zh:"Python 包管理", level:"mid", desc:"给 Python 装第三方库的工具：pip install 装包，pip list 看已装了哪些。requests、flask 这些常用库都靠它。", ex:"pip list", tip:"新系统上命令可能是 pip3；装包时加 --user 可以不用 sudo，装到自己家目录。" },
+        { cat:"dev", cmd:"cat > 文件 << 'EOF'", zh:"heredoc 写多行文件", level:"mid", desc:"不用打开编辑器，直接在终端里逐行写文件：回车后一行行输入内容，最后单独一行 EOF 结束。写小脚本、写配置最顺手。", ex:"cat > app.py << 'EOF'", tip:"结束标记 EOF 可以换成任何词，前后必须一致；标记加引号（'EOF'）时，内容里的 $变量 不会被展开，原样写入。" },
+        { cat:"dev", cmd:"chmod +x 与 ./脚本", zh:"让脚本能直接运行", level:"mid", desc:"脚本文件默认不能直接执行：先 chmod +x 给它执行权限，再用 ./脚本名 运行它（./ 表示当前目录）。", ex:"chmod +x run.sh && ./run.sh", tip:"为什么必须写 ./？因为当前目录不在 PATH 里，直接敲 run.sh 会报 command not found——这是 Linux 的安全设计。" },
+        { cat:"dev", cmd:"git", zh:"版本控制", level:"mid", desc:"代码的时光机：git init 建仓库，git add 把改动放进暂存区，git commit 存档一个版本，git log 随时回看历史。", ex:"git init", tip:"标准节奏是三步：改文件 → git add . → git commit -m \"说明这次改了啥\"。提交说明写清楚，未来会感谢现在的你。" },
+        { cat:"dev", cmd:"export", zh:"设置环境变量", level:"mid", desc:"给当前终端会话设置变量，后续命令都能读到。常用来切换默认编辑器、配置代理、告诉程序去哪找东西。", ex:"export EDITOR=nano", tip:"export 只对当前终端窗口有效，关掉就没了；想永久生效，把它写进 ~/.bashrc。" }
       ];
 
       /* ================= Render ================= */
@@ -782,7 +1127,7 @@
           '</div>' +
           '<span class="lvl ' + c.level + '">' + (c.level === "base" ? "入门" : "进阶") + '</span></div>' +
           '<p class="cmd-desc">' + esc(c.desc) + '</p>' +
-          '<div class="code-row"><code><span class="dollar">$ </span>' + esc(c.ex) + '</code>' +
+          '<div class="code-row"><code><span class="dollar">$ </span>' + esc(c.ex) + ' <span class="ccmt"># ' + esc(c.zh) + '</span></code>' +
           '<button class="copy-btn" type="button" data-copy="' + esc(c.ex).replace(/"/g,"&quot;") + '" aria-label="复制命令 ' + esc(c.cmd) + '">' +
           '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button></div>' +
           tip +
@@ -909,6 +1254,7 @@
       var sudoAuthed = false;
       var awaitPass = false;
       var pendingSudo = null;
+      var heredoc = null;
       var pingTimer = null;
       var pingInfo = null;
       var installed = {};
@@ -989,6 +1335,25 @@
         "2. 删除文件前先 ls 看一眼\n" +
         "3. 记不住参数就 man 一下\n" +
         "4. 这台练习机是 2 核 4G，跑服务足够了";
+      var APP_LOG =
+        "2026-10-23 08:01:05 INFO 192.168.1.10 GET /index 200\n" +
+        "2026-10-23 08:02:11 INFO 192.168.1.11 GET /about 200\n" +
+        "2026-10-23 08:03:47 WARN 192.168.1.10 GET /old-page 404\n" +
+        "2026-10-23 08:05:02 ERROR 192.168.1.22 POST /login 500\n" +
+        "2026-10-23 08:06:19 INFO 192.168.1.12 GET /index 200\n" +
+        "2026-10-23 08:07:33 ERROR 192.168.1.22 POST /login 500\n" +
+        "2026-10-23 08:09:58 WARN 192.168.1.13 GET /favicon.ico 404\n" +
+        "2026-10-23 08:11:24 INFO 192.168.1.10 GET /docs 200\n" +
+        "2026-10-23 08:13:40 ERROR 192.168.1.31 GET /api/data 502\n" +
+        "2026-10-23 08:15:07 INFO 192.168.1.14 POST /comment 201\n" +
+        "2026-10-23 08:17:29 ERROR 192.168.1.22 GET /api/data 502\n" +
+        "2026-10-23 08:19:51 INFO 192.168.1.15 GET /index 200";
+      var SERVER_CONF =
+        "# 示例服务配置（练习用）\n" +
+        "port=8080\n" +
+        "host=0.0.0.0\n" +
+        "log_level=info\n" +
+        "max_conn=100";
       var SITE_INDEX =
         "<!DOCTYPE html>\n<html>\n<head><title>我的第一个站点</title></head>\n" +
         "<body>\n<h1>我的第一个站点</h1>\n<p>由 nginx 托管在 Debian 上。</p>\n</body>\n</html>";
@@ -1014,6 +1379,8 @@
             "Documents": D("drwxr-xr-x", "visitor", "Oct 21 14:02"),
             "Downloads": D("drwxr-xr-x", "visitor", "Oct 22 19:47"),
             "notes.txt": F("-rw-r--r--", "visitor", 168, "Oct 23 09:02", NOTES),
+            "app.log": F("-rw-r--r--", "visitor", 612, "Oct 23 08:20", APP_LOG),
+            "server.conf": F("-rw-r--r--", "visitor", 96, "Oct 23 08:15", SERVER_CONF),
             "backup.tar.gz": F("-rw-r--r--", "visitor", 128451, "Oct 22 23:15", null),
             "site": D("drwxr-xr-x", "visitor", "Oct 22 20:13", {
               "index.html": F("-rw-r--r--", "visitor", 214, "Oct 22 20:13", SITE_INDEX),
@@ -1268,16 +1635,22 @@
         "  Virtualization:                     VT-x\n" +
         "  Hypervisor vendor:                  KVM\n" +
         "  Virtualization type:                full";
+      var minerDead = false, stuckDead = false, cronJobs = null;
       function psAux(){
-        return "USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\n" +
-        "root           1  0.0  0.3 167580 12804 ?        Ss   Oct20   0:04 /sbin/init\n" +
-        "root         214  0.0  0.2  24692  8452 ?        Ss   Oct20   0:01 /lib/systemd/systemd-journald\n" +
-        "root         236  0.0  0.1   6980  4212 ?        Ss   Oct20   0:00 /usr/sbin/cron -f\n" +
-        "message+     238  0.0  0.2   9840  7920 ?        Ss   Oct20   0:00 /usr/bin/dbus-daemon --system --address=systemd:\n" +
-        "root         301  0.0  0.4 386376 17444 ?        Ssl  Oct20   0:12 /usr/sbin/rsyslogd -n\n" +
-        "root         312  0.0  0.3  15436 12108 ?        Ss   Oct20   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups\n" +
-        "visitor     1024  0.0  0.5  21248 19876 pts/0    Ss   09:05   0:00 -bash\n" +
-        "visitor     1150  0.0  0.1  10520  4120 pts/0    R+   " + pad2(new Date().getHours()) + ":" + pad2(new Date().getMinutes()) + "   0:00 ps aux";
+        var rows = [
+          "USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND",
+          "root           1  0.0  0.3 167580 12804 ?        Ss   Oct20   0:04 /sbin/init",
+          "root         214  0.0  0.2  24692  8452 ?        Ss   Oct20   0:01 /lib/systemd/systemd-journald",
+          "root         236  0.0  0.1   6980  4212 ?        Ss   Oct20   0:00 /usr/sbin/cron -f",
+          "message+     238  0.0  0.2   9840  7920 ?        Ss   Oct20   0:00 /usr/bin/dbus-daemon --system --address=systemd:",
+          "root         301  0.0  0.4 386376 17444 ?        Ssl  Oct20   0:12 /usr/sbin/rsyslogd -n",
+          "root         312  0.0  0.3  15436 12108 ?        Ss   Oct20   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups",
+          "visitor     1024  0.0  0.5  21248 19876 pts/0    Ss   09:05   0:00 -bash"
+        ];
+        if (!minerDead) rows.push("visitor     2077 98.6 12.4 812340 487200 pts/0  R+   08:59  45:12 python3 miner.py");
+        if (!stuckDead) rows.push("visitor     2088  0.0  0.1  10520  4100 pts/0    T    09:01   0:00 python3 stuck.py");
+        rows.push("visitor     1150  0.0  0.1  10520  4120 pts/0    R+   " + pad2(new Date().getHours()) + ":" + pad2(new Date().getMinutes()) + "   0:00 ps aux");
+        return rows.join("\n");
       }
       function topSnapshot(){
         var d = new Date();
@@ -1289,6 +1662,7 @@
           "MiB Swap:      0.0 total,      0.0 free,      0.0 used.   3042.1 avail Mem\n" +
           "\n" +
           "    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND\n" +
+          (minerDead ? "" : "   2077 visitor   20   0  812340 487200  12340 R  98.6  12.4  45:12.33 miner.py\n") +
           "    301 root      20   0  386376  17444   6548 S   0.0   0.4   0:12.44 rsyslogd\n" +
           "    312 root      20   0   15436  12108   9876 S   0.0   0.3   0:00.87 sshd\n" +
           "   1024 visitor   20   0   21248  19876   9876 S   0.0   0.5   0:00.12 bash\n" +
@@ -1359,6 +1733,7 @@
         "zip":       { ver: "3.0-13", get: "168 kB", space: "542 kB" },
         "unzip":     { ver: "6.0-28", get: "164 kB", space: "556 kB" },
         "git":       { ver: "1:2.39.5-0+deb12u2", get: "3,912 kB", space: "19.4 MB" },
+        "python3":   { ver: "3.11.2-1+b1", get: "5,214 kB", space: "24.6 MB" },
         "tree":      { ver: "2.1.0-1", get: "48.2 kB", space: "112 kB" },
         "net-tools": { ver: "2.10-0.1", get: "243 kB", space: "1,024 kB" }
       };
@@ -1476,8 +1851,604 @@
         return "Unknown command verb " + verb + ".";
       }
 
-      var NOT_SIMULATED = ["tar","gzip","gunzip","zip","unzip","sed","awk","find","less","more","nano","vi","vim","emacs",
-        "sort","uniq","kill","pkill","killall","jobs","fg","bg","alias","man","scp","service","su","passwd","useradd"];
+      var NOT_SIMULATED = ["gzip","gunzip","zip","unzip","less","more","nano","vi","vim","emacs",
+        "pkill","killall","jobs","fg","bg","alias","man","scp","service","su","passwd","useradd"];
+
+      /* ---------- Text tools: grep / awk / sort / uniq (shared by files & pipes) ---------- */
+      function grepLines(text, pattern, flags){
+        var ic = flags.indexOf("i") !== -1, inv = flags.indexOf("v") !== -1,
+            num = flags.indexOf("n") !== -1, cnt = flags.indexOf("c") !== -1;
+        var needle = ic ? pattern.toLowerCase() : pattern;
+        var kept = [];
+        (text ? text.split("\n") : []).forEach(function(line, idx){
+          var hit = (ic ? line.toLowerCase() : line).indexOf(needle) !== -1;
+          if (inv) hit = !hit;
+          if (hit) kept.push(num ? (idx + 1) + ":" + line : line);
+        });
+        return cnt ? String(kept.length) : kept.join("\n");
+      }
+      function parseGrepArgs(args){
+        var flags = "", pattern = null, file = null;
+        args.forEach(function(a){
+          if (a.charAt(0) === "-" && a.length > 1 && pattern === null) flags += a.slice(1);
+          else if (pattern === null) pattern = a;
+          else if (file === null) file = a;
+        });
+        return { flags: flags, pattern: pattern, file: file };
+      }
+      function awkRun(prog, text){
+        var m = String(prog || "").match(/^\{\s*print\s+([^}]+)\}$/);
+        if (!m) return text;
+        var fields = m[1].split(",").map(function(s){ return s.trim(); });
+        return (text ? text.split("\n") : []).filter(function(l){ return l.length; }).map(function(line){
+          var cols = line.trim().split(/\s+/);
+          return fields.map(function(f){
+            if (f === "$0") return line;
+            var fm = f.match(/^\$(\d+)$/);
+            if (fm) return cols[parseInt(fm[1], 10) - 1] || "";
+            var sm = f.match(/^"([^"]*)"$/) || f.match(/^'([^']*)'$/);
+            if (sm) return sm[1];
+            return f;
+          }).join(" ");
+        }).join("\n");
+      }
+      function sortLines(text, args){
+        var rev = false, numeric = false;
+        args.forEach(function(a){
+          if (a.charAt(0) === "-"){
+            if (a.indexOf("r") !== -1) rev = true;
+            if (a.indexOf("n") !== -1) numeric = true;
+          }
+        });
+        var lines = (text ? text.split("\n") : []).slice();
+        lines.sort(function(x, y){
+          if (numeric){
+            var nx = parseFloat(x.replace(/^\s+/, "")), ny = parseFloat(y.replace(/^\s+/, ""));
+            if (isNaN(nx)) nx = 0;
+            if (isNaN(ny)) ny = 0;
+            return nx - ny;
+          }
+          return x < y ? -1 : (x > y ? 1 : 0);
+        });
+        if (rev) lines.reverse();
+        return lines.join("\n");
+      }
+      function uniqLines(text, count){
+        var lines = text ? text.split("\n") : [];
+        var out = [], prev = null, n = 0;
+        function flush(){
+          if (prev === null) return;
+          if (count){
+            var c = String(n);
+            while (c.length < 7) c = " " + c;
+            out.push(c + " " + prev);
+          } else out.push(prev);
+        }
+        lines.forEach(function(l){
+          if (l === prev) n++;
+          else { flush(); prev = l; n = 1; }
+        });
+        flush();
+        return out.join("\n");
+      }
+
+      /* ---------- Write files (redirect / heredoc) ---------- */
+      function putFile(abs, content, asRoot){
+        var par = parentOf(abs);
+        var pnode = getNode(par.dir);
+        if (!pnode || pnode.t !== "dir") return "bash: " + abs + ": No such file or directory";
+        if (!isWritable(par.dir) && !(asRoot || rootMode)) return "bash: " + abs + ": Permission denied";
+        var exist = pnode.children[par.name];
+        if (exist && exist.t === "dir") return "bash: " + abs + ": Is a directory";
+        if (exist){
+          exist.content = content;
+          exist.size = content.length;
+          exist.mtime = lsTimeNow();
+        } else {
+          pnode.children[par.name] = F("-rw-r--r--", (asRoot || rootMode) ? "root" : "visitor", content.length, lsTimeNow(), content);
+        }
+        return null;
+      }
+
+      /* ---------- Tiny Python interpreter (teaching subset) ---------- */
+      function pyStr(v){
+        if (v === null || v === undefined) return "None";
+        if (typeof v === "boolean") return v ? "True" : "False";
+        if (Array.isArray(v)) return "[" + v.map(pyStr).join(", ") + "]";
+        return String(v);
+      }
+      function pyTokenize(s){
+        var toks = [], i = 0;
+        while (i < s.length){
+          var ch = s.charAt(i);
+          if (ch === " " || ch === "\t"){ i++; continue; }
+          if ((ch === "f" || ch === "F") && (s.charAt(i + 1) === '"' || s.charAt(i + 1) === "'")){
+            var q1 = s.charAt(i + 1), j1 = i + 2, buf1 = "";
+            while (j1 < s.length && s.charAt(j1) !== q1){ buf1 += s.charAt(j1); j1++; }
+            toks.push({ t: "fstr", v: buf1 }); i = j1 + 1; continue;
+          }
+          if (ch === '"' || ch === "'"){
+            var q = ch, j = i + 1, buf = "";
+            while (j < s.length && s.charAt(j) !== q){
+              if (s.charAt(j) === "\\" && j + 1 < s.length){
+                var nx = s.charAt(j + 1);
+                buf += nx === "n" ? "\n" : nx === "t" ? "\t" : nx;
+                j += 2;
+              } else { buf += s.charAt(j); j++; }
+            }
+            toks.push({ t: "str", v: buf }); i = j + 1; continue;
+          }
+          if (/[0-9]/.test(ch) || (ch === "." && /[0-9]/.test(s.charAt(i + 1)))){
+            var num = "";
+            while (i < s.length && /[0-9.]/.test(s.charAt(i))){ num += s.charAt(i); i++; }
+            toks.push({ t: "num", v: parseFloat(num) }); continue;
+          }
+          if (/[A-Za-z_]/.test(ch)){
+            var nm = "";
+            while (i < s.length && /[A-Za-z0-9_]/.test(s.charAt(i))){ nm += s.charAt(i); i++; }
+            toks.push({ t: "name", v: nm }); continue;
+          }
+          var two = s.substr(i, 2);
+          if (two === "**" || two === "//" || two === "==" || two === "!=" || two === "<=" || two === ">="){
+            toks.push({ t: "op", v: two }); i += 2; continue;
+          }
+          if ("+-*/%(),<>".indexOf(ch) !== -1){ toks.push({ t: "op", v: ch }); i++; continue; }
+          throw new Error("SyntaxError: invalid character '" + ch + "'");
+        }
+        return toks;
+      }
+      function pyEvalToks(toks, env){
+        var pos = 0;
+        function peek(){ return toks[pos]; }
+        function next(){ return toks[pos++]; }
+        function expectOp(v){
+          var t = next();
+          if (!t || t.t !== "op" || t.v !== v) throw new Error("SyntaxError: expected '" + v + "'");
+        }
+        function parseExpr(){ return parseCompare(); }
+        function parseCompare(){
+          var left = parseAdd();
+          while (peek() && peek().t === "op" && ["==","!=","<",">","<=",">="].indexOf(peek().v) !== -1){
+            var op = next().v;
+            var right = parseAdd();
+            if (op === "==") left = left === right;
+            else if (op === "!=") left = left !== right;
+            else if (op === "<") left = left < right;
+            else if (op === ">") left = left > right;
+            else if (op === "<=") left = left <= right;
+            else left = left >= right;
+          }
+          return left;
+        }
+        function parseAdd(){
+          var left = parseMul();
+          while (peek() && peek().t === "op" && (peek().v === "+" || peek().v === "-")){
+            var op = next().v;
+            var right = parseMul();
+            if (op === "+"){
+              if (typeof left === "string" || typeof right === "string") left = pyStr(left) + pyStr(right);
+              else if (Array.isArray(left) && Array.isArray(right)) left = left.concat(right);
+              else left = left + right;
+            } else left = left - right;
+          }
+          return left;
+        }
+        function parseMul(){
+          var left = parseUnary();
+          while (peek() && peek().t === "op" && ["*","/","//","%"].indexOf(peek().v) !== -1){
+            var op = next().v;
+            var right = parseUnary();
+            if (op === "*"){
+              if (typeof left === "string" && typeof right === "number"){
+                var rep = "";
+                for (var ri = 0; ri < right; ri++) rep += left;
+                left = rep;
+              } else left = left * right;
+            } else if (op === "/") left = left / right;
+            else if (op === "//") left = Math.floor(left / right);
+            else left = left % right;
+          }
+          return left;
+        }
+        function parseUnary(){
+          var t = peek();
+          if (t && t.t === "op" && t.v === "-"){ next(); return -parseUnary(); }
+          if (t && t.t === "op" && t.v === "+"){ next(); return parseUnary(); }
+          return parsePower();
+        }
+        function parsePower(){
+          var base = parseAtom();
+          var t = peek();
+          if (t && t.t === "op" && t.v === "**"){ next(); return Math.pow(base, parseUnary()); }
+          return base;
+        }
+        function parseAtom(){
+          var t = next();
+          if (!t) throw new Error("SyntaxError: unexpected end of expression");
+          if (t.t === "num" || t.t === "str") return t.v;
+          if (t.t === "fstr") return pyFstr(t.v, env);
+          if (t.t === "op" && t.v === "("){
+            var v = parseExpr();
+            expectOp(")");
+            return v;
+          }
+          if (t.t === "name"){
+            if (t.v === "True") return true;
+            if (t.v === "False") return false;
+            if (t.v === "None") return null;
+            var pk = peek();
+            if (pk && pk.t === "op" && pk.v === "("){
+              next();
+              var args = [];
+              if (!(peek() && peek().t === "op" && peek().v === ")")){
+                for (;;){
+                  args.push(parseExpr());
+                  var sep = peek();
+                  if (sep && sep.t === "op" && sep.v === ","){ next(); continue; }
+                  break;
+                }
+              }
+              expectOp(")");
+              if (t.v === "range"){
+                var arr = [], start = args.length > 1 ? args[0] : 0, stop = args.length > 1 ? args[1] : args[0], step = args[2] || 1;
+                if (step > 0) for (var rv = start; rv < stop; rv += step) arr.push(rv);
+                else for (var rv2 = start; rv2 > stop; rv2 += step) arr.push(rv2);
+                return arr;
+              }
+              if (t.v === "sum"){
+                var sm = 0;
+                (args[0] || []).forEach(function(x){ sm += x; });
+                return sm;
+              }
+              if (t.v === "len") return (args[0] || "").length;
+              if (t.v === "int") return Math.floor(Number(args[0]));
+              if (t.v === "str") return pyStr(args[0]);
+              throw new Error("NameError: name '" + t.v + "' is not defined");
+            }
+            if (!(t.v in env)) throw new Error("NameError: name '" + t.v + "' is not defined");
+            return env[t.v];
+          }
+          throw new Error("SyntaxError: unexpected token");
+        }
+        var result = parseExpr();
+        return result;
+      }
+      function pyEvalStr(expr, env){ return pyEvalToks(pyTokenize(expr), env); }
+      function pyFstr(tpl, env){
+        return tpl.replace(/\{([^{}]+)\}/g, function(_, inner){
+          return pyStr(pyEvalStr(inner.trim(), env));
+        });
+      }
+      function pySplitArgs(s){
+        var parts = [], depth = 0, cur = "", q = null;
+        for (var i = 0; i < s.length; i++){
+          var ch = s.charAt(i);
+          if (q){
+            cur += ch;
+            if (ch === q) q = null;
+            continue;
+          }
+          if (ch === '"' || ch === "'"){ q = ch; cur += ch; continue; }
+          if (ch === "(") depth++;
+          if (ch === ")") depth--;
+          if (ch === "," && depth === 0){ parts.push(cur); cur = ""; continue; }
+          cur += ch;
+        }
+        if (cur.trim() !== "") parts.push(cur);
+        return parts;
+      }
+      function pyIndentOf(line){
+        var n = 0;
+        while (n < line.length && (line.charAt(n) === " " || line.charAt(n) === "\t")) n += line.charAt(n) === "\t" ? 4 : 1;
+        return n;
+      }
+      function pyExecBlock(lines, start, end, minIndent, env, out){
+        var i = start;
+        while (i < end){
+          var raw = lines[i];
+          var stmt = raw.trim();
+          if (stmt === "" || stmt.charAt(0) === "#"){ i++; continue; }
+          var ind = pyIndentOf(raw);
+          if (ind < minIndent) return i;
+          var fm = stmt.match(/^for\s+([A-Za-z_]\w*)\s+in\s+(.+):$/);
+          var im = stmt.match(/^if\s+(.+):$/);
+          if (fm || im){
+            var j = i + 1;
+            while (j < end && (lines[j].trim() === "" || pyIndentOf(lines[j]) > ind)) j++;
+            if (fm){
+              var vals = pyEvalStr(fm[2], env);
+              if (!Array.isArray(vals)) vals = [];
+              for (var vi = 0; vi < vals.length; vi++){
+                env[fm[1]] = vals[vi];
+                pyExecBlock(lines, i + 1, j, ind + 1, env, out);
+              }
+            } else if (pyEvalStr(im[1], env)){
+              pyExecBlock(lines, i + 1, j, ind + 1, env, out);
+            }
+            i = j;
+            continue;
+          }
+          var pm = stmt.match(/^print\s*\((.*)\)\s*$/);
+          if (pm){
+            var inner = pm[1].trim();
+            if (inner === "") out.push("");
+            else out.push(pySplitArgs(inner).map(function(a){ return pyStr(pyEvalStr(a.trim(), env)); }).join(" "));
+            i++;
+            continue;
+          }
+          var am = stmt.match(/^([A-Za-z_]\w*)\s*(\+|-|\*|\/)?=(?!=)\s*(.+)$/);
+          if (am){
+            var val = pyEvalStr(am[3], env);
+            if (am[2]){
+              var cur = env[am[1]];
+              if (cur === undefined) throw new Error("NameError: name '" + am[1] + "' is not defined");
+              if (am[2] === "+") val = (typeof cur === "string" || typeof val === "string") ? pyStr(cur) + pyStr(val) : cur + val;
+              else if (am[2] === "-") val = cur - val;
+              else if (am[2] === "*") val = cur * val;
+              else val = cur / val;
+            }
+            env[am[1]] = val;
+            i++;
+            continue;
+          }
+          pyEvalStr(stmt, env);
+          i++;
+        }
+        return i;
+      }
+      function runPython(fname, content){
+        var env = { "__name__": "__main__" };
+        var out = [];
+        try {
+          var lines = content.split("\n");
+          pyExecBlock(lines, 0, lines.length, 0, env, out);
+        } catch (e) {
+          out.push("Traceback (most recent call last):");
+          out.push("  File \"" + fname + "\", line 1, in <module>");
+          out.push(String(e && e.message ? e.message : e));
+        }
+        return out.join("\n");
+      }
+      function execPythonCmd(args, asRoot){
+        if (!installed["python3"]) return "bash: python3: command not found";
+        if (!args.length)
+          return "Python 3.11.2 (main, Mar 13 2023, 11:23:42) [GCC 12.2.0] on linux\n" +
+            "Type \"help\", \"copyright\", \"credits\" or \"license\" for more information.\n" +
+            "（这台模拟机不开放交互式 REPL——把代码写进 .py 文件，再用 python3 文件名.py 运行）";
+        if (args[0] === "--version" || args[0] === "-V") return "Python 3.11.2";
+        if (args[0] === "-c") return "（模拟机暂不支持 -c，把代码写进文件再运行）";
+        var target = args[0];
+        var abs = resolvePath(target);
+        var node = getNode(abs);
+        if (!node) return "python3: can't open file '" + abs + "': [Errno 2] No such file or directory";
+        if (node.t === "dir") return "python3: can't open file '" + abs + "': [Errno 21] Is a directory";
+        if (node.content === null) return "python3: can't open file '" + abs + "': [Errno 13] Permission denied";
+        return runPython(baseName(abs), node.content);
+      }
+
+      /* ---------- Shell script runner ---------- */
+      var shellDepth = 0;
+      function shExpand(s, vars){
+        return s.replace(/\$\{([A-Za-z_]\w*)\}|\$([A-Za-z_]\w*)/g, function(_, a, b){
+          var k = a || b;
+          if (k in vars) return vars[k];
+          if (k === "HOME") return HOME;
+          if (k === "USER") return "visitor";
+          if (k === "PWD") return cwd;
+          if (k === "HOSTNAME") return "debian-vm";
+          return "";
+        });
+      }
+      function runShellScript(content){
+        if (shellDepth >= 3) return "bash: 脚本互相调用太深，已停止";
+        shellDepth++;
+        var outLines = [];
+        var vars = {};
+        var lines = content.split("\n");
+        for (var li = 0; li < lines.length; li++){
+          var t = lines[li].trim();
+          if (t === "" || t.charAt(0) === "#") continue;
+          var vm = t.match(/^([A-Za-z_]\w*)=(.*)$/);
+          if (vm){
+            var vv = vm[2].trim();
+            if (vv.length >= 2 && ((vv.charAt(0) === '"' && vv.charAt(vv.length - 1) === '"') ||
+                (vv.charAt(0) === "'" && vv.charAt(vv.length - 1) === "'"))) vv = vv.slice(1, -1);
+            vars[vm[1]] = shExpand(vv, vars);
+            continue;
+          }
+          var toks = tokenize(t).map(function(tok){ return shExpand(tok, vars); });
+          if (!toks.length) continue;
+          if (toks[0] === "echo"){ outLines.push(toks.slice(1).join(" ")); continue; }
+          if (toks[0] === "cd") continue;
+          if (toks[0] === "python3"){
+            var pr = execPythonCmd(toks.slice(1), false);
+            if (pr) outLines.push(pr);
+            continue;
+          }
+          var r = execSimple(toks.join(" "), false);
+          if (r && r !== "\u0001CLEAR") outLines.push(r);
+        }
+        shellDepth--;
+        return outLines.join("\n");
+      }
+
+      /* ---------- git (mini) ---------- */
+      var gitState = {};
+      function gitRootOf(dir){
+        var d = dir;
+        for (;;){
+          var n = getNode(d === "/" ? "/.git" : d + "/.git");
+          if (n && n.t === "dir") return d;
+          if (d === "/") return null;
+          d = parentOf(d).dir;
+        }
+      }
+      function gitFiles(root){
+        var n = getNode(root);
+        if (!n || !n.children) return [];
+        return Object.keys(n.children).filter(function(k){ return k !== ".git" && n.children[k].t === "file"; }).sort();
+      }
+      function gitFakeHash(seedStr){
+        var h = 0;
+        for (var i = 0; i < seedStr.length; i++) h = (h * 31 + seedStr.charCodeAt(i)) >>> 0;
+        var hex = "";
+        var chars = "0123456789abcdef";
+        for (var j = 0; j < 40; j++){
+          h = (h * 1103515245 + 12345) >>> 0;
+          hex += chars.charAt((h >>> 8) % 16);
+        }
+        return hex;
+      }
+      function cmdGit(args, asRoot){
+        var sub = args[0] || "";
+        if (sub === "--version" || sub === "version") return "git version 2.39.5";
+        if (sub === "init"){
+          var targetDir = cwd;
+          if (args[1]){
+            var tAbs = resolvePath(args[1]);
+            var tNode = getNode(tAbs);
+            if (!tNode){
+              var tp = parentOf(tAbs);
+              var tpn = getNode(tp.dir);
+              if (!tpn || tpn.t !== "dir") return "fatal: cannot mkdir " + args[1] + ": No such file or directory";
+              if (!isWritable(tp.dir) && !(asRoot || rootMode)) return "fatal: cannot mkdir " + args[1] + ": Permission denied";
+              tpn.children[tp.name] = D("drwxr-xr-x", "visitor", lsTimeNow());
+              tNode = tpn.children[tp.name];
+            }
+            if (tNode.t !== "dir") return "fatal: " + args[1] + " is not a directory";
+            targetDir = tAbs;
+          }
+          var existing = getNode(targetDir === "/" ? "/.git" : targetDir + "/.git");
+          var tn = getNode(targetDir);
+          tn.children[".git"] = D("drwxr-xr-x", "visitor", lsTimeNow());
+          if (!gitState[targetDir]) gitState[targetDir] = { staged: [], commits: [], snap: [] };
+          return (existing ? "Reinitialized existing Git repository in " : "Initialized empty Git repository in ") +
+            (targetDir === "/" ? "" : targetDir) + "/.git/";
+        }
+        var root = gitRootOf(cwd);
+        if (!root) return "fatal: not a git repository (or any of the parent directories): .git";
+        var st = gitState[root] || (gitState[root] = { staged: [], commits: [], snap: [] });
+        if (sub === "status"){
+          var files = gitFiles(root);
+          var untracked = files.filter(function(f){ return st.snap.indexOf(f) === -1 && st.staged.indexOf(f) === -1; });
+          var out = ["On branch master"];
+          if (!st.commits.length) out.push("", "No commits yet");
+          if (st.staged.length){
+            out.push("", "Changes to be committed:", "  (use \"git restore --staged <file>...\" to unstage)");
+            st.staged.forEach(function(f){ out.push("\tnew file:   " + f); });
+          }
+          if (untracked.length){
+            out.push("", "Untracked files:", "  (use \"git add <file>...\" to include in what will be committed)");
+            untracked.forEach(function(f){ out.push("\t" + f); });
+          }
+          if (!st.staged.length && !untracked.length && st.commits.length) out.push("nothing to commit, working tree clean");
+          else if (!st.staged.length && untracked.length) out.push("", "nothing added to commit but untracked files present (use \"git add\" to track)");
+          return out.join("\n");
+        }
+        if (sub === "add"){
+          var targets = args.slice(1).filter(function(a){ return a.charAt(0) !== "-"; });
+          if (!targets.length) return "Nothing specified, nothing added.\nhint: Maybe you wanted to say 'git add .'?";
+          var all = gitFiles(root);
+          targets.forEach(function(tg){
+            if (tg === "." || tg === "*"){ st.staged = all.slice(); }
+            else if (all.indexOf(tg) !== -1 && st.staged.indexOf(tg) === -1) st.staged.push(tg);
+            else if (all.indexOf(tg) === -1) { /* pathspec error handled below */ }
+          });
+          var bad = targets.filter(function(tg){ return tg !== "." && tg !== "*" && all.indexOf(tg) === -1; });
+          if (bad.length) return "fatal: pathspec '" + bad[0] + "' did not match any files";
+          return "";
+        }
+        if (sub === "commit"){
+          var mi = args.indexOf("-m");
+          var msg = mi !== -1 ? args.slice(mi + 1).join(" ") : "";
+          if (!st.staged.length){
+            return "On branch master\n" + (st.commits.length
+              ? "nothing to commit, working tree clean"
+              : "nothing to commit (create/copy files and use \"git add\" to track)");
+          }
+          if (!msg) return "Aborting commit due to empty commit message.";
+          var full = gitFakeHash(root + "|" + msg + "|" + st.commits.length);
+          var created = st.staged.filter(function(f){ return st.snap.indexOf(f) === -1; });
+          st.staged.forEach(function(f){ if (st.snap.indexOf(f) === -1) st.snap.push(f); });
+          st.commits.push({ hash: full, msg: msg });
+          var first = st.commits.length === 1;
+          st.staged = [];
+          var lines = ["[master " + (first ? "(root-commit) " : "") + full.slice(0, 7) + "] " + msg,
+            " " + created.length + " file" + (created.length === 1 ? "" : "s") + " changed, 0 insertions(+), 0 deletions(-)"];
+          created.slice(0, 8).forEach(function(f){ lines.push(" create mode 100644 " + f); });
+          return lines.join("\n");
+        }
+        if (sub === "log"){
+          if (!st.commits.length) return "fatal: your current branch 'master' does not have any commits yet";
+          var rev = st.commits.slice().reverse();
+          if (args.indexOf("--oneline") !== -1)
+            return rev.map(function(c){ return c.hash.slice(0, 7) + " " + c.msg; }).join("\n");
+          return rev.map(function(c){
+            return "commit " + c.hash + "\nAuthor: visitor <visitor@debian-vm>\nDate:   " + dateOut(new Date()) + "\n\n    " + c.msg;
+          }).join("\n\n");
+        }
+        if (!sub) return "usage: git [--version] <command> [<args>]\n\n常用命令： init · status · add · commit · log";
+        return "git: '" + sub + "' is not a git command. See 'git --help'.";
+      }
+
+      /* ---------- tar (mini) ---------- */
+      function tarListing(abs, node){
+        var out = [];
+        var base = baseName(abs);
+        (function walk(n, prefix){
+          if (n.t === "dir"){
+            out.push(prefix + "/");
+            Object.keys(n.children || {}).sort().forEach(function(k){ walk(n.children[k], prefix + "/" + k); });
+          } else out.push(prefix);
+        })(node, base);
+        return out;
+      }
+      function cmdTar(args, asRoot){
+        var flags = (args[0] || "").replace(/^-/, "");
+        var archive = args[1] || "";
+        var src = args[2] || "";
+        if (!/^[a-z]+$/.test(flags) || !archive) return "tar: Cowardly refusing to create an empty archive\nTry 'tar --help' for more information.";
+        var aAbs = resolvePath(archive);
+        if (flags.indexOf("c") !== -1){
+          if (!src) return "tar: Cowardly refusing to create an empty archive\nTry 'tar --help' for more information.";
+          var sAbs = resolvePath(src);
+          var sNode = getNode(sAbs);
+          if (!sNode) return "tar: " + src + ": Cannot stat: No such file or directory\ntar: Exiting with failure status due to previous errors";
+          var listing = tarListing(sAbs, sNode);
+          var err = putFile(aAbs, "", asRoot);
+          if (err) return err.replace(/^bash:/, "tar:");
+          var aNode = getNode(aAbs);
+          aNode.content = null;
+          aNode.size = 10240 + listing.length * 512;
+          aNode.listing = listing;
+          return flags.indexOf("v") !== -1 ? listing.join("\n") : "";
+        }
+        var an = getNode(aAbs);
+        if (!an) return "tar: " + archive + ": Cannot open: No such file or directory\ntar: Error is not recoverable: exiting now";
+        var list2 = an.listing || [archive.replace(/\.tar\.gz$|\.tgz$|\.tar$/, "") + "/"];
+        if (flags.indexOf("x") !== -1){
+          list2.forEach(function(p){
+            var isDir = p.charAt(p.length - 1) === "/";
+            var clean = isDir ? p.slice(0, -1) : p;
+            var parts = clean.split("/");
+            var curAbs = cwd;
+            for (var pi = 0; pi < parts.length; pi++){
+              var parent = getNode(curAbs);
+              if (!parent || parent.t !== "dir") return;
+              var last = pi === parts.length - 1;
+              if (!parent.children[parts[pi]]){
+                parent.children[parts[pi]] = (last && !isDir)
+                  ? F("-rw-r--r--", "visitor", 0, lsTimeNow(), "")
+                  : D("drwxr-xr-x", "visitor", lsTimeNow());
+              }
+              curAbs = (curAbs === "/" ? "" : curAbs) + "/" + parts[pi];
+            }
+          });
+          return flags.indexOf("v") !== -1 ? list2.join("\n") : "";
+        }
+        if (flags.indexOf("t") !== -1) return list2.join("\n");
+        return "tar: 未识别的操作（这台模拟机支持 -czvf 打包、-xzvf 解压、-tzvf 列表）";
+      }
 
       /* ---------- Command execution ---------- */
       function execSimple(input, asRoot){
@@ -1505,8 +2476,12 @@
               "        free -h · df -h · du -sh <路径> · ps aux · top · ss -tlnp · ip a\n" +
               "网络类： ping [-c N] <主机> · curl [-I] <网址> · wget <网址>\n" +
               "管理类： sudo <命令> · apt update / install / remove / search · systemctl status / restart\n" +
+              "文本类： grep [-invc] <关键词> <文件> · sed -i 's/旧/新/g' <文件> · awk '{print $1}' <文件>\n" +
+              "        sort / uniq [-c] <文件> · find <目录> -name <模式> · wc -l <文件> · kill [-9] <PID> · crontab -l\n" +
+              "开发类： python3 <脚本.py> · python3 --version · git init / add / commit / status / log\n" +
+              "        tar -czvf <包名> <目录> 打包 · echo 文字 > 文件 写文件 · cat > 文件 << 'EOF' 写多行\n" +
               "其他：   echo · clear · history · env · exit（退出 root 或结束会话）\n" +
-              "支持管道： ps aux | grep ssh 。其余命令请到真机上练习，下方卡片里都有讲解。";
+              "支持管道： 命令 | grep 关键词 | awk '{print $列}' | sort | uniq -c | wc -l | tee <文件>，多段串联都可以。";
           case "ls": return cmdLs(args, effRoot);
           case "pwd": return cwd;
           case "cd": {
@@ -1537,6 +2512,123 @@
             var ww = wr.text.split(/\s+/).filter(Boolean).length;
             if (args.indexOf("-l") !== -1) return wl + " " + wf;
             return wl + " " + ww + " " + (wr.text.length + 1) + " " + wf;
+          }
+          case "grep": {
+            var gp = parseGrepArgs(args);
+            if (gp.pattern === null) return "usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.";
+            if (!gp.file) return "";
+            var gr = readFile("grep", gp.file, effRoot);
+            if (gr.err) return gr.err;
+            if (gr.bin) return "grep: " + gp.file + ": binary file matches";
+            return grepLines(gr.text, gp.pattern, gp.flags);
+          }
+          case "sed": {
+            var sIn = args.indexOf("-i") !== -1;
+            var sParts = args.filter(function(a){ return a !== "-i"; });
+            var sExpr = sParts[0] || "", sFile = sParts[1] || "";
+            if (sExpr.charAt(0) !== "s" || !sExpr.charAt(1))
+              return "sed: 这台模拟机支持替换写法：sed -i 's/旧内容/新内容/g' 文件";
+            if (!sFile) return "sed: no input files";
+            var sSegs = sExpr.slice(2).split(sExpr.charAt(1));
+            var sOld = sSegs[0], sNew = sSegs[1] || "", sG = (sSegs[2] || "").indexOf("g") !== -1;
+            if (!sOld) return "sed: 替换的旧内容不能为空";
+            var sr = readFile("sed", sFile, effRoot);
+            if (sr.err) return sr.err;
+            if (sr.bin) return "";
+            var sRes = sG ? sr.text.split(sOld).join(sNew) : sr.text.replace(sOld, sNew);
+            if (sIn){
+              var swErr = putFile(resolvePath(sFile), sRes, effRoot);
+              return swErr ? swErr.replace(/^bash:/, "sed:") : "";
+            }
+            return sRes;
+          }
+          case "awk": {
+            var aFile = args.filter(function(a){ return a.charAt(0) !== "{"; })[0];
+            if (!aFile) return "";
+            var ar = readFile("awk", aFile, effRoot);
+            if (ar.err) return ar.err;
+            if (ar.bin) return "";
+            return awkRun(args[0] || "", ar.text);
+          }
+          case "sort": {
+            var soFile = args.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+            if (!soFile) return "";
+            var sor = readFile("sort", soFile, effRoot);
+            if (sor.err) return sor.err;
+            if (sor.bin) return "";
+            return sortLines(sor.text, args);
+          }
+          case "uniq": {
+            var uFile = args.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+            if (!uFile) return "";
+            var ur = readFile("uniq", uFile, effRoot);
+            if (ur.err) return ur.err;
+            if (ur.bin) return "";
+            return uniqLines(ur.text, args.indexOf("-c") !== -1);
+          }
+          case "find": {
+            var fStart = ".", fPat = null;
+            for (var fi = 0; fi < args.length; fi++){
+              if (args[fi] === "-name" && args[fi + 1]) { fPat = args[fi + 1]; fi++; }
+              else if (fi === 0 && args[fi].charAt(0) !== "-") fStart = args[fi];
+            }
+            var fAbs = resolvePath(fStart);
+            var fNode = getNode(fAbs);
+            if (!fNode) return "find: '" + fStart + "': No such file or directory";
+            var fRe = null;
+            if (fPat){
+              var fEsc = fPat.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".");
+              fRe = new RegExp("^" + fEsc + "$");
+            }
+            var fOut = [];
+            var fBase = fStart === "." ? "." : fAbs;
+            (function fwalk(node, disp, name){
+              if (node !== fNode && (!fRe || fRe.test(name))) fOut.push(disp);
+              if (node.t === "dir" && node.children){
+                Object.keys(node.children).sort().forEach(function(k){
+                  fwalk(node.children[k], disp + "/" + k, k);
+                });
+              }
+            })(fNode, fBase, baseName(fAbs));
+            if (fNode.t === "file" && (!fRe || fRe.test(baseName(fAbs)))) fOut.push(fBase);
+            return fOut.join("\n");
+          }
+          case "kill": {
+            var kSig = "", kPid = null;
+            args.forEach(function(a){
+              if (a.charAt(0) === "-") kSig = a;
+              else kPid = a;
+            });
+            if (!kPid) return "bash: kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]";
+            if (kPid === "2077"){
+              if (minerDead) return "bash: kill: (2077) - No such process";
+              minerDead = true;
+              return "";
+            }
+            if (kPid === "2088"){
+              if (stuckDead) return "bash: kill: (2088) - No such process";
+              if (kSig !== "-9") return "";
+              stuckDead = true;
+              return "";
+            }
+            if (["1","214","236","238","301","312","1024","1150"].indexOf(kPid) !== -1)
+              return "bash: kill: (" + kPid + ") - Operation not permitted";
+            return "bash: kill: (" + kPid + ") - No such process";
+          }
+          case "crontab": {
+            if (args[0] === "-l") return (cronJobs && cronJobs.length) ? cronJobs.join("\n") : "no crontab for visitor";
+            if (args[0] === "-r"){ cronJobs = null; return ""; }
+            if (args[0] === "-e") return "这台模拟机没有编辑器，装定时任务有更稳妥的写法：先用 echo \"分 时 日 月 周 命令\" 拼好一行，再用管道交给 crontab - 装上，最后 crontab -l 验证。";
+            return "usage: crontab [-l | -e | -r]";
+          }
+          case "which": {
+            var wq = args[0] || "";
+            if (!wq) return "";
+            var wKnown = { "ls":1, "cat":1, "cp":1, "mv":1, "rm":1, "grep":1, "sed":1, "awk":1, "sort":1, "find":1, "tar":1, "curl":1, "wget":1, "git":1, "crontab":1, "ssh":1 };
+            if (wq === "python3") return installed["python3"] ? "/usr/bin/python3" : "which: no python3 in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)";
+            if (wKnown[wq]) return "/usr/bin/" + wq;
+            if (installed[wq]) return "/usr/bin/" + wq;
+            return "which: no " + wq + " in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)";
           }
           case "echo":
             return args.join(" ");
@@ -1780,8 +2872,30 @@
           case "exit": case "logout":
             if (rootMode){ rootMode = false; syncPrompt(); return "exit"; }
             return "logout\n（模拟终端不会真的关掉——想继续练习，输入 help 就行）";
-          case "bash": case "sh": return "";
+          case "python3": return execPythonCmd(args, effRoot);
+          case "git": return cmdGit(args, effRoot);
+          case "tar": return cmdTar(args, effRoot);
+          case "bash": case "sh": {
+            if (!args.length) return "";
+            var bAbs = resolvePath(args[0]);
+            var bNode = getNode(bAbs);
+            if (!bNode) return "bash: " + args[0] + ": No such file or directory";
+            if (bNode.t === "dir") return "bash: " + args[0] + ": Is a directory";
+            if (bNode.content === null) return "bash: " + args[0] + ": cannot execute binary file";
+            return runShellScript(bNode.content);
+          }
           default:
+            if (base.indexOf("./") === 0 || base.indexOf("/") !== -1){
+              var xAbs = resolvePath(base);
+              var xNode = getNode(xAbs);
+              if (!xNode) return "bash: " + base + ": No such file or directory";
+              if (xNode.t === "dir") return "bash: " + base + ": Is a directory";
+              if (xNode.perms.charAt(3) !== "x" && !effRoot)
+                return "bash: " + base + ": Permission denied";
+              if (xNode.content === null) return "bash: " + base + ": cannot execute binary file: Exec format error";
+              if (/\.py$/.test(base)) return runPython(baseName(xAbs), xNode.content);
+              return runShellScript(xNode.content);
+            }
             if (NOT_SIMULATED.indexOf(base) !== -1)
               return "提示：这台模拟机没有内置 " + base + " 的模拟输出，它在真机上完全可用；输入 help 查看已支持的命令。";
             return "bash: " + base + ": command not found";
@@ -1796,25 +2910,60 @@
           for (var i = 1; i < segs.length; i++){
             var gt = tokenize(segs[i].trim());
             if (!gt.length) continue;
-            if (gt[0] !== "grep") return "bash: " + gt[0] + ": command not found";
-            var flags = "", pattern = "";
-            gt.slice(1).forEach(function(t){
-              if (t.charAt(0) === "-") flags += t.slice(1);
-              else pattern = t;
-            });
-            var ic = flags.indexOf("i") !== -1, inv = flags.indexOf("v") !== -1, num = flags.indexOf("n") !== -1;
-            var src = out ? out.split("\n") : [];
-            var kept = [];
-            src.forEach(function(line, idx){
-              var hay = ic ? line.toLowerCase() : line;
-              var needle = ic ? pattern.toLowerCase() : pattern;
-              var hit = hay.indexOf(needle) !== -1;
-              if (inv) hit = !hit;
-              if (hit) kept.push(num ? (idx + 1) + ":" + line : line);
-            });
-            out = kept.join("\n");
+            var gname = gt[0], gargs = gt.slice(1);
+            if (gname === "grep"){
+              var gpp = parseGrepArgs(gargs);
+              out = gpp.pattern === null ? out : grepLines(out, gpp.pattern, gpp.flags);
+            } else if (gname === "awk"){
+              out = awkRun(gargs[0] || "", out);
+            } else if (gname === "sort"){
+              out = sortLines(out, gargs);
+            } else if (gname === "uniq"){
+              out = uniqLines(out, gargs.indexOf("-c") !== -1);
+            } else if (gname === "wc"){
+              var wls = out ? out.split("\n") : [];
+              if (gargs.indexOf("-l") !== -1) out = String(wls.length);
+              else {
+                var wws = out ? out.split(/\s+/).filter(Boolean).length : 0;
+                out = wls.length + " " + wws + " " + (out ? out.length + 1 : 0);
+              }
+            } else if (gname === "head" || gname === "tail"){
+              var hn = 10;
+              for (var hi = 0; hi < gargs.length; hi++){
+                if (gargs[hi] === "-n" && gargs[hi + 1]) { hn = parseInt(gargs[hi + 1], 10) || 10; hi++; }
+                else if (/^-\d+$/.test(gargs[hi])) hn = parseInt(gargs[hi].slice(1), 10);
+              }
+              var hls = out ? out.split("\n") : [];
+              out = (gname === "tail" ? hls.slice(-hn) : hls.slice(0, hn)).join("\n");
+            } else if (gname === "tee"){
+              var tFile = gargs.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+              if (tFile){
+                var tOld = gargs.indexOf("-a") !== -1 ? getNode(resolvePath(tFile)) : null;
+                var tContent = out ? out + "\n" : "";
+                if (tOld && tOld.t === "file" && tOld.content) tContent = tOld.content + tContent;
+                putFile(resolvePath(tFile), tContent, asRoot);
+              }
+            } else if (gname === "crontab"){
+              if (gargs[0] === "-") cronJobs = out ? out.split("\n") : [];
+              out = "";
+            } else {
+              return "bash: " + gname + ": command not found";
+            }
           }
           return out;
+        }
+        var rm = input.match(/^([\s\S]+?)\s*(>>?)\s*([^\s;|]+)\s*$/);
+        if (rm && rm[1].indexOf("<<") === -1 && rm[1].indexOf(">") === -1){
+          var rout = execSimple(rm[1].trim(), asRoot);
+          if (rout === "\u0001CLEAR") return rout;
+          var tAbs = resolvePath(rm[3]);
+          var content = rout ? rout + "\n" : "";
+          if (rm[2] === ">>"){
+            var exNode = getNode(tAbs);
+            if (exNode && exNode.t === "file" && exNode.content) content = exNode.content + content;
+          }
+          var werr = putFile(tAbs, content, asRoot);
+          return werr || "";
         }
         return execSimple(input, asRoot);
       }
@@ -1823,6 +2972,26 @@
       function submitLine(){
         var raw = termInput.value;
         termInput.value = "";
+        if (heredoc){
+          var hd = document.createElement("div");
+          hd.className = "cmd-echo";
+          hd.textContent = "> " + raw;
+          termBody.appendChild(hd);
+          if (raw.trim() === heredoc.marker){
+            var hbody = heredoc.lines.join("\n");
+            if (heredoc.append){
+              var hen = getNode(resolvePath(heredoc.file));
+              if (hen && hen.content) hbody = hen.content + (hen.content.charAt(hen.content.length - 1) === "\n" ? "" : "\n") + hbody;
+            }
+            var herr = putFile(resolvePath(heredoc.file), hbody, false);
+            if (herr) printOut(herr);
+            heredoc = null;
+          } else {
+            heredoc.lines.push(raw);
+          }
+          scrollTerm();
+          return;
+        }
         if (awaitPass){
           awaitPass = false;
           sudoAuthed = true;
@@ -1841,6 +3010,12 @@
         if (!cmd){ scrollTerm(); return; }
         termHistory.push(cmd);
         histIdx = termHistory.length;
+        var hm = cmd.match(/^cat\s+(>>?)\s*(\S+)\s*<<\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?$/);
+        if (hm){
+          heredoc = { file: hm[2], marker: hm[3], lines: [], append: hm[1] === ">>" };
+          scrollTerm();
+          return;
+        }
         var sm = cmd.match(/^sudo\s+(.+)$/);
         if (sm && !sudoAuthed && !rootMode){
           pendingSudo = sm[1];
@@ -1866,7 +3041,7 @@
         var b = document.createElement("button");
         b.type = "button"; b.textContent = q;
         b.addEventListener("click", function(){
-          if (awaitPass) return;
+          if (awaitPass || heredoc) return;
           termInput.value = q;
           submitLine();
           termInput.focus();
@@ -1896,6 +3071,7 @@
           e.preventDefault();
           if (pingTimer) stopPing(true);
           if (awaitPass){ awaitPass = false; pendingSudo = null; }
+          if (heredoc){ heredoc = null; printOut("（已取消这次 heredoc 输入，文件没有写入）"); }
           printEcho(termInput.value, "^C");
           termInput.value = "";
           scrollTerm();
@@ -1910,7 +3086,7 @@
           if (!last) return;
           var cands = [];
           if (toks.length === 1){
-            cands = ["ls","cd","cat","pwd","echo","clear","help","whoami","date","free","df","ps","top","uname","nproc","lscpu","ping","curl","sudo","apt","systemctl","history","touch","mkdir","rm","ip","ss","du","head","tail"]
+            cands = ["ls","cd","cat","pwd","echo","clear","help","whoami","date","free","df","ps","top","uname","nproc","lscpu","ping","curl","sudo","apt","systemctl","history","touch","mkdir","rm","ip","ss","du","head","tail","python3","git","tar","chmod","cp","mv","wc","env"]
               .filter(function(c){ return c.indexOf(last) === 0; });
           } else {
             var node = getNode(cwd);
@@ -1936,15 +3112,24 @@
       });
 
       /* ================= Game mode: missions / XP / levels ================= */
-      var G_CHAPTERS = ["初入终端", "文件功夫", "系统侦察", "网络探索", "管理员之路"];
-      var G_CN = "一二三四五";
+      var G_CHAPTERS = ["初入终端", "文件功夫", "系统侦察", "网络探索", "管理员之路", "代码工坊", "开发全流程",
+        "权限与用户", "文本三剑客", "管道与重定向", "进程管理", "脚本与计划任务", "实战综合"];
+      var G_CN = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三"];
       var G_LEVELS = [
         { xp: 0,   name: "终端新手" },
         { xp: 60,  name: "命令学徒" },
         { xp: 120, name: "文件管家" },
         { xp: 195, name: "系统侦察员" },
         { xp: 275, name: "网络领航员" },
-        { xp: 400, name: "Linux 大师" }
+        { xp: 400, name: "系统管理员" },
+        { xp: 650, name: "脚本工匠" },
+        { xp: 890, name: "Linux 大师" },
+        { xp: 1070, name: "权限掌控者" },
+        { xp: 1280, name: "文本炼金师" },
+        { xp: 1490, name: "流水线工程师" },
+        { xp: 1690, name: "进程猎手" },
+        { xp: 1930, name: "自动化专家" },
+        { xp: 2230, name: "Linux 宗师" }
       ];
       function findInHome(name){
         var found = null;
@@ -1967,6 +3152,11 @@
           if (t[i].charAt(0) === "-" && /[la]/.test(t[i])) return true;
         }
         return false;
+      }
+
+      function helloFile(name){
+        var n = getNode(HOME + "/hello/" + name);
+        return n && n.t === "file" ? n : null;
       }
 
       // cmd(c, out): 按敲入的命令判定；state(): 按模拟机当前状态判定（文件建好、目录切换成功等）
@@ -2022,8 +3212,160 @@
         { ch:4, title:"服务巡查", story:"远程登录靠的是 SSH 服务。检查一下它是不是好好地在运行。", goal:"查看 ssh 服务的状态", hint:"systemctl status ssh", xp:25,
           cmd:function(c){ return /^systemctl\s+status\s+ssh(\.service)?$/.test(c); } },
         { ch:4, title:"日志侦探", story:"毕业考：打开 systemd 的系统日志，看看这台机器最近都发生过什么。", goal:"查看系统日志", hint:"journalctl", xp:25,
-          cmd:function(c){ return /^journalctl(\s|$)/.test(c); } }
+          cmd:function(c){ return /^journalctl(\s|$)/.test(c); } },
+        { ch:5, title:"请出 Python", story:"管服务器只是第一步——接下来学着写程序。这台机器还没装 Python，用 apt 把它请进来。", goal:"用 apt 安装 python3", hint:"sudo apt install python3", xp:25,
+          state:function(){ return !!installed["python3"]; } },
+        { ch:5, title:"确认版本", story:"装完先验货：看看 Python 到底装的是哪个版本。开发的第一课——永远先确认环境。", goal:"查看 Python 版本", hint:"python3 --version", xp:25,
+          cmd:function(c, o){ return /^python3\s+(--version|-V)$/.test(c) && o.indexOf("Python 3.11") !== -1; } },
+        { ch:5, title:"项目落地", story:"写代码先有个窝。新建一个文件夹 hello，当我们的第一个项目目录。", goal:"新建文件夹 hello", hint:"mkdir hello", xp:25,
+          state:function(){ var p = findInHome("hello"); return !!p && getNode(p).t === "dir"; } },
+        { ch:5, title:"走进工坊", story:"进到项目目录里再开工——之后写的文件都会落在这里，不会满家目录乱跑。", goal:"进入 hello 文件夹", hint:"cd hello", xp:25,
+          state:function(){ return cwd === HOME + "/hello"; } },
+        { ch:5, title:"第一行代码", story:"用 echo 加重定向，把一行 Python 代码直接写进文件 hello.py：让它打印 Hello, Linux!（用 heredoc 一行行写也可以。）", goal:"创建 hello.py，内容包含一句 print", hint:"echo 'print(\"Hello, Linux!\")' > hello.py", xp:25,
+          state:function(){ var n = helloFile("hello.py"); return !!n && n.content && n.content.indexOf("print") !== -1; } },
+        { ch:5, title:"运行第一个程序", story:"代码写好了，让 Python 解释器跑一遍 hello.py，看看它会不会乖乖打招呼。", goal:"运行 hello.py，输出 Hello, Linux!", hint:"python3 hello.py", xp:25,
+          cmd:function(c, o){ return /^python3\s+(\S+\/)?hello\.py$/.test(c) && o.indexOf("Hello") !== -1; } },
+        { ch:5, title:"写个计算器", story:"一行不过瘾，用 heredoc 写个三行的小程序 calc.py：第一行 a = 3，第二行 b = 4，第三行 print(a + b)。敲 cat > calc.py << 'EOF' 回车后逐行输入，最后单独一行 EOF 结束。", goal:"用 heredoc 写出 calc.py（赋值 + print，共三行）", hint:"cat > calc.py << 'EOF'（逐行输入，最后 EOF 结束）", xp:25,
+          state:function(){ var n = helloFile("calc.py"); return !!n && n.content && n.content.indexOf("=") !== -1 && n.content.indexOf("print") !== -1 && n.content.split("\n").length >= 2; } },
+        { ch:5, title:"运行计算器", story:"运行 calc.py：如果程序没写错，屏幕上应该只出现一个数字 7。", goal:"运行 calc.py，得到结果 7", hint:"python3 calc.py", xp:25,
+          cmd:function(c, o){ return /^python3\s+(\S+\/)?calc\.py$/.test(c) && /(^|\s)7(\s|$)/.test(o); } },
+        { ch:5, title:"循环求和", story:"高斯小时候算的题：1 加到 100。用 heredoc 写 sum.py：total = 0 一行，for i in range(1, 101): 一行，缩进四格 total += i 一行，最后 print(total)。", goal:"写出 sum.py（用 for 循环和 range）", hint:"cat > sum.py << 'EOF'（循环体记得缩进）", xp:25,
+          state:function(){ var n = helloFile("sum.py"); return !!n && n.content && n.content.indexOf("range") !== -1 && n.content.indexOf("print") !== -1; } },
+        { ch:5, title:"见证 5050", story:"运行 sum.py，亲眼看看循环一瞬间算出的答案——5050。", goal:"运行 sum.py，得到 5050", hint:"python3 sum.py", xp:25,
+          cmd:function(c, o){ return /^python3\s+(\S+\/)?sum\.py$/.test(c) && o.indexOf("5050") !== -1; } },
+        { ch:6, title:"一键启动脚本", story:"每次都手敲 python3 hello.py 太麻烦。写个 shell 脚本 run.sh 把它一键化：第一行 #!/bin/bash，第二行 echo 一句开工提示，第三行 python3 hello.py。用 heredoc 写就行。", goal:"创建 run.sh，内容里调用 hello.py", hint:"cat > run.sh << 'EOF'（三行写完 EOF 结束）", xp:30,
+          state:function(){ var n = helloFile("run.sh"); return !!n && n.content && n.content.indexOf("hello.py") !== -1; } },
+        { ch:6, title:"给脚本执行权", story:"新建的脚本默认只能看不能跑。给 run.sh 加上执行权限（+x），它才真正成为一个「程序」。", goal:"给 run.sh 添加执行权限", hint:"chmod +x run.sh", xp:30,
+          state:function(){ var n = helloFile("run.sh"); return !!n && n.perms.charAt(3) === "x"; } },
+        { ch:6, title:"一键运行", story:"权限给了，用 ./run.sh 运行它——注意前面的 ./，意思是「就跑当前目录下这个」。", goal:"运行 ./run.sh，看到 Hello 输出", hint:"./run.sh", xp:30,
+          cmd:function(c, o){ return /^\.\/run\.sh$/.test(c) && o.indexOf("Hello") !== -1; } },
+        { ch:6, title:"给项目建仓库", story:"代码越写越多，得有个时光机。确保你人在 hello 目录里，用 git 给项目建一个仓库。", goal:"在 hello 目录里执行 git init", hint:"git init", xp:30,
+          state:function(){ var n = getNode(HOME + "/hello/.git"); return !!n && n.t === "dir"; } },
+        { ch:6, title:"暂存全部文件", story:"提交之前先把文件放进「暂存区」——git add . 的点代表当前目录下所有文件，一个不落。", goal:"用 git add . 暂存全部文件", hint:"git add .", xp:30,
+          state:function(){ var st = gitState[HOME + "/hello"]; return !!st && st.staged.length > 0; } },
+        { ch:6, title:"第一次提交", story:"把暂存区存成正式版本，附一句说明。这一刻，你的项目有了第一个存档点。", goal:"git commit 提交第一个版本", hint:"git commit -m \"第一个版本\"", xp:30,
+          state:function(){ var st = gitState[HOME + "/hello"]; return !!st && st.commits.length >= 1; } },
+        { ch:6, title:"写项目说明", story:"发布前补一份说明：在 hello 目录里用 echo 写 README.md，第一行写上 # 我的第一个项目。", goal:"创建 README.md 并写入标题", hint:"echo \"# 我的第一个项目\" > README.md", xp:30,
+          state:function(){ var n = helloFile("README.md"); return !!n && !!n.content; } },
+        { ch:6, title:"打包发布", story:"毕业作品打包！先回主目录（cd ~），再把整个 hello 项目压缩成 hello.tar.gz——这就是能发给任何人的一份发布包。", goal:"在家目录生成 hello.tar.gz", hint:"tar -czvf hello.tar.gz hello", xp:30,
+          state:function(){ var n = getNode(HOME + "/hello.tar.gz"); return !!n && n.t === "file"; } },
+
+        /* ---------- 第八章 权限与用户 ---------- */
+        { ch:7, title:"我是谁", story:"新阶段先从「身份」学起。权限问题排查的第一步，永远是先确认：我现在到底是谁？", goal:"查看当前登录的用户名", hint:"whoami", xp:30,
+          cmd:function(c){ return /^whoami$/.test(c); } },
+        { ch:7, title:"身份全家桶", story:"光知道名字不够。id 一条命令，把你的用户 ID、组 ID 和所属的组一次全亮出来——sudo 组就在里面，这就是你能用 sudo 的原因。", goal:"用 id 查看完整的身份信息", hint:"id", xp:30,
+          cmd:function(c){ return /^id$/.test(c); } },
+        { ch:7, title:"花名册找人", story:"/etc/passwd 是全系统的用户花名册。用 cat 打开它、再接一个 grep，只把你自己的那行筛出来——顺便预习一下管道。", goal:"在 /etc/passwd 里筛出 visitor 的账号行", hint:"cat /etc/passwd | grep visitor", xp:30,
+          cmd:function(c, o){ return /cat\s+\/etc\/passwd\s*\|\s*grep\s+visitor/.test(c) && o.indexOf("visitor:x:1000") !== -1; } },
+        { ch:7, title:"机密文件", story:"有些文件只该自己看。先 touch 建一个 secret.txt，再用数字权限 600 把它锁死：只有所有者能读写，其他人一律免进。", goal:"创建 secret.txt 并把权限设为 600（-rw-------）", hint:"chmod 600 secret.txt（先 touch secret.txt 把文件建出来）", xp:30,
+          state:function(){ var p = findInHome("secret.txt"); return !!p && getNode(p).perms === "-rw-------"; } },
+        { ch:7, title:"工具脚本亮相", story:"权限数字法再练一遍，这次是给「程序」开绿灯：随便写一个 tool.sh（echo 写一行就行），再 chmod 755——所有者全权，别人能看能跑，这正是脚本的标准权限。", goal:"创建 tool.sh 并赋予 755 权限", hint:"chmod 755 tool.sh（先用 echo 写一行内容进去）", xp:30,
+          state:function(){ var p = findInHome("tool.sh"); return !!p && getNode(p).perms === "-rwxr-xr-x"; } },
+        { ch:7, title:"移交所有权", story:"最后一个权限动作：把 secret.txt 的所有者移交给 root。chown 是管理员的活儿，记得前面加 sudo（密码随便输）。", goal:"用 sudo 把 secret.txt 的所有者改成 root", hint:"sudo chown root secret.txt", xp:30,
+          state:function(){ var p = findInHome("secret.txt"); return !!p && getNode(p).owner === "root"; } },
+
+        /* ---------- 第九章 文本三剑客 ---------- */
+        { ch:8, title:"回家集合", story:"接下来三章都在家目录的 app.log 上练功——这是今早刚生成的一份网站访问日志。先回到家目录集合。", goal:"回到家目录", hint:"cd ~", xp:35,
+          state:function(){ return cwd === HOME; } },
+        { ch:8, title:"筛出错误行", story:"日志有 12 行，肉眼找 ERROR 太慢。grep 是文本处理三剑客之首：给它一个关键词，它只把命中的行留下。", goal:"用 grep 筛出 app.log 里所有 ERROR 行", hint:"grep ERROR app.log", xp:35,
+          cmd:function(c, o){ return /^grep\s+(-\w+\s+)?ERROR\s+(\S+\/)?app\.log$/.test(c) && o.indexOf("ERROR") !== -1; } },
+        { ch:8, title:"数一数错误", story:"老板只问一句：今天到底报了几次错？grep 加上 -c 不打印内容、只回一个数字——答案是 4，别数错。", goal:"用 grep -c 数出 ERROR 出现的次数", hint:"grep -c ERROR app.log", xp:35,
+          cmd:function(c, o){ return /^grep\s/.test(c) && /-c|--count/.test(c) && /ERROR/.test(c) && o.trim() === "4"; } },
+        { ch:8, title:"警告带行号", story:"WARN 也得查，但光看内容没法定位。加上 -n，grep 会把每行在文件里的行号一起报出来，方便你回头用编辑器跳过去。", goal:"用 grep -n 查 app.log 里的 WARN 行", hint:"grep -n WARN app.log", xp:35,
+          cmd:function(c, o){ return /^grep\s/.test(c) && c.indexOf("-n") !== -1 && /WARN/.test(c) && /\d+:/.test(o); } },
+        { ch:8, title:"批量改配置", story:"server.conf 里服务端口写的是 8080，上线规范要求改成 80。用 sed 的替换语法一次改对：s 是替换，g 是全部替换，别漏。", goal:"用 sed -i 把 server.conf 里的 8080 改成 80", hint:"sed -i 's/8080/80/g' server.conf", xp:35,
+          state:function(){ var n = getNode(HOME + "/server.conf"); return !!n && !!n.content && n.content.indexOf("port=80") !== -1 && n.content.indexOf("8080") === -1; } },
+        { ch:8, title:"按列统计", story:"三剑客收官之作 awk：它能把每行按空格切成列，$3 正好是日志的级别列。取出这一列，再 sort 排序、uniq -c 计数——三种级别各出现几次，一目了然。", goal:"用 awk 取出级别列并统计每种级别的次数", hint:"awk '{print $3}' app.log | sort | uniq -c", xp:35,
+          cmd:function(c, o){ return /^awk\s+'\{print\s+\$3\}'\s+(\S+\/)?app\.log\s*\|\s*sort\s*\|\s*uniq\s+-c$/.test(c) && o.indexOf("ERROR") !== -1 && o.indexOf("INFO") !== -1; } },
+
+        /* ---------- 第十章 管道与重定向 ---------- */
+        { ch:9, title:"进程里筛 SSH", story:"管道专章开练。ps aux 输出一大屏，接上 grep ssh，只留下和远程登录有关的行——这就是管道的看家用法。", goal:"用管道在全部进程里筛出 ssh 相关的行", hint:"ps aux | grep ssh", xp:35,
+          cmd:function(c, o){ return /^ps\s+aux\s*\|\s*grep\s+ssh/.test(c) && o.indexOf("sshd") !== -1; } },
+        { ch:9, title:"三级流水线", story:"把三件工具串成一条流水线：cat 读出日志，grep 只留 ERROR，wc -l 数行数。一条命令顶过去三步，结果还是那个 4。", goal:"串联 cat、grep、wc 数出日志错误总数", hint:"cat app.log | grep ERROR | wc -l", xp:35,
+          cmd:function(c, o){ return /^cat\s+(\S+\/)?app\.log\s*\|\s*grep\s+ERROR\s*\|\s*wc\s+-l$/.test(c) && o.trim() === "4"; } },
+        { ch:9, title:"谁错得最多", story:"进阶流水线：先筛 ERROR，再用 awk 取第 4 列（IP 地址），排序、计数。一眼看出 192.168.1.22 是今天的「错误之王」。", goal:"统计每个 IP 出现 ERROR 的次数", hint:"cat app.log | grep ERROR | awk '{print $4}' | sort | uniq -c", xp:35,
+          cmd:function(c, o){ return /awk\s+'\{print\s+\$4\}'/.test(c) && /uniq\s+-c/.test(c) && o.indexOf("192.168.1.22") !== -1 && o.indexOf("192.168.1.31") !== -1; } },
+        { ch:9, title:"巡检报告存档", story:"屏幕上的输出转眼就滚没了。用重定向 > 把 df -h 的结果存进 disk-report.txt，这份巡检报告就留档了。", goal:"把 df -h 的输出重定向存入 disk-report.txt", hint:"df -h > disk-report.txt", xp:35,
+          state:function(){ var p = findInHome("disk-report.txt"); if (!p) return false; var n = getNode(p); return !!n.content && n.content.indexOf("/dev/sda1") !== -1; } },
+        { ch:9, title:"给日志补记", story:">> 是追加重定向，不会冲掉原内容。巡检做完，给 app.log 末尾补记一行「巡检完成」，留个痕迹。", goal:"用 >> 往 app.log 末尾追加一行「巡检完成」", hint:"echo \"巡检完成\" >> app.log", xp:35,
+          state:function(){ var n = getNode(HOME + "/app.log"); return !!n && !!n.content && n.content.indexOf("巡检完成") !== -1; } },
+        { ch:9, title:"双写留档", story:"tee 是管道里的三通：数据照常显示，同时抄一份进文件。把当前进程表双写一份到 processes.txt，屏幕和档案两不误。", goal:"用 tee 把 ps aux 的输出存一份到 processes.txt", hint:"ps aux | tee processes.txt", xp:35,
+          cmd:function(c){ return /^ps\s+aux\s*\|\s*tee\s+processes\.txt$/.test(c); },
+          state:function(){ var p = findInHome("processes.txt"); if (!p) return false; var n = getNode(p); return !!n.content && n.content.indexOf("sshd") !== -1; } },
+
+        /* ---------- 第十一章 进程管理 ---------- */
+        { ch:10, title:"揪出失控进程", story:"警报：有个叫 miner.py 的进程把 CPU 吃到了 98.6%——多半是被人塞进来的挖矿脚本。先在进程表里把它揪出来，记下它的 PID。", goal:"在进程列表里筛出 miner 进程", hint:"ps aux | grep miner", xp:40,
+          cmd:function(c, o){ return /ps\s+aux\s*\|\s*grep\s+miner/.test(c) && o.indexOf("miner.py") !== -1 && o.indexOf("2077") !== -1; } },
+        { ch:10, title:"终止它", story:"PID 2077，就是它。用 kill 给它发一个终止信号——先礼后兵，普通 kill 就够，-9 是最后的手段。", goal:"用 kill 结束 PID 2077", hint:"kill 2077", xp:40,
+          cmd:function(c){ return /^kill\s+(-9\s+)?2077$/.test(c); },
+          state:function(){ return minerDead; } },
+        { ch:10, title:"确认战果", story:"杀完要验尸。再筛一遍 miner：如果列表里干干净净，说明它真的没了（这条命令这次不会有任何输出，很正常）。", goal:"再次筛选 miner，确认它已消失", hint:"ps aux | grep miner", xp:40,
+          cmd:function(c){ return /^ps\s+aux\s*\|\s*grep\s+miner/.test(c); },
+          state:function(){ return minerDead; } },
+        { ch:10, title:"实时榜单", story:"ps 是静态快照，top 才是实时榜单。打开 top 看一眼现在的 CPU 排名—— miner 没了，榜单应该风平浪静。", goal:"打开 top 查看实时进程榜单", hint:"top", xp:40,
+          cmd:function(c, o){ return /^top$/.test(c) && o.indexOf("Tasks") !== -1; } },
+        { ch:10, title:"强杀假死进程", story:"还有个 stuck.py（PID 2088）处于 T（已停止）状态，假死了。普通 kill 对它毫无作用——这时候才轮到 kill -9：不给任何收尾机会，直接强制终结。", goal:"用 kill -9 强制结束 PID 2088", hint:"kill -9 2088", xp:40,
+          cmd:function(c){ return /^kill\s+-9\s+2088$/.test(c); },
+          state:function(){ return stuckDead; } },
+
+        /* ---------- 第十二章 脚本与计划任务 ---------- */
+        { ch:11, title:"会打招呼的脚本", story:"脚本进阶第一课：变量。用 heredoc 写 greet.sh：第一行给变量赋值 NAME=\"守护者\"，第二行 echo 时用 $NAME 把它取出来。", goal:"创建带变量的 greet.sh（NAME= 赋值 + echo $NAME）", hint:"cat > greet.sh << 'EOF'（两行写完，EOF 结束）", xp:40,
+          state:function(){ var p = findInHome("greet.sh"); if (!p) return false; var n = getNode(p); return !!n.content && n.content.indexOf("NAME=") !== -1 && n.content.indexOf("echo") !== -1; } },
+        { ch:11, title:"运行问候脚本", story:"用 bash 直接运行 greet.sh，看看 $NAME 被换成了什么——变量展开的那一瞬间，脚本就从「死文字」变成了「活程序」。", goal:"运行 greet.sh，输出包含「你好」", hint:"bash greet.sh", xp:40,
+          cmd:function(c, o){ return /^(bash\s+greet\.sh|\.\/greet\.sh)$/.test(c) && o.indexOf("你好") !== -1; } },
+        { ch:11, title:"备份脚本", story:"把第七章的手工打包写成脚本 backup.sh，以后一条命令搞定：第一行 #!/bin/bash，第二行 SRC=hello，第三行 tar -czvf project-backup.tar.gz $SRC。", goal:"创建 backup.sh：用变量 SRC 指定要打包的目录", hint:"cat > backup.sh << 'EOF'（三行写完，EOF 结束）", xp:40,
+          state:function(){ var p = findInHome("backup.sh"); if (!p) return false; var n = getNode(p); return !!n.content && n.content.indexOf("tar") !== -1 && n.content.indexOf("=") !== -1; } },
+        { ch:11, title:"跑一次备份", story:"在家目录里用 bash 运行 backup.sh。如果变量和 tar 都写对了，家目录里会多出一个 project-backup.tar.gz。", goal:"运行 backup.sh，生成 project-backup.tar.gz", hint:"bash backup.sh", xp:40,
+          state:function(){ var n = getNode(HOME + "/project-backup.tar.gz"); return !!n && n.t === "file"; } },
+        { ch:11, title:"查定时表", story:"手工备份靠自觉，定时任务靠系统。先看一眼你现在的定时任务表——大概率是空的（no crontab for visitor）。", goal:"用 crontab -l 查看自己的定时任务", hint:"crontab -l", xp:40,
+          cmd:function(c){ return /^crontab\s+-l$/.test(c); } },
+        { ch:11, title:"凌晨三点备份", story:"给系统上个闹钟：每天凌晨 3:00 自动把 hello 打包。把任务行用 echo 拼好、再用管道交给 crontab - 装上：分 时 日 月 周，一个都不能错位。", goal:"装一条每天 3:00 执行 tar 备份的定时任务", hint:"echo \"0 3 * * * tar -czvf /home/visitor/hello-backup.tar.gz /home/visitor/hello\" | crontab -", xp:40,
+          state:function(){ return !!cronJobs && cronJobs.some(function(l){ return l.indexOf("0 3") !== -1 && l.indexOf("tar") !== -1; }); } },
+
+        /* ---------- 第十三章 实战综合 ---------- */
+        { ch:12, title:"磁盘大户排查", story:"毕业实战开始。值班群报警：磁盘用量涨得不对劲。排查第一步，用 du 汇总一下 hello 项目占了多大地方。", goal:"用 du -sh 查看 hello 目录的总大小", hint:"du -sh hello", xp:50,
+          cmd:function(c, o){ return /^du\s/.test(c) && c.indexOf("hello") !== -1 && o.indexOf("hello") !== -1; } },
+        { ch:12, title:"全盘找日志", story:"同事说还有一份日志不知藏哪了。用 find 从家目录出发，按名字模式 *.log 全盘搜出来——找文件这事，find 才是正解。", goal:"用 find 在家目录下找出所有 .log 文件", hint:"find ~ -name \"*.log\"", xp:50,
+          cmd:function(c, o){ return /^find\s/.test(c) && c.indexOf("-name") !== -1 && o.indexOf("app.log") !== -1; } },
+        { ch:12, title:"502 定位", story:"用户反馈网站时不时 502。打开 app.log 数一数 ERROR 的总数，和第九章练的一样——基本功就是拿来实战的。（日志多了行巡检记录，错误数不变。）", goal:"数出 app.log 中 ERROR 的总数", hint:"grep -c ERROR app.log", xp:50,
+          cmd:function(c, o){ return /^grep\s/.test(c) && /-c|--count/.test(c) && /ERROR/.test(c) && o.trim() === "4"; } },
+        { ch:12, title:"端口确认", story:"502 也可能是服务没在监听。用 ss 看一眼这台机器对外开着哪些端口，确认 22 的 SSH 还在听。", goal:"用 ss 查看正在监听的端口", hint:"ss -tlnp", xp:50,
+          cmd:function(c, o){ return /^ss\s/.test(c) && o.indexOf(":22") !== -1; } },
+        { ch:12, title:"服务确认", story:"最后一道确认：SSH 服务本身的状态。systemctl 给出 active (running)，这次报警就和它无关。", goal:"查看 ssh 服务状态", hint:"systemctl status ssh", xp:50,
+          cmd:function(c){ return /^systemctl\s+status\s+ssh(\.service)?$/.test(c); } },
+        { ch:12, title:"毕业巡检脚本", story:"毕业大考：把巡检写成一个能一键运行的脚本 check.sh——heredoc 写入（至少包含 df -h 和 free -h 两条），chmod +x 给执行权，最后 ./check.sh 跑起来。磁盘、内存一屏看完，这就是运维每天的开工第一件事。", goal:"写好 check.sh（含 df 与 free）、赋执行权并运行成功", hint:"cat > check.sh << 'EOF' 写脚本 → chmod +x check.sh → ./check.sh", xp:50,
+          cmd:function(c, o){ return /^\.\/check\.sh$/.test(c) && o.indexOf("Filesystem") !== -1 && o.indexOf("Mem:") !== -1; },
+          state:function(){ var p = findInHome("check.sh"); if (!p) return false; var n = getNode(p); return n.perms.charAt(3) === "x" && !!n.content && n.content.indexOf("df") !== -1 && n.content.indexOf("free") !== -1; } }
       ];
+
+      var TOTAL_XP = MISSIONS.reduce(function(s, m){ return s + m.xp; }, 0);
+      /* 每条命令的一句注释：点开任务提示时，显示在命令后面解释它的作用 */
+      var CMD_NOTES = {
+        "pwd": "显示你当前所在的目录", "ls": "列出目录内容：-a 连隐藏文件，-l 看详细信息",
+        "cd": "切换目录，~ 代表家目录", "cat": "把文件内容全部打印出来，也能配合管道当数据源",
+        "touch": "新建一个空文件（文件已存在则更新修改时间）", "mkdir": "新建文件夹",
+        "cp": "复制文件：cp 源文件 目标", "mv": "移动文件；在同一目录里用就是改名",
+        "rm": "删除文件，删后不进回收站，动手前先看清", "free": "查看内存用量，-h 显示易读单位",
+        "nproc": "显示 CPU 核心数", "df": "查看各分区磁盘空间，-h 显示易读单位",
+        "du": "查看目录占多大空间，-sh 汇总成一个总数", "uname": "显示系统与内核信息，-a 是全部",
+        "ps": "列出进程快照，aux 是查看全部进程的常用组合", "top": "实时滚动的进程榜单（模拟机里是快照）",
+        "ping": "测试和目标主机通不通，-c 指定发包次数", "ip": "ip a 查看本机网卡与 IP 地址",
+        "curl": "在终端里访问网址，-I 只看响应头", "ss": "查看端口监听情况，-tlnp 是常用组合",
+        "sudo": "以管理员 root 身份执行后面这条命令", "apt": "Debian 的软件包管理器：update 刷新源，install 装软件",
+        "htop": "更好看的实时进程监视器（需先安装）", "systemctl": "管理 systemd 服务：status 看状态",
+        "journalctl": "查看 systemd 的系统日志", "python3": "运行 Python 程序；--version 查版本",
+        "git": "版本控制：init 建仓，add 暂存，commit 存档", "tar": "打包解包：-czvf 打包成 .tar.gz，-xzvf 解开",
+        "chmod": "改文件权限：数字每一位 = 读 4 + 写 2 + 执行 1", "chown": "改文件的所有者，通常要 sudo",
+        "whoami": "显示当前登录的用户名", "id": "显示你的用户 ID、组 ID 与所属组",
+        "grep": "按关键词筛选行：-c 只数行数，-n 带行号，-i 忽略大小写",
+        "sed": "批量替换文本：s/旧/新/g 是全局替换，-i 直接改文件",
+        "awk": "按列取数据：$1、$3 分别是第 1、第 3 列",
+        "sort": "把行排序：-n 按数字大小，-r 从大到小", "uniq": "去掉相邻的重复行，-c 顺带统计次数",
+        "wc": "统计行数、词数、字节数，-l 只看行数", "echo": "输出文字；配 > 覆盖写文件，>> 追加到末尾",
+        "kill": "按进程号 PID 结束进程，-9 是强制终结", "crontab": "管理定时任务：-l 查看，任务按「分 时 日 月 周 命令」写",
+        "find": "按名字、大小、时间找文件，-name 后跟名称模式", "tee": "把管道的输出一边显示、一边存进文件",
+        "head": "看文件开头几行", "tail": "看文件结尾几行"
+      };
 
       var gIdx = 0, gXp = 0, gStatus = [], gCmdOk = false, gProcessed = 0, gHintOn = false, gFinished = false;
       for (var gi = 0; gi < MISSIONS.length; gi++) gStatus.push("todo");
@@ -2062,7 +3404,8 @@
         document.getElementById("hudLv").textContent = "Lv." + (lv + 1);
         document.getElementById("hudLvName").textContent = G_LEVELS[lv].name;
         document.getElementById("hudXp").textContent = gXp;
-        document.getElementById("hudFill").style.width = Math.round(gXp / 400 * 100) + "%";
+        document.getElementById("hudXpMax").textContent = TOTAL_XP;
+        document.getElementById("hudFill").style.width = Math.round(gXp / TOTAL_XP * 100) + "%";
         document.getElementById("hudDone").textContent = passed + " / " + MISSIONS.length;
         var stars = "";
         for (var c = 0; c < G_CHAPTERS.length; c++){
@@ -2074,7 +3417,7 @@
 
         var html = "";
         G_CHAPTERS.forEach(function(chName, c){
-          html += '<div class="mp-ch"><div class="mp-ch-name">第' + G_CN.charAt(c) + "章 · " + chName + "</div>";
+          html += '<div class="mp-ch"><div class="mp-ch-name">第' + G_CN[c] + "章 · " + chName + "</div>";
           MISSIONS.forEach(function(m, i){
             if (m.ch !== c) return;
             var st = gStatus[i];
@@ -2089,14 +3432,14 @@
         if (gFinished){
           elChapter.textContent = "全部通关";
           elCount.textContent = "任务 " + MISSIONS.length + " / " + MISSIONS.length;
-          elTitle.textContent = "通关！你已是 Linux 大师";
-          elStory.textContent = "26 个任务全部走完：从 pwd 到 journalctl，你已经完整经历了一台 Debian 服务器的日常管理。想复习哪条命令，下面的手册随时可查；想再玩一遍，刷新页面即可重新开局。";
+          elTitle.textContent = "通关！你已是 Linux 宗师";
+          elStory.textContent = MISSIONS.length + " 个任务全部走完：从 pwd 到 journalctl，从运维走到写 Python 小程序、git 提交、打包发布，又练透了权限、文本三剑客、管道、进程管理、计划任务和实战巡检——一条完整的 Linux 学习路径你已经走通了。想复习哪条命令，下面的手册随时可查；想再玩一遍，刷新页面即可重新开局。";
           elGoalWrap.style.display = "none";
           elHint.hidden = true;
           elActions.style.display = "none";
         } else {
           var m = MISSIONS[gIdx];
-          elChapter.textContent = "第" + G_CN.charAt(m.ch) + "章 · " + G_CHAPTERS[m.ch];
+          elChapter.textContent = "第" + G_CN[m.ch] + "章 · " + G_CHAPTERS[m.ch];
           elCount.textContent = "任务 " + (gIdx + 1) + " / " + MISSIONS.length;
           elTitle.textContent = m.title;
           elStory.textContent = m.story;
@@ -2127,10 +3470,10 @@
         gIdx++;
         if (gIdx >= MISSIONS.length){
           gFinished = true;
-          printGame("★★★ 全部任务通关！从第一次敲 pwd 到查服务日志，你已经能独立管好一台 Debian 服务器了。");
+          printGame("★★★ 全部任务通关！从第一次敲 pwd 到独立写巡检脚本、设计划任务，你已经能独立管好一台 Debian 服务器了。");
         } else {
           var nm = MISSIONS[gIdx];
-          if (nm.ch !== m.ch) printGame("—— 第" + G_CN.charAt(nm.ch) + "章 · " + G_CHAPTERS[nm.ch] + " ——", "game-task");
+          if (nm.ch !== m.ch) printGame("—— 第" + G_CN[nm.ch] + "章 · " + G_CHAPTERS[nm.ch] + " ——", "game-task");
           activateMission();
         }
         renderGame();
@@ -2140,7 +3483,11 @@
         if (gFinished) return;
         gHintOn = !gHintOn;
         elHint.hidden = !gHintOn;
-        if (gHintOn) elHintCmd.textContent = MISSIONS[gIdx].hint;
+        if (gHintOn){
+          elHintCmd.textContent = MISSIONS[gIdx].hint;
+          var hk = MISSIONS[gIdx].hint.replace(/^sudo\s+/, "").split(/\s+/)[0].replace(/^\.\//, "");
+          document.getElementById("mpHintNote").textContent = CMD_NOTES[hk] ? " —— " + CMD_NOTES[hk] : "";
+        }
         this.textContent = gHintOn ? "收起提示" : "查看提示";
         termInput.focus();
       });
@@ -2185,6 +3532,7 @@
         var elObjective = document.getElementById("pxObjective");
         var elHintLine = document.getElementById("pxHintLine");
         var elHintCmd = document.getElementById("pxHintCmd");
+        var elHintNote = document.getElementById("pxHintNote");
         var elLog = document.getElementById("pxLog");
         var elInput = document.getElementById("pxInput");
         var elStage = document.getElementById("pxStage");
@@ -2297,6 +3645,21 @@
             "..nnnnnggnnnnn..",
             "..nnnnnnnnnnnn..",
             "...nnnnnnnnnn..."
+          ]},
+          file: { pal: PAL, map: [
+            "................",
+            "....ffffffff....",
+            "....ffffffqq....",
+            "....fffffqqq....",
+            "....ffffffff....",
+            "....fqqqqqqf....",
+            "....ffffffff....",
+            "....fqqqqqqf....",
+            "....ffffffff....",
+            "....fqqqqqqf....",
+            "....ffffffff....",
+            ".....ffffff.....",
+            "................"
           ]},
           ironbox: { pal: PAL, map: [
             "..qqqqqqqqqqqq..",
@@ -2503,13 +3866,87 @@
                 test: /^(kill\s+(-9\s+)?1|rm\s+(-\w+\s+)?boss|chmod\s+000\s+boss)$/, act: "slash", msg: "魔王被击碎，化作一地退出码！" },
               { x: 352, kind: "gate", gold: true, label: "胜利之门", goal: "最后一步：用 echo 喊出你的胜利宣言（echo 后面随便写一句话），推开胜利之门。", cmd: "echo 我通关了",
                 test: /^echo\s+\S/, act: "cast", msg: "大门打开，阳光洒了进来！" }
+            ]},
+          { name: "代码峡谷", sky: ["#8fc7e8", "#e8f3d8"], ground: "#7a5c38", groundTop: "#5da24e", decor: "forest",
+            npc: { x: 58, name: "脚本匠 · 老谢", pal: { r: "#2e7d74" },
+              greet: "小伙子，写过代码没有？我这峡谷里的机关全靠程序驱动——程序没写出来，门就不开。",
+              ask: "先帮我验一验运行环境：运行一下现成的 hello.py，在下面终端输入 python3 hello.py。能出声，这峡谷就认你。",
+              goal: "支线：帮老谢验证运行环境——运行 python3 hello.py（敲错不掉心）。",
+              cmd: "python3 hello.py",
+              test: /^python3\s+hello\.py$/,
+              done: "老谢竖起大拇指：「环境没问题！去吧，峡谷里的机关都等你来写。」",
+              fail: "老谢指指木牌：「文件名是 hello.py，前面加上 python3 再回车，就这么简单。」",
+              skip: "老谢摆摆手：「不验也罢，写代码时留神就是了。」" },
+            obs: [
+              { x: 118, kind: "file", label: "app.py", goal: "峡谷的机关需要一个程序文件，可它还不存在：用 touch 新建一个空文件 app.py。", cmd: "touch app.py",
+                test: /^touch\s+app\.py$/, act: "cast", msg: "一张空白的代码纸出现了——万事开头难，这一步最要紧。" },
+              { x: 224, kind: "chest", label: "写入代码", goal: "把代码写进 app.py：用 echo 加上重定向符号 >，随便写一句 print 代码进去。", cmd: "echo 'print(1)' > app.py",
+                test: /^echo\s+.+>\s*app\.py$/, act: "cast", msg: "代码写进去了，纸上泛起微光。" },
+              { x: 318, kind: "gate", label: "运行", goal: "石门由 app.py 驱动：用 python3 运行它，门就会开。", cmd: "python3 app.py",
+                test: /^python3\s+app\.py$/, act: "cast", msg: "程序跑起来了！石门缓缓打开。" },
+              { x: 392, kind: "ghost", label: "PID 502", goal: "门后还飘着一只旧服务的幽灵进程（PID 502）占着路，用 kill 送走它。", cmd: "kill 502",
+                test: /^kill\s+(-9\s+)?502$/, act: "slash", msg: "旧进程被终止，峡谷恢复了安静。" }
+            ]},
+          { name: "上线之塔", sky: ["#2c2145", "#171126"], ground: "#4c4260", groundTop: "#7768a0", decor: "throne",
+            npc: { x: 54, name: "运维长 · 阿塔", pal: { r: "#31557f" },
+              greet: "塔顶就是发布台。多少人卡在最后一步：代码写好了，却不会上线。",
+              ask: "上线之前先点名工具：查一下 git 的版本，在下面终端输入 git --version。工具在手，我才敢把发布台交给你。",
+              goal: "支线：帮阿塔点名工具——输入 git --version（敲错不掉心）。",
+              cmd: "git --version",
+              test: /^git\s+--version$/,
+              done: "阿塔点头：「git 2.39.5，在岗。去完成最后的上线仪式吧。」",
+              fail: "阿塔提醒：「就一条 git --version，查版本的命令都是这个套路。」",
+              skip: "阿塔叹了口气：「工具都不点名就上线？罢了，你自便。」" },
+            obs: [
+              { x: 118, kind: "seal", label: "repo", goal: "发布台被结界封着，其实它是一座空仓库：用 git init 初始化它，结界自解。", cmd: "git init",
+                test: /^git\s+init$/, act: "cast", msg: "仓库初始化完成，结界化作光点散去。" },
+              { x: 224, kind: "ironbox", label: "app.tar.gz", goal: "把项目 app 打成发布包：tar -czvf app.tar.gz app，一包在手，处处能装。", cmd: "tar -czvf app.tar.gz app",
+                test: /^tar\s+-\w*c\w*\s+app\.tar\.gz\s+app$/, act: "cast", msg: "发布包打好了，沉甸甸的，很有成就感。" },
+              { x: 330, kind: "gate", label: "deploy.sh", goal: "最后一步：用 bash 运行部署脚本 deploy.sh，塔门就会打开。", cmd: "bash deploy.sh",
+                test: /^bash\s+deploy\.sh$/, act: "cast", msg: "部署脚本跑完——项目正式上线！塔门大开。" }
+            ]},
+          { name: "文本沼泽", sky: ["#2e4038", "#16211c"], ground: "#3d4a33", groundTop: "#5f7a4a", decor: "grave",
+            npc: { x: 56, name: "日志婆婆 · 格蕾", pal: { r: "#6b4a7a" },
+              greet: "咳咳……这片沼泽的日志堆了三十年，错误全埋在字里行间，靠眼睛找，找到天黑也找不完。",
+              ask: "你帮婆婆一个忙：用 grep 在 app.log 里把带 ERROR 的行筛出来。筛出来了，婆婆这颗心就落了地。",
+              goal: "支线：帮格蕾婆婆筛错误日志——输入 grep ERROR app.log（敲错不掉心）。",
+              cmd: "grep ERROR app.log",
+              test: /^grep\s+(-\w+\s+)?ERROR\s+app\.log$/,
+              done: "婆婆扶了扶眼镜：「四条错误，一条不落——后生，你这手 grep 比婆婆的放大镜强多啦。」",
+              fail: "婆婆摆摆手：「关键词是 ERROR，文件是 app.log，中间用空格隔开，再试一次。」",
+              skip: "婆婆叹口气：「那婆婆自己慢慢翻吧，你赶路要紧。」" },
+            obs: [
+              { x: 118, kind: "plog", label: "app.log", goal: "沼泽上漂着一本日志 app.log，毒雾就是从错误行里冒出来的：用 grep 把 ERROR 行筛出来，毒雾自散。", cmd: "grep ERROR app.log",
+                test: /^grep\s+(-\w+\s+)?ERROR\s+app\.log$/, act: "cast", msg: "错误行被一条条挑了出来，毒雾散尽了！" },
+              { x: 224, kind: "chest", label: "server.conf", goal: "宝箱里锁着配置文件 server.conf，端口写错成了 8080：用 sed 把它替换成 80（记得 s/8080/80/g）。", cmd: "sed -i 's/8080/80/g' server.conf",
+                test: /^sed\s+(-i\s+)?'s\/8080\/80\/g'\s+server\.conf$/, act: "cast", msg: "配置改对了，宝箱咔哒一声弹开！" },
+              { x: 330, kind: "gate", label: "取列之门", goal: "石门只认「日期」这一列：用 awk 只打印 app.log 的第 1 列—— '{print $1}' 别写错。", cmd: "awk '{print $1}' app.log",
+                test: /^awk\s+'\{print\s+\$1\}'\s+app\.log$/, act: "cast", msg: "日期列整整齐齐飘出来，石门认账，开了！" }
+            ]},
+          { name: "定时钟楼", sky: ["#33244a", "#1a1229"], ground: "#4a3d5e", groundTop: "#7768a0", decor: "throne",
+            npc: { x: 54, name: "守钟人 · 克朗", pal: { r: "#7a6230" },
+              greet: "这座钟楼的每一个齿轮，都是一条定时任务。老夫守钟四十年，最怕的就是有人问：现在都排了哪些班？",
+              ask: "你来答：在下面终端输入 crontab -l，把当前的定时任务表列给老夫看。看对了，老夫送你一程。",
+              goal: "支线：帮克朗查看定时任务——输入 crontab -l（敲错不掉心）。",
+              cmd: "crontab -l",
+              test: /^crontab\s+-l$/,
+              done: "克朗眯眼扫过清单：「一块表走时准不准，先看它排没排班——你懂行。」",
+              fail: "克朗敲了敲钟壳：「就 crontab -l 这一条，-l 是 list，列清单的意思。」",
+              skip: "克朗摆摆手：「不查也罢，反正钟还在走。」" },
+            obs: [
+              { x: 118, kind: "seal", label: "crontab", goal: "钟楼大门被时间结界封着：打开定时任务编辑器 crontab -e，给钟楼排上新班，结界自解。", cmd: "crontab -e",
+                test: /^crontab\s+-e$/, act: "cast", msg: "新班排好了，齿轮咔咔咬合，结界碎成光点！" },
+              { x: 224, kind: "ghost", label: "PID 31337", goal: "一只假死的失控进程赖在齿轮里（PID 31337），普通 kill 叫不动它——直接 kill -9 强制终结！", cmd: "kill -9 31337",
+                test: /^kill\s+-9\s+31337$/, act: "slash", msg: "假死进程被强制清除，钟楼重新滴答起来！" },
+              { x: 330, kind: "gate", gold: true, label: "排序之门", goal: "最后一道门：把访客名单 names.txt 先排序、再去重，一条流水线送过去——sort names.txt | uniq。", cmd: "sort names.txt | uniq",
+                test: /^sort\s+names\.txt\s*\|\s*uniq$/, act: "cast", msg: "名单整整齐齐，钟楼大门洞开——你走完了全部九关！" }
             ]}
         ];
 
         /* ---------- state ---------- */
         var S = null;
-        var bestStars = [0, 0, 0, 0, 0];
-        var sideDone = [false, false, false, false, false];
+        var bestStars = LEVELS.map(function(){ return 0; });
+        var sideDone = LEVELS.map(function(){ return false; });
         function sideCount(){ return sideDone.filter(Boolean).length; }
         function curNpc(){ return curLevel().npc || null; }
         var particles = [];
@@ -2538,6 +3975,31 @@
         function totalStars(){
           return bestStars.reduce(function(a, b){ return a + b; }, 0);
         }
+        /* 每条游戏命令后面跟一句注释，说明这条命令是干什么的 */
+        var PX_CMD_NOTES = {
+          "rm": "删除文件，删后不进回收站，动手前先看清",
+          "chmod": "改文件权限：+x 加执行权限，数字每一位 = 读 4 + 写 2 + 执行 1",
+          "cat": "把文件内容全部打印出来看看",
+          "ls": "列出目录内容：-a 连隐藏文件一起列出",
+          "kill": "按进程号 PID 结束进程，-9 是强制终结",
+          "cp": "复制文件：cp 源文件 目标",
+          "mv": "移动文件；在同一目录里用就是改名",
+          "echo": "输出文字；配 > 还能把文字写进文件",
+          "touch": "新建一个空文件（文件已存在则更新修改时间）",
+          "python3": "运行 Python 程序；--version 查版本",
+          "pip": "Python 包管理：list 查看已装了哪些包",
+          "which": "查一个命令的可执行文件到底在哪",
+          "git": "版本控制：init 建仓库，--version 查版本",
+          "tar": "打包解包：-czvf 打包成 .tar.gz",
+          "bash": "用 bash 运行一个脚本文件",
+          "grep": "按关键词筛选，只留下包含它的行",
+          "sed": "批量替换文本：s/旧/新/g 是全局替换，-i 直接改文件",
+          "awk": "按列取数据：$1、$2 分别是第 1、第 2 列",
+          "crontab": "管理定时任务：-l 查看清单，-e 编辑任务表",
+          "sort": "把行排序；常接 | uniq 去掉重复行",
+          "talk": "和 NPC 对话，接下他的支线任务",
+          "go": "跳过支线 / 结束对话，继续前进"
+        };
         function renderPanel(){
           var lv = curLevel();
           elLvName.textContent = "第 " + (S.level + 1) + " / " + LEVELS.length + " 关 · " + lv.name;
@@ -2551,8 +4013,8 @@
           var hearts = "";
           for (var i = 0; i < 3; i++) hearts += i < S.hearts ? "♥" : "♡";
           elHearts.textContent = hearts;
-          elStarTotal.textContent = "★ " + totalStars() + " / 15";
-          elSideTotal.textContent = "支线 ✦ " + sideCount() + " / 5";
+          elStarTotal.textContent = "★ " + totalStars() + " / " + (LEVELS.length * 3);
+          elSideTotal.textContent = "支线 ✦ " + sideCount() + " / " + LEVELS.length;
           var npc = curNpc();
           var inNpc = npc && (S.npcStage === "greet" || S.npcStage === "quest" || S.npcStage === "cleared");
           elObjLabel.textContent = inNpc ? "支线 · NPC" : "当前目标";
@@ -2577,6 +4039,10 @@
             elObjective.textContent = "（第 " + (S.obsIdx + 1) + " / " + lv.obs.length + " 个障碍）" + ob.goal;
             elHintCmd.textContent = ob.cmd;
           }
+          var pxHk = elHintCmd.textContent.replace(/^sudo\s+/, "").split(/[\s|]/)[0].replace(/^\.\//, "");
+          elHintNote.textContent = elHintCmd.textContent.indexOf(" / ") >= 0
+            ? " —— 三招轮流用：kill 结束进程、rm 删除文件、chmod 000 剥光它的权限"
+            : (PX_CMD_NOTES[pxHk] ? " —— " + PX_CMD_NOTES[pxHk] : "");
           elHintLine.hidden = !S.hintOn || S.finished || S.obsIdx >= lv.obs.length;
           elHintBtn.textContent = S.hintOn ? "收起命令" : "显示命令";
         }
@@ -2910,7 +4376,7 @@
           elOvStars.textContent = "★".repeat(stars) + "☆".repeat(3 - stars);
           elOvTitle.textContent = last ? "全部通关！骑士重获自由" : "第 " + (S.level + 1) + " 关通关！";
           elOvText.textContent = last
-            ? "5 个关卡全部打通，一共收集 " + totalStars() + " / 15 颗星，支线任务完成 " + sideCount() + " / 5。一路上你用到的 rm、chmod、cat、ls、kill、cp、mv、sudo、echo，还有支线里的 python3、pip、which，都是真机上天天在用的命令——下面还有任务模式和 67 条命令手册等你继续练。"
+            ? LEVELS.length + " 个关卡全部打通，一共收集 " + totalStars() + " / " + (LEVELS.length * 3) + " 颗星，支线任务完成 " + sideCount() + " / " + LEVELS.length + "。一路上你用到的 rm、chmod、cat、ls、kill、cp、mv、sudo、echo、touch、python3、git、tar、grep、sed、awk、crontab，都是真机上天天在用的命令——下面还有任务模式和 75 条命令手册等你继续练。"
             : (S.mistakes === 0 ? "全程零失误，漂亮！" : "本关失误 " + S.mistakes + " 次。") +
               (sideDone[S.level] ? "本关支线也办成了 ✦。" : "本关的支线没接也没关系，重开本关还能补。") +
               " 下一关：" + LEVELS[S.level + 1].name + "。";
@@ -2934,7 +4400,7 @@
         elOvBtn.addEventListener("click", function(){
           var act = elOvBtn.getAttribute("data-act");
           if (act === "next") loadLevel(S.level + 1);
-          else if (act === "again"){ bestStars = [0, 0, 0, 0, 0]; sideDone = [false, false, false, false, false]; loadLevel(0); }
+          else if (act === "again"){ bestStars = LEVELS.map(function(){ return 0; }); sideDone = LEVELS.map(function(){ return false; }); loadLevel(0); }
           else loadLevel(S.level);
           elInput.focus();
         });
@@ -3034,6 +4500,811 @@
         }
         loadLevel(0);
         requestAnimationFrame(loop);
+      })();
+    </script>
+
+    <script>
+      /* ================= Markdown 训练营 ================= */
+      (function(){
+        "use strict";
+        function mesc(s){
+          return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+        function minline(s){
+          var codes = [];
+          s = s.replace(/`([^`\n]+)`/g, function(m, c){ codes.push(c); return "\u0001" + (codes.length - 1) + "\u0002"; });
+          s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, '<img alt="$1" src="$2" />');
+          s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+          s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+          s = s.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+          s = s.replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
+          s = s.replace(/(^|[^\w])_([^_\n]+)_(?![\w])/g, "$1<em>$2</em>");
+          s = s.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+          s = s.replace(/\u0001(\d+)\u0002/g, function(m, i){ return "<code>" + codes[+i] + "</code>"; });
+          return s;
+        }
+        function splitRow(l){
+          return l.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(function(c){ return c.trim(); });
+        }
+        function isSep(l){ return typeof l === "string" && l.indexOf("-") >= 0 && /^\s*\|?[\s:|-]+\|?\s*$/.test(l); }
+        function mdRender(src){
+          var lines = String(src).replace(/\r\n?/g, "\n").split("\n");
+          var out = [], i = 0;
+          function blank(l){ return /^\s*$/.test(l); }
+          function blockStart(l){
+            return /^```/.test(l) || /^(#{1,6})\s/.test(l) || /^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(l) ||
+              /^\s*>\s?/.test(l) || /^\s*([-*+]|\d+\.)\s+/.test(l);
+          }
+          while (i < lines.length){
+            var line = lines[i];
+            if (blank(line)){ i++; continue; }
+            if (/^```/.test(line)){
+              var buf = []; i++;
+              while (i < lines.length && !/^```\s*$/.test(lines[i])){ buf.push(lines[i]); i++; }
+              i++;
+              out.push("<pre><code>" + mesc(buf.join("\n")) + "</code></pre>");
+              continue;
+            }
+            var h = line.match(/^(#{1,6})\s+(.*)$/);
+            if (h){ out.push("<h" + h[1].length + ">" + minline(mesc(h[2].trim())) + "</h" + h[1].length + ">"); i++; continue; }
+            if (/^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(line)){ out.push("<hr />"); i++; continue; }
+            if (/^\s*>\s?/.test(line)){
+              var q = [];
+              while (i < lines.length && /^\s*>\s?/.test(lines[i])){ q.push(minline(mesc(lines[i].replace(/^\s*>\s?/, "")))); i++; }
+              out.push("<blockquote>" + q.join("<br />") + "</blockquote>");
+              continue;
+            }
+            if (line.indexOf("|") >= 0 && i + 1 < lines.length && isSep(lines[i + 1])){
+              var head = splitRow(line); i += 2; var rows = [];
+              while (i < lines.length && !blank(lines[i]) && lines[i].indexOf("|") >= 0){ rows.push(splitRow(lines[i])); i++; }
+              var t = '<div class="md-tablewrap"><table><thead><tr>' + head.map(function(c){ return "<th>" + minline(mesc(c)) + "</th>"; }).join("") + "</tr></thead><tbody>";
+              rows.forEach(function(r){ t += "<tr>" + r.map(function(c){ return "<td>" + minline(mesc(c)) + "</td>"; }).join("") + "</tr>"; });
+              out.push(t + "</tbody></table></div>");
+              continue;
+            }
+            if (/^\s*([-*+]|\d+\.)\s+/.test(line)){
+              var ordered = /^\s*\d+\.\s+/.test(line), items = [], hasTask = false;
+              while (i < lines.length && /^\s*([-*+]|\d+\.)\s+/.test(lines[i])){
+                var raw = lines[i].replace(/^\s*([-*+]|\d+\.)\s+/, "");
+                var tk = raw.match(/^\[( |x|X)\]\s+(.*)$/);
+                if (tk){ hasTask = true; items.push({ task:true, done: tk[1].toLowerCase() === "x", text: tk[2] }); }
+                else items.push({ task:false, text: raw });
+                i++;
+              }
+              var tag = ordered ? "ol" : "ul";
+              out.push("<" + tag + (hasTask ? ' class="md-tasks"' : "") + ">" + items.map(function(it){
+                if (it.task) return '<li class="md-task"><span class="md-box">' + (it.done ? "☑" : "☐") + "</span>" + minline(mesc(it.text)) + "</li>";
+                return "<li>" + minline(mesc(it.text)) + "</li>";
+              }).join("") + "</" + tag + ">");
+              continue;
+            }
+            var p = [];
+            while (i < lines.length && !blank(lines[i]) && !blockStart(lines[i]) &&
+                   !(lines[i].indexOf("|") >= 0 && i + 1 < lines.length && isSep(lines[i + 1]))){
+              p.push(minline(mesc(lines[i].trim()))); i++;
+            }
+            if (p.length) out.push("<p>" + p.join("<br />") + "</p>"); else i++;
+          }
+          return out.join("\n");
+        }
+
+        /* ---------- 语法速查卡 ---------- */
+        var MD_CARDS = [
+          { name:"标题", src:"# 一级标题\n## 二级标题\n### 三级标题", note:"# 号越多级别越小，最多六级；# 后面必须空一格再写文字。" },
+          { name:"加粗与斜体", src:"这是 **加粗**，这是 *斜体*，\n这是 ***又粗又斜***。", note:"星号把文字包起来：一颗是斜体、两颗是加粗、三颗是又粗又斜，星号要成对出现。" },
+          { name:"无序列表", src:"- 苹果\n- 香蕉\n- 橙子", note:"行首一个 - 加空格就是一项；* 和 + 也能当列表符号，全文统一用一种最清爽。" },
+          { name:"有序列表", src:"1. 打开终端\n2. 输入命令\n3. 按下回车执行", note:"数字加点再空格；数字写错顺序也没关系，渲染时会自动重新编号。" },
+          { name:"链接", src:"[Cola Ice X 的博客](https://cola.dot2.nyc.mn/)", note:"方括号里是显示文字，小括号里是网址，两部分之间不能有空格。" },
+          { name:"图片", src:"![演示图片](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+CiAgPHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiNiZmUzZjAiLz4KICA8Y2lyY2xlIGN4PSIxOTgiIGN5PSIzNCIgcj0iMTciIGZpbGw9IiNmNmM5NDUiLz4KICA8cG9seWdvbiBwb2ludHM9IjAsMTYwIDcyLDU4IDE0NCwxNjAiIGZpbGw9IiM1YjhjNWEiLz4KICA8cG9seWdvbiBwb2ludHM9IjgyLDE2MCAxNjIsNDIgMjQyLDE2MCIgZmlsbD0iIzNmNmQ0ZSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTYyLDQyIDE3OSw2NiAxNDUsNjYiIGZpbGw9IiNmZmZmZmYiLz4KICA8cmVjdCB5PSIxNDAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiM3ZmFlNmUiLz4KPC9zdmc+Cg==)", note:"比链接多一个开头的 !；方括号里写替代文字——图片加载不出来时就显示它。" },
+          { name:"引用", src:"> 学而不思则罔，\n> 思而不学则殆。", note:"行首一个 > 就是引用；引用的每一行都要加，中间空行也只写一个 >。" },
+          { name:"代码", src:"先运行 `git status` 看看状态，\n再把脚本写进代码块：\n\n```bash\n# 在终端里运行这两行\ngit add .\ngit commit -m \"存档\"\n```", note:"行内代码用一对反引号 ` 包住；代码块用三个反引号包起来，后面跟语言名（bash、python）渲染时还能语法高亮。" },
+          { name:"表格", src:"| 命令 | 作用 |\n| --- | --- |\n| ls | 列出文件 |\n| cd | 切换目录 |", note:"第一行是表头，第二行是分隔线（--- 的个数随意）；冒号控制对齐： :--- 左对齐、---: 右对齐、:---: 居中。" },
+          { name:"任务列表", src:"- [x] 写完 README\n- [ ] 推到 GitHub\n- [ ] 部署上线", note:"列表项里加 [ ] 是待办、[x] 是已完成；在 GitHub 上会渲染成可以点选的清单。" },
+          { name:"分割线与删除线", src:"上半部分写完了。\n\n---\n\n这句 ~~写错了，划掉~~，这句保留。", note:"单独一行三个 - 就是一条分割线；一对 ~~ 把文字包住就是删除线。" },
+          { name:"段落与换行", src:"这是第一段。\n\n空一行，就开始新的一段。\n行尾加两个空格再回车，  \n就是段落内换行。", note:"Markdown 认段落靠空行：在一行末尾加两个空格再回车，可以在同一段里强制换行。" }
+        ];
+        var mdGrid = document.getElementById("mdGrid");
+        mdGrid.innerHTML = MD_CARDS.map(function(c){
+          return '<div class="md-card"><h4>' + mesc(c.name) + '</h4><pre class="md-src">' + mesc(c.src) +
+            '</pre><div class="md-view md-render">' + mdRender(c.src) + '</div><p class="md-note">' + mesc(c.note) + "</p></div>";
+        }).join("");
+
+        /* ---------- 训练场 ---------- */
+        function mok(msg){ return { ok:true, msg: msg || "过关！写对了。" }; }
+        function mno(msg){ return { ok:false, msg: msg }; }
+        function liCount(html){ return (html.match(/<li[ >]/g) || []).length; }
+        var MD_TASKS = [
+          { title:"第一个标题",
+            story:"你新建了一份学习笔记，第一件事是给它起一个醒目的大标题。",
+            goal:"写一个一级标题，文字是「我的学习笔记」",
+            starter:"在这里写下标题…",
+            hint:"# 我的学习笔记",
+            note:"# 后面空一格再写标题文字；一级标题只有一个 #。",
+            check:function(s, h){
+              return /<h1>我的学习笔记<\/h1>/.test(h) ? mok("一级标题就位！记住：一个 # 是最大的一级标题。")
+                : mno("还没看到一级标题：一行开头写一个 #、空一格，再写「我的学习笔记」。");
+            } },
+          { title:"划重点",
+            story:"笔记里有一句座右铭，你想把最关键的部分标出来。",
+            goal:"写一句话，里面要有加粗的「每天进步一点点」和斜体的「贵在坚持」（句子的其余部分随意）",
+            starter:"学习 Linux 的秘诀是……",
+            hint:"学习 Linux 的秘诀是 **每天进步一点点**，*贵在坚持*。",
+            note:"两颗星号包住的是加粗，一颗星号包住的是斜体，星号要紧贴文字、成对出现。",
+            check:function(s, h){
+              if (!/<strong>每天进步一点点<\/strong>/.test(h)) return mno("没找到加粗的「每天进步一点点」：用一对 ** 把它包起来。");
+              if (!/<em>贵在坚持<\/em>/.test(h)) return mno("没找到斜体的「贵在坚持」：用一对 * 把它包起来。");
+              return mok("加粗和斜体都对了——这正是 README 里标重点的常用手法。");
+            } },
+          { title:"购物清单",
+            story:"周末要去超市，你用 Markdown 先把清单列出来。",
+            goal:"用无序列表列至少 3 样东西，其中必须有「牛奶」和「鸡蛋」",
+            starter:"- 苹果\n- \n- ",
+            hint:"- 苹果\n- 牛奶\n- 鸡蛋",
+            note:"每行以「- 」开头就是列表的一项；最后一项写完记得回车。",
+            check:function(s, h){
+              if (!/<ul>/.test(h)) return mno("还没生成列表：每行以「- 」开头试试。");
+              if (liCount(h) < 3) return mno("列表至少要 3 项，现在只有 " + liCount(h) + " 项。");
+              if (h.indexOf("牛奶") < 0 || h.indexOf("鸡蛋") < 0) return mno("清单里还缺「牛奶」或「鸡蛋」，补上再检查。");
+              return mok("清单列好了！手机上打开任何 Markdown 编辑器都能这样记事。");
+            } },
+          { title:"部署三步走",
+            story:"项目要上线了，你把部署流程按顺序记进笔记，免得漏步。",
+            goal:"用有序列表写 3 个步骤，分别包含「打包」「上传」「重启」",
+            starter:"1. \n2. \n3. ",
+            hint:"1. 打包项目文件\n2. 上传到服务器\n3. 重启服务生效",
+            note:"行首「数字. 」就是有序列表，数字从 1 开始逐个加一。",
+            check:function(s, h){
+              if (!/<ol>/.test(h)) return mno("需要有序列表：每行以「1. 」「2. 」「3. 」开头。");
+              if (liCount(h) < 3) return mno("要有完整的 3 个步骤。");
+              if (h.indexOf("打包") < 0 || h.indexOf("上传") < 0 || h.indexOf("重启") < 0) return mno("三个关键词缺一不可：打包、上传、重启。");
+              return mok("步骤齐了。有顺序的事情，就用有序列表。");
+            } },
+          { title:"挂个链接",
+            story:"你想在笔记里给自己的博客留一个入口，点一下就能跳过去。",
+            goal:"写一个链接：显示文字是「Cola Ice X 的博客」，指向 https://cola.dot2.nyc.mn/",
+            starter:"我的博客在这里：（把链接补上）",
+            hint:"[Cola Ice X 的博客](https://cola.dot2.nyc.mn/)",
+            note:"[文字](网址) 是链接的固定句式：方括号放显示文字，小括号放网址，中间不要空格。",
+            check:function(s, h){
+              return /<a href="https:\/\/cola\.dot2\.nyc\.mn\/?"[^>]*>Cola Ice X 的博客<\/a>/.test(h) ? mok("链接挂好了，预览区里点一下就能跳到你的博客。")
+                : mno("链接不对：格式是 [Cola Ice X 的博客](https://cola.dot2.nyc.mn/)，注意方括号和小括号紧挨着。");
+            } },
+          { title:"配张图",
+            story:"文字说明太干巴，你决定给笔记配一张演示图。",
+            goal:"插入图片：替代文字写「演示图」，图片地址是 data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+CiAgPHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiNiZmUzZjAiLz4KICA8Y2lyY2xlIGN4PSIxOTgiIGN5PSIzNCIgcj0iMTciIGZpbGw9IiNmNmM5NDUiLz4KICA8cG9seWdvbiBwb2ludHM9IjAsMTYwIDcyLDU4IDE0NCwxNjAiIGZpbGw9IiM1YjhjNWEiLz4KICA8cG9seWdvbiBwb2ludHM9IjgyLDE2MCAxNjIsNDIgMjQyLDE2MCIgZmlsbD0iIzNmNmQ0ZSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTYyLDQyIDE3OSw2NiAxNDUsNjYiIGZpbGw9IiNmZmZmZmYiLz4KICA8cmVjdCB5PSIxNDAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiM3ZmFlNmUiLz4KPC9zdmc+Cg==",
+            starter:"下面是演示图：\n\n（在这里插入图片）",
+            hint:"![演示图](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+CiAgPHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiNiZmUzZjAiLz4KICA8Y2lyY2xlIGN4PSIxOTgiIGN5PSIzNCIgcj0iMTciIGZpbGw9IiNmNmM5NDUiLz4KICA8cG9seWdvbiBwb2ludHM9IjAsMTYwIDcyLDU4IDE0NCwxNjAiIGZpbGw9IiM1YjhjNWEiLz4KICA8cG9seWdvbiBwb2ludHM9IjgyLDE2MCAxNjIsNDIgMjQyLDE2MCIgZmlsbD0iIzNmNmQ0ZSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTYyLDQyIDE3OSw2NiAxNDUsNjYiIGZpbGw9IiNmZmZmZmYiLz4KICA8cmVjdCB5PSIxNDAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiM3ZmFlNmUiLz4KPC9zdmc+Cg==)",
+            note:"图片就是链接前面多一个 !：![替代文字](图片地址)。",
+            check:function(s, h){
+              return /<img[^>]*alt="演示图"[^>]*src="assets\/md-demo\.svg"/.test(h) || /!\[\s*演示图\s*\]\(assets\/md-demo\.svg\)/.test(s)
+                ? mok("图配上了！替代文字别偷懒——图挂了、读屏软件都靠它。")
+                : mno("还没插入图片：照着 ![演示图](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+CiAgPHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiNiZmUzZjAiLz4KICA8Y2lyY2xlIGN4PSIxOTgiIGN5PSIzNCIgcj0iMTciIGZpbGw9IiNmNmM5NDUiLz4KICA8cG9seWdvbiBwb2ludHM9IjAsMTYwIDcyLDU4IDE0NCwxNjAiIGZpbGw9IiM1YjhjNWEiLz4KICA8cG9seWdvbiBwb2ludHM9IjgyLDE2MCAxNjIsNDIgMjQyLDE2MCIgZmlsbD0iIzNmNmQ0ZSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTYyLDQyIDE3OSw2NiAxNDUsNjYiIGZpbGw9IiNmZmZmZmYiLz4KICA8cmVjdCB5PSIxNDAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiM3ZmFlNmUiLz4KPC9zdmc+Cg==) 写，别漏了开头的 !。");
+            } },
+          { title:"引一句名言",
+            story:"写读后感时你想引用《论语》里的一句话，让它和正文区分开。",
+            goal:"用引用块写下包含「学而不思则罔」的句子",
+            starter:"孔子说过：\n\n（引用写在这里）",
+            hint:"> 学而不思则罔，思而不学则殆。",
+            note:"行首一个 > 加空格，就是引用；引用的每一行行首都要有 >。",
+            check:function(s, h){
+              return /<blockquote>[\s\S]*学而不思则罔/.test(h) ? mok("引用到位。访谈、名言、重点摘录都用引用块排。")
+                : mno("还没形成引用块：行首加「> 」，再写上含「学而不思则罔」的句子。");
+            } },
+          { title:"行内代码",
+            story:"你在教程里提到一条命令，想让它在句子里以代码的样子显示。",
+            goal:"写一句话，提到「提交之前先运行 git status 看状态」，并把 git status 用行内代码包起来（不要用代码块）",
+            starter:"提交代码之前，先运行  查看一下当前状态。",
+            hint:"提交代码之前，先运行 `git status` 查看一下当前状态。",
+            note:"一对反引号 ` 把命令名包住，它就会在句子里以等宽字体显示。反引号在键盘左上角、数字 1 左边。",
+            check:function(s, h){
+              if (/<pre>/.test(h)) return mno("这题要用行内代码，不要用三个反引号的代码块。");
+              return /<code>git status<\/code>/.test(h) ? mok("对了！行内代码就是给句子里的命令、文件名「穿制服」用的。")
+                : mno("没找到行内代码：用一对反引号把 git status 包起来。");
+            } },
+          { title:"贴段代码",
+            story:"教程写到一半，你要把一段脚本原样贴出来，让读者复制去运行。",
+            goal:"用代码块贴一段脚本，里面有一行 echo \"hello markdown\"",
+            starter:"把下面这段脚本保存运行，就能打印一句话：\n\n（代码块写在这里）",
+            hint:"```bash\necho \"hello markdown\"\n```",
+            note:"三个反引号单独占一行开头（后面可跟语言名 bash），代码写中间，最后再一行三个反引号收尾。",
+            check:function(s, h){
+              return /```[a-z]*\s*\n[\s\S]*?echo "hello markdown"[\s\S]*?```/.test(s) ? mok("代码块贴好了——粘贴代码、配置、日志，都交给它。")
+                : mno("代码块没成型：开头一行三个反引号，中间放 echo \"hello markdown\"，结尾再一行三个反引号。");
+            } },
+          { title:"做张表格",
+            story:"期中成绩出来了，你用表格把成绩单排得整整齐齐。",
+            goal:"做一个表格：表头是「姓名」和「成绩」两列，下面至少 2 行数据",
+            starter:"（在这里写表格）",
+            hint:"| 姓名 | 成绩 |\n| --- | --- |\n| 小明 | 95 |\n| 小红 | 88 |",
+            note:"每行用 | 分隔单元格；表头下面必须有一行 | --- | --- | 分隔线，表格才成立。",
+            check:function(s, h){
+              if (!/<th>姓名<\/th>/.test(h) || !/<th>成绩<\/th>/.test(h)) return mno("表头不对：第一行写 | 姓名 | 成绩 |，别忘了第二行的分隔线。");
+              if (((h.match(/<tr>/g) || []).length) < 3) return mno("数据至少 2 行（表头行 + 2 行数据），再添一行。");
+              return mok("表格完成！写周报、列清单、比参数，表格是最清楚的排法。");
+            } },
+          { title:"待办清单",
+            story:"新的一周开始，你列了三件要做的事——第一件其实已经做完了。",
+            goal:"用任务列表写 3 项待办：第 1 项已完成（[x]），后 2 项未完成（[ ]），内容自拟",
+            starter:"- [ ] \n- [ ] \n- [ ] ",
+            hint:"- [x] 学完 Markdown 语法\n- [ ] 写一篇博客\n- [ ] 推到 GitHub",
+            note:"任务列表 = 无序列表 + [ ]：空格是待办，里面填 x 是已完成。",
+            check:function(s, h){
+              var m = s.match(/^- \[( |x|X)\] .+$/gm) || [];
+              if (m.length !== 3) return mno("需要正好 3 项任务，现在识别到 " + m.length + " 项：每行以「- [ ] 」或「- [x] 」开头，后面写内容。");
+              if (!/\[(x|X)\]/.test(m[0])) return mno("第 1 项要标记为已完成：把 [ ] 里的空格换成 x。");
+              if (/\[(x|X)\]/.test(m[1]) || /\[(x|X)\]/.test(m[2])) return mno("后 2 项是未完成：方括号里留一个空格 [ ] 就好。");
+              return mok("清单打勾的规矩学会了——GitHub 的 Issue 和 PR 里天天用它。");
+            } },
+          { title:"毕业作品：项目 README",
+            story:"最后，把学到的全用上：给你的 Linux 学习项目写一份像样的 README。",
+            goal:"一份完整的 README，要同时有：一级标题、一处加粗、至少 3 项的功能清单、一个代码块、一个链接",
+            starter:"# 项目名\n\n（在这里介绍你的项目，再列功能清单、放一段代码、挂一个链接）",
+            hint:"# 我的 Linux 学习笔记\n\n这是我用 **边闯关边练** 的方式攒下来的命令笔记。\n\n## 功能清单\n\n- 79 个闯关任务\n- 模拟终端实操\n- 命令速查手册\n\n## 快速开始\n\n```bash\n# 浏览器打开即可\nopen index.html\n```\n\n更多内容看 [我的博客](https://cola.dot2.nyc.mn/)。",
+            note:"README 的经典结构：标题 → 一句话介绍 → 功能清单 → 使用方法（代码块）→ 更多链接。",
+            check:function(s, h){
+              if (!/<h1>/.test(h)) return mno("缺一级标题：用 # 开头写项目名。");
+              if (!/<strong>/.test(h)) return mno("缺加粗：用 ** 把介绍里的重点包起来。");
+              if (liCount(h) < 3) return mno("缺功能清单：用 - 列出至少 3 项。");
+              if (!/<pre><code>/.test(h)) return mno("缺代码块：用三个反引号包一段命令或代码。");
+              if (!/<a href=/.test(h)) return mno("缺链接：用 [文字](网址) 挂一个链接。");
+              return mok("五要素齐全——标题、加粗、清单、代码块、链接全都有。Markdown 训练营，通关！");
+            } }
+        ];
+
+        var mdEditor = document.getElementById("mdEditor");
+        var mdPreview = document.getElementById("mdPreview");
+        var mdFeedback = document.getElementById("mdFeedback");
+        var mdList = document.getElementById("mdList");
+        var mdCur = 0;
+        var mdDone = MD_TASKS.map(function(){ return false; });
+        function mdDoneCount(){ return mdDone.filter(Boolean).length; }
+        function mdUpdatePreview(){
+          var html = mdRender(mdEditor.value);
+          mdPreview.innerHTML = html || '<p style="color:var(--ink-faint);margin:0">（预览会显示在这里）</p>';
+        }
+        function mdRenderList(){
+          mdList.innerHTML = MD_TASKS.map(function(t, i){
+            var cls = "md-item" + (mdDone[i] ? " done" : "") + (i === mdCur ? " current" : "");
+            var mark = mdDone[i] ? "✓" : (i === mdCur ? "▶" : "·");
+            return '<button type="button" class="' + cls + '" data-i="' + i + '"><span class="md-mark">' + mark +
+              "</span><span>" + (i + 1) + ". " + mesc(t.title) + "</span></button>";
+          }).join("");
+          var btns = mdList.querySelectorAll("button");
+          for (var k = 0; k < btns.length; k++){
+            btns[k].addEventListener("click", function(){ mdLoadTask(+this.getAttribute("data-i")); });
+          }
+        }
+        function mdLoadTask(i){
+          mdCur = i;
+          var t = MD_TASKS[i];
+          document.getElementById("mdTaskNo").textContent = "第 " + (i + 1) + " 题 / 共 " + MD_TASKS.length + " 题";
+          document.getElementById("mdTaskCount").textContent = "已完成 " + mdDoneCount() + " / " + MD_TASKS.length;
+          document.getElementById("mdTaskTitle").textContent = t.title;
+          document.getElementById("mdTaskStory").textContent = t.story;
+          document.getElementById("mdTaskGoal").textContent = t.goal;
+          document.getElementById("mdHint").hidden = true;
+          document.getElementById("mdNextBtn").hidden = !mdDone[i] || i === MD_TASKS.length - 1;
+          mdEditor.value = t.starter;
+          mdFeedback.className = "md-feedback";
+          mdFeedback.textContent = "";
+          mdUpdatePreview();
+          mdRenderList();
+        }
+        mdEditor.addEventListener("input", mdUpdatePreview);
+        document.getElementById("mdHintBtn").addEventListener("click", function(){
+          var box = document.getElementById("mdHint");
+          document.getElementById("mdHintSrc").textContent = MD_TASKS[mdCur].hint;
+          document.getElementById("mdHintNote").textContent = MD_TASKS[mdCur].note;
+          box.hidden = !box.hidden;
+        });
+        document.getElementById("mdCheckBtn").addEventListener("click", function(){
+          var r = MD_TASKS[mdCur].check(mdEditor.value, mdRender(mdEditor.value));
+          if (r.ok) mdDone[mdCur] = true;
+          mdFeedback.className = "md-feedback show " + (r.ok ? "ok" : "no");
+          mdFeedback.textContent = (r.ok ? "✓ " : "✗ ") + r.msg;
+          document.getElementById("mdNextBtn").hidden = !mdDone[mdCur] || mdCur === MD_TASKS.length - 1;
+          document.getElementById("mdTaskCount").textContent = "已完成 " + mdDoneCount() + " / " + MD_TASKS.length +
+            (mdDoneCount() === MD_TASKS.length ? " · 全部通关！" : "");
+          mdRenderList();
+        });
+        document.getElementById("mdNextBtn").addEventListener("click", function(){
+          if (mdCur < MD_TASKS.length - 1) mdLoadTask(mdCur + 1);
+        });
+        mdLoadTask(0);
+      })();
+    </script>
+
+    <script>
+      /* ================= 顶部标签页切换 ================= */
+      (function(){
+        "use strict";
+        var btns = Array.prototype.slice.call(document.querySelectorAll(".tab-btn"));
+        var panes = Array.prototype.slice.call(document.querySelectorAll("[data-tab]"));
+        function activate(name){
+          btns.forEach(function(b){
+            var on = b.getAttribute("data-target") === name;
+            b.classList.toggle("active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+            b.tabIndex = on ? 0 : -1;
+          });
+          panes.forEach(function(p){
+            p.classList.toggle("tab-hidden", p.getAttribute("data-tab") !== name);
+          });
+        }
+        btns.forEach(function(b, i){
+          b.addEventListener("click", function(){ activate(b.getAttribute("data-target")); });
+          b.addEventListener("keydown", function(e){
+            var j = null;
+            if (e.key === "ArrowRight") j = (i + 1) % btns.length;
+            else if (e.key === "ArrowLeft") j = (i + btns.length - 1) % btns.length;
+            else if (e.key === "Home") j = 0;
+            else if (e.key === "End") j = btns.length - 1;
+            if (j !== null){
+              e.preventDefault();
+              activate(btns[j].getAttribute("data-target"));
+              btns[j].focus();
+            }
+          });
+        });
+        activate("missions");
+      })();
+    </script>
+
+    <script>
+      /* ================= 鼠标特效：拖尾 / 光标 / 聚光 / 倾斜 / 爆发 ================= */
+      (function(){
+        "use strict";
+        var fine = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+        var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var panel = document.getElementById("fxPanel");
+        var reopen = document.getElementById("fxReopen");
+        var closeBtn = document.getElementById("fxClose");
+        if (closeBtn) closeBtn.addEventListener("click", function(){ if(panel) panel.style.display="none"; if(reopen) reopen.classList.add("show"); });
+        if (reopen) reopen.addEventListener("click", function(){ if(panel) panel.style.display=""; reopen.classList.remove("show"); });
+        if (!fine || reduced) {
+          // Touch / reduced-motion: keep the panel as explanation, no canvas loop.
+          var c0 = document.getElementById("fxCanvas"); if (c0) c0.style.display = "none";
+          return;
+        }
+
+        var state = { trail:true, cursor:true, spot:true, tilt:true, burst:true };
+        var canvas = document.getElementById("fxCanvas");
+        var ctx = canvas.getContext("2d");
+        var glow = document.getElementById("fxGlow");
+        var ring = document.getElementById("fxRing");
+        var dot = document.getElementById("fxDot");
+        var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+        function resize(){
+          W = window.innerWidth; H = window.innerHeight;
+          canvas.width = Math.floor(W * DPR); canvas.height = Math.floor(H * DPR);
+          canvas.style.width = W + "px"; canvas.style.height = H + "px";
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize(); window.addEventListener("resize", resize);
+
+        var CHARS = ["$", ">", "_", "/", "~", "#", "*", ";", "|", "{", "}", ":", "-", "+", "="];
+        var COLORS = ["#3fb950", "#3fb950", "#2ea043", "#7ee787", "#d9930d", "#58a6ff"];
+        var parts = [];
+        function spawn(x, y, opts){
+          opts = opts || {};
+          var n = opts.n || 1;
+          for (var i = 0; i < n; i++) {
+            if (parts.length > 180) parts.shift();
+            var ang = opts.burst ? (Math.random() * Math.PI * 2) : (-Math.PI/2 + (Math.random()-.5)*1.1);
+            var spd = opts.burst ? (1.2 + Math.random()*3.4) : (0.25 + Math.random()*0.9);
+            parts.push({
+              x: x + (Math.random()-.5)*(opts.burst?6:14),
+              y: y + (Math.random()-.5)*(opts.burst?6:10),
+              vx: Math.cos(ang)*spd + (opts.vx||0),
+              vy: Math.sin(ang)*spd + (opts.burst ? 0 : -0.35 - Math.random()*0.5),
+              life: 0, max: opts.burst ? (34 + Math.random()*22) : (38 + Math.random()*30),
+              ch: CHARS[Math.floor(Math.random()*CHARS.length)],
+              size: opts.burst ? (11 + Math.random()*9) : (10 + Math.random()*8),
+              rot: (Math.random()-.5)*0.7, vr: (Math.random()-.5)*0.06,
+              color: COLORS[Math.floor(Math.random()*COLORS.length)],
+              burst: !!opts.burst
+            });
+          }
+        }
+
+        var mx = W/2, my = H/2, rx = mx, ry = my, gx = mx, gy = my, lastX = mx, lastY = my, lastSpawn = 0, seen = false;
+        var tiltEl = null;
+
+        function setSpot(el, x, y){
+          var r = el.getBoundingClientRect();
+          el.style.setProperty("--mx", ((x - r.left) / Math.max(r.width,1) * 100) + "%");
+          el.style.setProperty("--my", ((y - r.top) / Math.max(r.height,1) * 100) + "%");
+          return r;
+        }
+        function clearTilt(el){
+          if (!el) return;
+          el.classList.remove("fx-tilting");
+          el.style.transform = "";
+          el.style.transition = "transform .35s ease";
+          setTimeout(function(){ if(el) el.style.transition=""; }, 360);
+        }
+        function applyTilt(el, x, y){
+          if (!state.tilt) return;
+          var r = el.getBoundingClientRect();
+          if (r.height > 520 || r.width < 180) return;
+          var px = (x - r.left) / r.width - .5;
+          var py = (y - r.top) / r.height - .5;
+          el.classList.add("fx-tilting");
+          el.style.transition = "transform .08s linear";
+          el.style.transform = "perspective(900px) rotateX(" + (-py*4.5).toFixed(2) + "deg) rotateY(" + (px*5.5).toFixed(2) + "deg) translateY(-1px)";
+        }
+
+        document.addEventListener("mousemove", function(e){
+          mx = e.clientX; my = e.clientY;
+          if (!seen) { seen = true; rx = gx = mx; ry = gy = my; if(state.cursor){ glow.classList.add("on"); ring.classList.add("on"); dot.classList.add("on","blink"); } }
+          var now = performance.now();
+          var dist = Math.hypot(mx - lastX, my - lastY);
+          if (state.trail && dist > 10 && now - lastSpawn > 28) {
+            spawn(mx, my, { n: dist > 55 ? 3 : 2 });
+            lastX = mx; lastY = my; lastSpawn = now;
+          }
+          // hover grow
+          var hov = e.target && e.target.closest ? e.target.closest("a,button,input,textarea,select,summary,label,.card,.tab-btn") : null;
+          ring.classList.toggle("hovering", !!hov);
+          // spotlight + tilt target
+          var card = e.target && e.target.closest ? e.target.closest(".card,.concept,.md-card,.tab-btn") : null;
+          if (card) {
+            if (state.spot) setSpot(card, mx, my);
+            if (tiltEl && tiltEl !== card) clearTilt(tiltEl);
+            tiltEl = card;
+            applyTilt(card, mx, my);
+          } else if (tiltEl) { clearTilt(tiltEl); tiltEl = null; }
+        }, { passive:true });
+
+        document.addEventListener("mouseleave", function(){ glow.classList.remove("on"); ring.classList.remove("on"); dot.classList.remove("on"); if(tiltEl){clearTilt(tiltEl); tiltEl=null;} });
+        document.addEventListener("mousedown", function(e){
+          ring.classList.add("down");
+          if (state.burst) {
+            spawn(e.clientX, e.clientY, { n: 14, burst:true });
+            if (!reduced) {
+              var rip = document.createElement("span");
+              rip.className = "fx-ripple"; rip.style.left = e.clientX + "px"; rip.style.top = e.clientY + "px";
+              document.body.appendChild(rip);
+              setTimeout(function(){ rip.remove(); }, 680);
+            }
+          }
+        });
+        document.addEventListener("mouseup", function(){ ring.classList.remove("down"); });
+
+        // Panel toggles (in-memory only for this session)
+        if (panel) panel.addEventListener("click", function(e){
+          var chip = e.target.closest ? e.target.closest(".fx-chip") : null;
+          if (!chip) return;
+          var key = chip.getAttribute("data-fx");
+          state[key] = !state[key];
+          chip.setAttribute("aria-pressed", state[key] ? "true" : "false");
+          if (key === "spot") document.body.classList.toggle("fx-spot-on", state.spot);
+          if (key === "cursor") {
+            var on = state.cursor && seen;
+            glow.classList.toggle("on", on); ring.classList.toggle("on", on); dot.classList.toggle("on", on);
+          }
+          if (key === "tilt" && !state.tilt && tiltEl) { clearTilt(tiltEl); tiltEl = null; }
+          if (key === "trail" && !state.trail) parts = parts.filter(function(p){ return p.burst; });
+          if (!state.trail && !state.cursor && !state.burst) document.body.classList.add("fx-off"); else document.body.classList.remove("fx-off");
+        });
+
+        function loop(){
+          // follower easing: dot is tight, ring lags, glow lags more — creates trail feel
+          rx += (mx - rx) * 0.20; ry += (my - ry) * 0.20;
+          gx += (mx - gx) * 0.065; gy += (my - gy) * 0.065;
+          if (state.cursor) {
+            dot.style.transform = "translate(" + mx + "px," + my + "px)";
+            ring.style.transform = "translate(" + rx + "px," + ry + "px)";
+            glow.style.transform = "translate(" + gx + "px," + gy + "px)";
+          }
+          ctx.clearRect(0, 0, W, H);
+          for (var i = parts.length - 1; i >= 0; i--) {
+            var p = parts[i]; p.life++;
+            p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+            if (p.burst) { p.vx *= 0.94; p.vy = p.vy * 0.94 + 0.055; } else { p.vy -= 0.008; p.vx *= 0.985; }
+            var t = p.life / p.max;
+            if (t >= 1) { parts.splice(i,1); continue; }
+            var alpha = t < .15 ? t/.15 : 1 - (t-.15)/.85;
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, alpha) * (p.burst ? .95 : .8);
+            ctx.font = "700 " + p.size + "px 'JetBrains Mono', monospace";
+            ctx.fillStyle = p.color;
+            ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+            ctx.fillText(p.ch, 0, 0);
+            ctx.restore();
+          }
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        // Welcome burst so the effect is discoverable without hunting
+        setTimeout(function(){
+          if (state.burst) spawn(Math.min(W*0.72, W-80), 120, { n: 10, burst:true });
+        }, 650);
+      })();
+    </script>
+
+    <script>
+      /* ================= 学习背景音乐：Web Audio 现场合成（无外部音频） =================
+         独立于标签页切换逻辑：播放器不在任何 data-tab 面板内，
+         切到「像素远征 / Markdown 训练营」不会隐藏它、也不会停播。 */
+      (function(){
+        "use strict";
+        var bar = document.getElementById("musicBar");
+        var toggleBtn = document.getElementById("musicToggle");
+        var toggleIco = document.getElementById("musicToggleIco");
+        var toggleText = document.getElementById("musicToggleText");
+        var statusEl = document.getElementById("musicStatus");
+        var volInput = document.getElementById("musicVolume");
+        var volVal = document.getElementById("musicVolVal");
+        var viz = document.getElementById("musicViz");
+        if (!toggleBtn) return;
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) { statusEl.textContent = "当前浏览器不支持 Web Audio，音乐不可用。"; toggleBtn.disabled = true; return; }
+
+        function mf(midi){ return 440 * Math.pow(2, (midi - 69) / 12); }
+        var MOODS = {
+          focus: { label:"专注", chordDur:12, arpInt:1.7, filter:1500, wet:.30, noise:0,
+            padType:"triangle", padLevel:.042, arpLevel:.065, arpDecay:1.7,
+            chords:[
+              { bass:36, notes:[60,64,67,71] },
+              { bass:33, notes:[57,60,64,67] },
+              { bass:29, notes:[53,57,60,65] },
+              { bass:31, notes:[55,59,62,67] }
+            ] },
+          relax: { label:"放松", chordDur:14, arpInt:2.6, filter:1100, wet:.42, noise:.016,
+            padType:"sine", padLevel:.05, arpLevel:.052, arpDecay:2.2,
+            chords:[
+              { bass:29, notes:[53,57,60,64] },
+              { bass:26, notes:[50,53,57,60] },
+              { bass:34, notes:[58,62,65,69] },
+              { bass:36, notes:[55,60,64,67] }
+            ] },
+          night: { label:"深夜", chordDur:16, arpInt:3.4, filter:760, wet:.50, noise:.007,
+            padType:"sine", padLevel:.046, arpLevel:.05, arpDecay:2.8,
+            chords:[
+              { bass:26, notes:[50,53,57,60] },
+              { bass:34, notes:[58,62,65,69] },
+              { bass:29, notes:[53,57,60,64] },
+              { bass:33, notes:[57,60,64,67] }
+            ] }
+        };
+        var mood = "focus";
+        var volume = 0.6;
+        var playing = false;
+        var actx = null, masterGain = null, bus = null, busFilter = null, wetGain = null,
+            noiseGain = null, noiseSrc = null, analyser = null;
+        var schedTimer = null, nextChordAt = 0, nextArpAt = 0, chordIdx = 0, arpStep = 0;
+        var currentNotes = MOODS.focus.chords[0].notes.slice();
+        var activePads = [];
+        var stopToken = 0;
+        var vizRAF = null;
+
+        function volCurve(){ return Math.pow(volume, 1.6) * 0.9; }
+
+        function makeImpulse(dur, decay){
+          var rate = actx.sampleRate, len = Math.floor(rate * dur);
+          var buf = actx.createBuffer(2, len, rate);
+          for (var ch = 0; ch < 2; ch++) {
+            var d = buf.getChannelData(ch);
+            for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+          }
+          return buf;
+        }
+        function makeNoiseBuffer(){
+          var rate = actx.sampleRate, len = rate * 2;
+          var buf = actx.createBuffer(1, len, rate);
+          var d = buf.getChannelData(0), last = 0;
+          for (var i = 0; i < len; i++) { // slightly browned noise = softer air
+            var w = Math.random() * 2 - 1;
+            last = (last + 0.02 * w) / 1.02; d[i] = last * 3.2;
+          }
+          return buf;
+        }
+
+        function buildGraph(){
+          var cfg = MOODS[mood];
+          masterGain = actx.createGain(); masterGain.gain.value = 0;
+          bus = actx.createGain(); bus.gain.value = 0.9;
+          busFilter = actx.createBiquadFilter(); busFilter.type = "lowpass";
+          busFilter.frequency.value = cfg.filter; busFilter.Q.value = 0.4;
+          var dry = actx.createGain(); dry.gain.value = 0.85;
+          bus.connect(busFilter); busFilter.connect(dry); dry.connect(masterGain);
+          var conv = actx.createConvolver(); conv.buffer = makeImpulse(2.8, 2.4);
+          wetGain = actx.createGain(); wetGain.gain.value = cfg.wet;
+          bus.connect(conv); conv.connect(wetGain); wetGain.connect(masterGain);
+          var delay = actx.createDelay(1); delay.delayTime.value = 0.42;
+          var fb = actx.createGain(); fb.gain.value = 0.26;
+          var dGain = actx.createGain(); dGain.gain.value = 0.15;
+          bus.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(dGain); dGain.connect(masterGain);
+          analyser = actx.createAnalyser(); analyser.fftSize = 64; analyser.smoothingTimeConstant = 0.75;
+          var comp = actx.createDynamicsCompressor();
+          comp.threshold.value = -22; comp.ratio.value = 6;
+          masterGain.connect(analyser); analyser.connect(comp); comp.connect(actx.destination);
+          // ambient air layer (level depends on mood)
+          noiseSrc = actx.createBufferSource(); noiseSrc.buffer = makeNoiseBuffer(); noiseSrc.loop = true;
+          var nf = actx.createBiquadFilter(); nf.type = "lowpass"; nf.frequency.value = 640;
+          noiseGain = actx.createGain(); noiseGain.gain.value = cfg.noise;
+          noiseSrc.connect(nf); nf.connect(noiseGain); noiseGain.connect(masterGain);
+          noiseSrc.start();
+        }
+
+        function addPadOsc(midi, t, dur, type, level, detune){
+          var o = actx.createOscillator(); o.type = type; o.frequency.value = mf(midi);
+          if (detune) o.detune.value = detune;
+          var g = actx.createGain();
+          var atk = Math.min(3.2, dur * 0.28), rel = Math.min(4, dur * 0.34);
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.linearRampToValueAtTime(level, t + atk);
+          g.gain.setValueAtTime(level, Math.max(t + atk, t + dur - rel));
+          g.gain.linearRampToValueAtTime(0.0001, t + dur + 1.1);
+          o.connect(g); g.connect(bus);
+          o.start(t); o.stop(t + dur + 1.3);
+          activePads.push({ g: g, end: t + dur + 1.3 });
+        }
+        function schedulePad(t){
+          var cfg = MOODS[mood];
+          var chord = cfg.chords[chordIdx % cfg.chords.length];
+          chordIdx++;
+          currentNotes = chord.notes.slice();
+          var dur = cfg.chordDur + 2.5;
+          addPadOsc(chord.bass + 12, t, dur, "sine", cfg.padLevel * 1.2, 0);
+          for (var i = 0; i < chord.notes.length; i++) {
+            addPadOsc(chord.notes[i], t, dur, cfg.padType, cfg.padLevel, 0);
+            addPadOsc(chord.notes[i], t, dur, "sine", cfg.padLevel * 0.5, 7);
+          }
+        }
+        function scheduleArp(t){
+          if (Math.random() < 0.16) return; // breathing rests
+          var cfg = MOODS[mood];
+          var pool = currentNotes.concat(currentNotes.map(function(n){ return n + 12; }));
+          arpStep++;
+          var idx = Math.abs(Math.round(arpStep * 1.7 + Math.random() * 2 - 1)) % pool.length;
+          var midi = pool[idx];
+          var o = actx.createOscillator(); o.type = "sine"; o.frequency.value = mf(midi);
+          var g = actx.createGain();
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.linearRampToValueAtTime(cfg.arpLevel, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + cfg.arpDecay);
+          o.connect(g); g.connect(bus);
+          o.start(t); o.stop(t + cfg.arpDecay + 0.1);
+          if (mood === "night") { // faint bell harmonic
+            var o2 = actx.createOscillator(); o2.type = "sine"; o2.frequency.value = mf(midi) * 2;
+            var g2 = actx.createGain();
+            g2.gain.setValueAtTime(0.0001, t);
+            g2.gain.linearRampToValueAtTime(cfg.arpLevel * 0.28, t + 0.015);
+            g2.gain.exponentialRampToValueAtTime(0.0001, t + cfg.arpDecay * 0.6);
+            o2.connect(g2); g2.connect(bus);
+            o2.start(t); o2.stop(t + cfg.arpDecay + 0.1);
+          }
+        }
+        function scheduler(){
+          if (!playing || !actx) return;
+          var cfg = MOODS[mood], now = actx.currentTime;
+          while (nextChordAt < now + 4) { schedulePad(nextChordAt); nextChordAt += cfg.chordDur; }
+          while (nextArpAt < now + 3) { scheduleArp(nextArpAt); nextArpAt += cfg.arpInt * (0.85 + Math.random() * 0.3); }
+          activePads = activePads.filter(function(p){ return p.end > now; });
+        }
+        function fadeOutPads(sec){
+          if (!actx) return;
+          var now = actx.currentTime;
+          activePads.forEach(function(p){
+            try {
+              p.g.gain.cancelScheduledValues(now);
+              p.g.gain.setTargetAtTime(0.0001, now, sec / 3);
+            } catch (e) {}
+          });
+          activePads = [];
+        }
+
+        function drawVizIdle(){
+          if (!viz) return;
+          var c = viz.getContext("2d");
+          c.clearRect(0, 0, viz.width, viz.height);
+          c.fillStyle = "rgba(63,185,80,.35)";
+          for (var i = 0; i < 12; i++) c.fillRect(4 + i * 12, viz.height / 2 - 1, 7, 2);
+        }
+        function drawViz(){
+          if (!playing || !analyser || !viz) return;
+          var c = viz.getContext("2d");
+          var data = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(data);
+          c.clearRect(0, 0, viz.width, viz.height);
+          c.fillStyle = "#3fb950";
+          var n = 12, bw = 7, gap = 5;
+          for (var i = 0; i < n; i++) {
+            var v = data[2 + i] / 255;
+            var h = Math.max(3, v * (viz.height - 8));
+            c.globalAlpha = 0.45 + v * 0.55;
+            c.fillRect(4 + i * (bw + gap), viz.height - h - 3, bw, h);
+          }
+          c.globalAlpha = 1;
+          vizRAF = requestAnimationFrame(drawViz);
+        }
+
+        function setStatus(){
+          if (playing) statusEl.textContent = "播放中 · " + MOODS[mood].label + "氛围 — 切换上方标签页不会中断，关掉点暂停即可";
+          else statusEl.textContent = "已关闭 · 点播放才出声（Web Audio 现场合成，无音频文件、不用联网）";
+        }
+        function startMusic(){
+          if (!actx) actx = new AC();
+          actx.resume();
+          stopToken++;
+          buildGraph();
+          playing = true;
+          var now = actx.currentTime;
+          masterGain.gain.setValueAtTime(0.0001, now);
+          masterGain.gain.linearRampToValueAtTime(Math.max(volCurve(), 0.0001), now + 1.2);
+          chordIdx = 0; arpStep = 0;
+          nextChordAt = now + 0.08; nextArpAt = now + 1.4;
+          scheduler();
+          schedTimer = setInterval(scheduler, 450);
+          bar.classList.add("playing");
+          toggleBtn.classList.add("playing"); toggleBtn.setAttribute("aria-pressed", "true");
+          toggleIco.textContent = "❚❚"; toggleText.textContent = "暂停音乐";
+          setStatus();
+          if (vizRAF) cancelAnimationFrame(vizRAF);
+          drawViz();
+        }
+        function stopMusic(){
+          playing = false;
+          stopToken++;
+          var token = stopToken;
+          if (schedTimer) { clearInterval(schedTimer); schedTimer = null; }
+          if (vizRAF) { cancelAnimationFrame(vizRAF); vizRAF = null; }
+          drawVizIdle();
+          bar.classList.remove("playing");
+          toggleBtn.classList.remove("playing"); toggleBtn.setAttribute("aria-pressed", "false");
+          toggleIco.textContent = "▶"; toggleText.textContent = "播放背景音乐";
+          setStatus();
+          if (actx && masterGain) {
+            var now = actx.currentTime;
+            try {
+              masterGain.gain.cancelScheduledValues(now);
+              masterGain.gain.setTargetAtTime(0.0001, now, 0.09);
+            } catch (e) {}
+            setTimeout(function(){
+              if (token !== stopToken || playing) return;
+              try { if (noiseSrc) noiseSrc.stop(); } catch (e) {}
+              fadeOutPads(0.1);
+              try { actx.suspend(); } catch (e) {}
+            }, 450);
+          }
+        }
+
+        toggleBtn.addEventListener("click", function(){ playing ? stopMusic() : startMusic(); });
+
+        var chips = bar.querySelectorAll(".mood-chip");
+        Array.prototype.forEach.call(chips, function(chip){
+          chip.addEventListener("click", function(){
+            var m = chip.getAttribute("data-mood");
+            if (!MOODS[m] || m === mood) { if (playing) setStatus(); return; }
+            mood = m;
+            Array.prototype.forEach.call(chips, function(c){ c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+            if (playing && actx) {
+              var cfg = MOODS[mood], now = actx.currentTime;
+              busFilter.frequency.setTargetAtTime(cfg.filter, now, 0.4);
+              wetGain.gain.setTargetAtTime(cfg.wet, now, 0.4);
+              noiseGain.gain.setTargetAtTime(cfg.noise, now, 0.6);
+              fadeOutPads(1.3);
+              chordIdx = 0;
+              nextChordAt = now + 0.9; nextArpAt = now + 1.1;
+              scheduler();
+            }
+            setStatus();
+          });
+        });
+
+        volInput.addEventListener("input", function(){
+          volume = (parseInt(volInput.value, 10) || 0) / 100;
+          volVal.textContent = volInput.value + "%";
+          if (playing && actx && masterGain) {
+            masterGain.gain.setTargetAtTime(Math.max(volCurve(), 0.0001), actx.currentTime, 0.08);
+          }
+        });
+
+        drawVizIdle();
+        setStatus();
       })();
     </script>
   </body>
