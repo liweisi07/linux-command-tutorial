@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Linux 命令闯关教学</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#f4f2ec;
+        --bg-soft:#eceade;
+        --panel:#fffdf7;
+        --panel-2:#f8f6ef;
+        --ink:#1c1a15;
+        --ink-soft:#55503f;
+        --ink-faint:#8a8471;
+        --line:#ddd8c6;
+        --term-bg:#14161a;
+        --term-bg-2:#1b1e24;
+        --term-line:#2c3038;
+        --term-ink:#e8e6df;
+        --term-dim:#9aa0a8;
+        --green:#3fb950;
+        --green-deep:#1f7a37;
+        --amber:#d9930d;
+        --red:#d64541;
+        --accent:#1f7a37;
+        --accent-soft:#e3efe2;
+        --shadow:0 1px 2px rgba(28,26,21,.06),0 8px 24px -12px rgba(28,26,21,.18);
+        --radius:10px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#101215;
+          --bg-soft:#16181d;
+          --panel:#191b20;
+          --panel-2:#1e2026;
+          --ink:#ece9e0;
+          --ink-soft:#b3afa2;
+          --ink-faint:#7d7a6e;
+          --line:#2c2f36;
+          --term-bg:#0c0e11;
+          --term-bg-2:#121419;
+          --term-line:#262a31;
+          --term-ink:#e8e6df;
+          --term-dim:#8b9096;
+          --green:#3fb950;
+          --green-deep:#3fb950;
+          --amber:#e3a008;
+          --red:#f0645e;
+          --accent:#3fb950;
+          --accent-soft:#1d2b20;
+          --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -12px rgba(0,0,0,.6);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{
+        margin:0;
+        background:var(--bg);
+        color:var(--ink);
+        font-family:"Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+        font-size:16px;
+        line-height:1.65;
+        -webkit-font-smoothing:antialiased;
+      }
+      code,kbd,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+      ::selection{background:var(--green);color:#fff}
+
+      .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+      /* ---------- Hero ---------- */
+      .hero{padding:52px 0 8px}
+      .hero h1{
+        font-size:clamp(30px,5.4vw,52px);
+        line-height:1.15;
+        font-weight:900;
+        letter-spacing:-.01em;
+        margin:0 0 14px;
+      }
+      .hero h1 .cursor{
+        display:inline-block;width:.55em;height:.92em;margin-left:.08em;
+        background:var(--green);vertical-align:-.08em;
+        animation:blink 1.1s steps(1) infinite;
+      }
+      @keyframes blink{50%{opacity:0}}
+      @media (prefers-reduced-motion: reduce){
+        .hero h1 .cursor{animation:none}
+        html{scroll-behavior:auto}
+      }
+      .hero p.lede{
+        margin:0;max-width:640px;color:var(--ink-soft);font-size:17px;
+      }
+      .hero p.lede b{color:var(--ink)}
+      .hero-meta{
+        display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;
+        color:var(--ink-faint);font-size:13.5px;
+      }
+      .hero-meta span b{color:var(--ink-soft);font-weight:700}
+
+      /* ---------- Terminal demo ---------- */
+      .term{
+        margin-top:30px;background:var(--term-bg);border:1px solid var(--term-line);
+        border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
+      }
+      .term-bar{
+        display:flex;align-items:center;gap:8px;
+        background:var(--term-bg-2);border-bottom:1px solid var(--term-line);
+        padding:10px 14px;
+      }
+      .dot{width:12px;height:12px;border-radius:50%}
+      .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+      .term-title{margin-left:8px;color:var(--term-dim);font-size:12.5px}
+      .term-hint{margin-left:auto;color:var(--term-dim);font-size:12.5px}
+      .term-body{
+        padding:16px 18px 8px;height:308px;overflow-y:auto;
+        color:var(--term-ink);font-size:14px;line-height:1.75;
+        font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+      }
+      .term-body .out{color:var(--term-dim);white-space:pre-wrap;word-break:break-all}
+      .term-body .cmd-echo{white-space:pre-wrap;word-break:break-all}
+      .prompt{color:var(--green);font-weight:700}
+      .prompt .path{color:#58a6ff}
+      .term-input-row{
+        display:flex;align-items:baseline;gap:8px;
+        padding:4px 18px 16px;
+        font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px;
+      }
+      .term-input-row .prompt{white-space:nowrap}
+      #termInput{
+        flex:1;min-width:0;background:transparent;border:0;outline:0;
+        color:var(--term-ink);font:inherit;caret-color:var(--green);padding:0;
+      }
+      .term-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 16px}
+      .term-chips button{
+        font-family:"JetBrains Mono",monospace;font-size:12.5px;
+        background:transparent;color:var(--term-dim);
+        border:1px solid var(--term-line);border-radius:999px;
+        padding:4px 12px;cursor:pointer;transition:color .15s,border-color .15s;
+      }
+      .term-chips button:hover{color:var(--green);border-color:var(--green)}
+
+      /* ---------- Toolbar ---------- */
+      .toolbar{
+        position:sticky;top:0;z-index:20;
+        background:color-mix(in srgb,var(--bg) 88%,transparent);
+        backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+        border-bottom:1px solid var(--line);
+        margin-top:44px;
+      }
+      .toolbar-inner{padding:14px 0 12px}
+      .search-row{display:flex;gap:10px;align-items:stretch}
+      .search-box{
+        flex:1;display:flex;align-items:center;gap:10px;
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:0 14px;box-shadow:var(--shadow);
+      }
+      .search-box svg{flex:none;color:var(--ink-faint)}
+      #searchInput{
+        flex:1;min-width:0;border:0;outline:0;background:transparent;
+        color:var(--ink);font-size:16px;padding:11px 0;
+        font-family:inherit;
+      }
+      #searchInput::placeholder{color:var(--ink-faint)}
+      .count-badge{
+        flex:none;display:flex;align-items:center;
+        font-size:13px;color:var(--ink-soft);
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:0 14px;box-shadow:var(--shadow);white-space:nowrap;
+      }
+      .count-badge b{color:var(--accent);font-weight:700;margin:0 2px}
+      .cats{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none}
+      .cats::-webkit-scrollbar{display:none}
+      .cat-btn{
+        flex:none;font:inherit;font-size:14px;cursor:pointer;
+        background:transparent;color:var(--ink-soft);
+        border:1px solid var(--line);border-radius:999px;padding:6px 15px;
+        transition:all .15s;
+      }
+      .cat-btn:hover{border-color:var(--ink-faint);color:var(--ink)}
+      .cat-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}
+
+      /* ---------- Sections & cards ---------- */
+      main{padding-bottom:20px}
+      section.cat-section{padding-top:38px}
+      .cat-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+      .cat-head h2{font-size:23px;font-weight:900;margin:0;letter-spacing:-.01em}
+      .cat-head .cat-no{
+        font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--accent);font-weight:700;
+      }
+      .cat-head .cat-count{margin-left:auto;color:var(--ink-faint);font-size:13px;white-space:nowrap}
+      .cat-desc{color:var(--ink-soft);margin:0 0 18px;font-size:15px;max-width:720px}
+      .grid{
+        display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;
+      }
+      .card{
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:16px 16px 14px;box-shadow:var(--shadow);
+        display:flex;flex-direction:column;gap:9px;
+      }
+      .card-top{display:flex;align-items:flex-start;gap:10px}
+      .cmd-name{
+        font-family:"JetBrains Mono",monospace;font-weight:700;font-size:17px;color:var(--ink);
+      }
+      .cmd-zh{font-size:13px;color:var(--ink-faint);margin-top:1px}
+      .lvl{
+        margin-left:auto;flex:none;font-size:11.5px;font-weight:700;
+        padding:2px 9px;border-radius:999px;letter-spacing:.02em;
+      }
+      .lvl.base{background:var(--accent-soft);color:var(--green-deep)}
+      .lvl.mid{background:#fdf3e0;color:#9a6a08}
+      @media (prefers-color-scheme: dark){
+        .lvl.mid{background:#2e2410;color:#e3a008}
+      }
+      .cmd-desc{font-size:14.5px;color:var(--ink-soft);margin:0}
+      .code-row{
+        display:flex;align-items:center;gap:8px;
+        background:var(--term-bg);border:1px solid var(--term-line);border-radius:7px;
+        padding:9px 8px 9px 12px;margin-top:auto;
+      }
+      .code-row code{
+        flex:1;min-width:0;color:var(--term-ink);font-size:13.5px;
+        white-space:nowrap;overflow-x:auto;scrollbar-width:none;
+      }
+      .code-row code::-webkit-scrollbar{display:none}
+      .code-row code .dollar{color:var(--green);user-select:none}
+      .copy-btn{
+        flex:none;display:inline-flex;align-items:center;gap:5px;
+        font:inherit;font-size:12px;cursor:pointer;
+        background:var(--term-bg-2);color:var(--term-dim);
+        border:1px solid var(--term-line);border-radius:6px;padding:5px 9px;
+        transition:color .15s,border-color .15s;
+      }
+      .copy-btn:hover{color:var(--green);border-color:var(--green)}
+      .copy-btn.copied{color:var(--green);border-color:var(--green)}
+      .card details{font-size:13.5px;color:var(--ink-soft)}
+      .card summary{
+        cursor:pointer;color:var(--accent);font-weight:500;font-size:13px;
+        list-style:none;display:inline-flex;align-items:center;gap:4px;
+      }
+      .card summary::-webkit-details-marker{display:none}
+      .card summary::after{content:"▸";font-size:11px;transition:transform .15s}
+      .card details[open ] summary::after{transform:rotate(90deg)}
+      .card details p{margin:7px 0 0;line-height:1.7}
+      .card details code{
+        background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;
+        padding:0 5px;font-size:12.5px;color:var(--ink);
+      }
+      .empty{
+        display:none;text-align:center;padding:56px 20px;color:var(--ink-faint);
+      }
+      .empty .mono{font-size:15px;color:var(--ink-soft)}
+      .empty.show{display:block}
+
+      /* ---------- Concepts ---------- */
+      .concepts{padding-top:52px}
+      .concepts h2,.deploy h2{font-size:23px;font-weight:900;margin:0 0 6px}
+      .concepts>p,.deploy>p{color:var(--ink-soft);margin:0 0 18px;font-size:15px;max-width:720px}
+      .concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+      .concept{
+        background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;
+      }
+      .concept h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:9px}
+      .concept h3 code{
+        font-size:16px;background:var(--term-bg);color:var(--green);
+        border-radius:6px;padding:2px 9px;font-weight:700;
+      }
+      .concept p{margin:0;font-size:14px;color:var(--ink-soft)}
+      .concept p code{background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12.5px;color:var(--ink)}
+
+      /* ---------- Deploy ---------- */
+      .deploy{padding:52px 0 30px}
+      .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;counter-reset:step}
+      .step{
+        background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:16px;box-shadow:var(--shadow);
+      }
+      .step .n{
+        font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;
+        color:var(--green-deep);background:var(--accent-soft);
+        display:inline-block;border-radius:6px;padding:2px 9px;margin-bottom:9px;
+      }
+      .step h3{margin:0 0 5px;font-size:15.5px}
+      .step p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+      .step code{background:var(--bg-soft);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12.5px}
+
+      footer{
+        border-top:1px solid var(--line);margin-top:26px;
+        padding:22px 0 40px;color:var(--ink-faint);font-size:13.5px;
+      }
+      footer .wrap{display:flex;flex-wrap:wrap;gap:6px 26px;justify-content:space-between}
+
+      .toast{
+        position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+        background:var(--ink);color:var(--bg);font-size:14px;font-weight:500;
+        padding:9px 18px;border-radius:999px;opacity:0;pointer-events:none;
+        transition:opacity .2s,transform .2s;z-index:50;box-shadow:var(--shadow);
+      }
+      .toast.show{opacity:1;transform:translate(-50%,0)}
+
+      /* ---------- Game mode ---------- */
+      .hud{
+        display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;
+        margin-top:26px;background:var(--panel);border:1px solid var(--line);
+        border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);
+      }
+      .hud-level{display:flex;align-items:center;gap:10px}
+      .hud-lv{
+        font-weight:700;background:var(--term-bg);color:var(--green);
+        border-radius:7px;padding:3px 10px;font-size:15px;
+      }
+      .hud-lvname{font-weight:700;font-size:16px}
+      .hud-xp{flex:1;min-width:170px}
+      .hud-xp-top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-faint);margin-bottom:5px}
+      .hud-xp-top b{color:var(--accent)}
+      .hud-track{height:9px;background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+      .hud-fill{height:100%;width:0;background:var(--green);border-radius:999px;transition:width .5s ease}
+      @media (prefers-reduced-motion: reduce){ .hud-fill{transition:none} }
+      .hud-stat{text-align:left}
+      .hud-stat b{display:block;font-size:16px;line-height:1.3}
+      .hud-stat span{font-size:12px;color:var(--ink-faint)}
+      #hudStars{color:var(--amber);letter-spacing:3px}
+      .game-grid{
+        display:grid;grid-template-columns:332px 1fr;gap:16px;
+        margin-top:16px;align-items:start;
+      }
+      .game-grid .term{margin-top:0}
+      .mission-panel{
+        background:var(--panel);border:1px solid var(--line);border-radius:12px;
+        box-shadow:var(--shadow);padding:18px;
+        position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto;
+      }
+      .mp-head{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink-faint)}
+      .mp-head #mpChapter{color:var(--accent);font-weight:700}
+      .mp-title{font-size:21px;font-weight:900;margin:10px 0 6px;line-height:1.3}
+      .mp-story{margin:0;font-size:14.5px;color:var(--ink-soft)}
+      .mp-goal{margin-top:12px;background:var(--accent-soft);border-radius:8px;padding:10px 12px}
+      .mp-goal span{font-size:11.5px;font-weight:700;color:var(--green-deep);letter-spacing:.06em}
+      .mp-goal p{margin:2px 0 0;font-size:14.5px;font-weight:500}
+      .mp-hint{
+        margin-top:10px;background:var(--term-bg);border-radius:8px;
+        padding:9px 12px;color:var(--term-dim);font-size:13px;
+        display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+      }
+      .mp-hint[hidden ]{display:none}
+      .mp-hint code{color:var(--green);font-size:13.5px;font-family:"JetBrains Mono",monospace}
+      .mp-actions{display:flex;gap:8px;margin-top:12px}
+      .mp-btn{
+        font:inherit;font-size:13.5px;cursor:pointer;font-weight:700;
+        background:var(--ink);color:var(--bg);border:1px solid var(--ink);
+        border-radius:8px;padding:7px 14px;
+      }
+      .mp-btn.ghost{background:transparent;color:var(--ink-soft);border-color:var(--line);font-weight:500}
+      .mp-btn.ghost:hover{border-color:var(--ink-faint);color:var(--ink)}
+      .mp-list{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+      .mp-ch{margin-bottom:10px}
+      .mp-ch-name{font-size:12px;font-weight:700;color:var(--ink-faint);margin-bottom:3px}
+      .mp-item{display:flex;gap:7px;align-items:baseline;font-size:13.5px;color:var(--ink-faint);padding:2px 0}
+      .mp-item .mp-mark{width:14px;flex:none;text-align:center}
+      .mp-item .mp-xp{margin-left:auto;font-size:11.5px;flex:none}
+      .mp-item.done{color:var(--ink-soft)}
+      .mp-item.done .mp-mark{color:var(--green-deep);font-weight:700}
+      .mp-item.current{color:var(--ink);font-weight:700}
+      .mp-item.current .mp-mark{color:var(--accent)}
+      .mp-item.skipped{color:var(--ink-faint)}
+      .mp-item.skipped .mp-name{text-decoration:line-through}
+      .term-body .out.game-win{color:var(--green);font-weight:700}
+      .term-body .out.game-task{color:#58a6ff}
+      .handbook-head{padding-top:46px}
+      .handbook-head h2{font-size:23px;font-weight:900;margin:0 0 6px}
+      .handbook-head p{color:var(--ink-soft);margin:0;font-size:15px;max-width:720px}
+      @media (max-width:900px){
+        .game-grid{grid-template-columns:1fr}
+        .mission-panel{position:static;max-height:none}
+      }
+
+      @media (max-width:560px){
+        .hero{padding-top:36px}
+        .grid{grid-template-columns:1fr}
+        .term-body{height:262px;font-size:13px}
+        .term-hint{display:none}
+        .count-badge{display:none}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <h1>Linux 命令闯关<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="lede">学命令不用背——<b>照着任务清单，在模拟虚拟机里亲手敲一遍</b>。敲对了就过关、攒经验、升等级；五章 26 个任务全部通关，你就能独立管好一台 Debian 服务器。卡住随时查下面的命令手册。</p>
+        <div class="hero-meta">
+          <span>示例环境 <b>Debian 12 / Ubuntu 通用</b></span>
+          <span>模拟机配置 <b>2 核 CPU · 4 GB 内存 · 20 GB 磁盘</b></span>
+          <span>命令总数 <b id="totalCount">—</b></span>
+          <span>玩法 <b>做任务 → 攒经验 → 升级通关</b></span>
+        </div>
+      </header>
+
+      <div class="hud" aria-label="游戏进度">
+        <div class="hud-level">
+          <span class="hud-lv mono" id="hudLv">Lv.1</span>
+          <span class="hud-lvname" id="hudLvName">终端新手</span>
+        </div>
+        <div class="hud-xp">
+          <div class="hud-xp-top"><span>经验值</span><span><b id="hudXp">0</b> / 400 XP</span></div>
+          <div class="hud-track"><div class="hud-fill" id="hudFill"></div></div>
+        </div>
+        <div class="hud-stat"><b id="hudDone">0 / 26</b><span>已完成任务</span></div>
+        <div class="hud-stat"><b id="hudStars">☆☆☆☆☆</b><span>章节之星</span></div>
+      </div>
+
+      <div class="game-grid">
+        <aside class="mission-panel" aria-label="任务面板">
+          <div class="mp-head"><span id="mpChapter">第一章 · 初入终端</span><span id="mpCount">任务 1 / 26</span></div>
+          <h2 class="mp-title" id="mpTitle"></h2>
+          <p class="mp-story" id="mpStory"></p>
+          <div class="mp-goal" id="mpGoalWrap"><span>目标</span><p id="mpGoal"></p></div>
+          <div class="mp-hint" id="mpHint" hidden><span>照着敲：</span><code id="mpHintCmd"></code></div>
+          <div class="mp-actions" id="mpActions">
+            <button type="button" class="mp-btn" id="mpHintBtn">查看提示</button>
+            <button type="button" class="mp-btn ghost" id="mpSkipBtn">跳过这关</button>
+          </div>
+          <div class="mp-list" id="mpList"></div>
+        </aside>
+
+        <div class="term" id="termBox" aria-label="模拟终端">
+          <div class="term-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="term-title mono">visitor@debian-vm: ~ — bash · 模拟虚拟机（2 核 / 4 GB）</span>
+            <span class="term-hint">输入 help 查看这台模拟机支持的命令</span>
+          </div>
+          <div class="term-body" id="termBody"></div>
+          <div class="term-input-row">
+            <span class="prompt">visitor@debian-vm<span class="path">:~</span>$</span>
+            <input id="termInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="在模拟终端中输入命令" />
+          </div>
+          <div class="term-chips" id="termChips"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="wrap toolbar-inner">
+        <div class="search-row">
+          <label class="search-box">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+            <input id="searchInput" type="search" placeholder="搜索命令或用途，比如：查看内存、删除、端口……" aria-label="搜索命令" />
+          </label>
+          <div class="count-badge">显示 <b id="visibleCount">—</b> 条</div>
+        </div>
+        <nav class="cats" id="catNav" aria-label="命令分类"></nav>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <section class="handbook-head">
+        <h2>命令手册</h2>
+        <p>闯关卡住时来这里查：67 条常用命令按场景分成 11 类，每条都有讲解和可复制的示例。看完回到上面的终端里敲一遍，就能过关。</p>
+      </section>
+      <main id="main"></main>
+      <div class="empty" id="emptyState">
+        <p class="mono">$ grep "???" 命令手册<br />未找到匹配的命令</p>
+        <p>换个关键词试试，比如「文件」「网络」「内存」。</p>
+      </div>
+
+      <section class="concepts">
+        <h2>先搞懂这几个概念，命令就通了</h2>
+        <p>Linux 命令大多是「小工具拼装」：一个命令只做一件事，再用管道把它们串起来。下面四个概念是理解一切命令的钥匙。</p>
+        <div class="concept-grid">
+          <div class="concept">
+            <h3><code>|</code> 管道</h3>
+            <p>把左边命令的输出，当作右边命令的输入。<code>ps aux | grep nginx</code> 就是先列出全部进程，再只筛出含 nginx 的行——组合出无限可能。</p>
+          </div>
+          <div class="concept">
+            <h3><code>&gt;</code> 重定向</h3>
+            <p>把输出写进文件而不是屏幕。<code>&gt;</code> 覆盖写入，<code>&gt;&gt;</code> 追加到末尾。例：<code>echo "hi" &gt;&gt; log.txt</code> 把一行字追加进日志。</p>
+          </div>
+          <div class="concept">
+            <h3><code>sudo</code> 提权</h3>
+            <p>普通用户权限不够时，在命令前加 <code>sudo</code> 以管理员身份执行，会要求输入你的密码。改系统配置、装软件时常用，别对来路不明的命令乱加。</p>
+          </div>
+          <div class="concept">
+            <h3><code>--help</code> 自带说明书</h3>
+            <p>任何命令忘了参数，先试 <code>命令 --help</code> 看简明用法，想看完整手册用 <code>man 命令</code>（按 <code>q</code> 退出）。这是最权威的资料来源。</p>
+          </div>
+          <div class="concept">
+            <h3><code>~</code> 与路径</h3>
+            <p><code>~</code> 是你的家目录，<code>.</code> 是当前目录，<code>..</code> 是上一级。以 <code>/</code> 开头的是绝对路径，其余都是相对当前目录的相对路径。</p>
+          </div>
+          <div class="concept">
+            <h3><code>Tab</code> 自动补全</h3>
+            <p>输一半按 Tab，终端帮你补全命令和文件名；按两下会列出所有候选。配合 ↑ ↓ 翻历史命令，是用终端提速的第一习惯。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="deploy">
+        <h2>把这一页部署到 Cloudflare Pages</h2>
+        <p>本页是单个静态 HTML 文件，没有后端、没有构建步骤，天然适合 Cloudflare Pages 的免费托管——和部署其他静态工具站的流程完全一样。</p>
+        <div class="steps">
+          <div class="step"><span class="n">STEP 1</span><h3>打开控制台</h3><p>登录 <code>dash.cloudflare.com</code>，左侧进入「Workers 和 Pages」。</p></div>
+          <div class="step"><span class="n">STEP 2</span><h3>创建 Pages 项目</h3><p>点「创建」→ 切到「Pages」页签 → 选择「上传资产」。</p></div>
+          <div class="step"><span class="n">STEP 3</span><h3>上传文件</h3><p>给项目起个名（如 <code>linux-cmd</code>），把 <code>index.html</code> 拖进上传区，点「保存并部署」。</p></div>
+          <div class="step"><span class="n">STEP 4</span><h3>访问站点</h3><p>几秒后即可通过 <code>项目名.pages.dev</code> 打开；之后想更新，重新上传新版文件即可。</p></div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <span>命令示例以 Debian / Ubuntu 为准；其他发行版大同小异，包管理命令除外。</span>
+        <span class="mono">rm -rf 之前，请先看三遍路径。</span>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+      var CATEGORIES = [
+        { id:"files",  no:"01", name:"文件与目录", desc:"一切从这里开始：在目录之间移动、查看、新建、复制、移动和删除文件。先把这几个练成本能。" },
+        { id:"view",   no:"02", name:"查看与编辑", desc:"文件建好之后怎么读、怎么改：从快速预览到全屏编辑器 nano，以及盯日志必备的 tail -f。" },
+        { id:"perm",   no:"03", name:"权限与用户", desc:"Linux 的权限决定谁能读、写、执行一个文件。看懂 rwxr-xr-x，就能解决一大半「Permission denied」。" },
+        { id:"disk",   no:"04", name:"磁盘与系统信息", desc:"磁盘满了？内存还剩多少？系统跑了多久？这几个命令是给服务器「量体温」的常规检查。" },
+        { id:"proc",   no:"05", name:"进程管理", desc:"程序在 Linux 里以进程的形式运行。查看谁在吃 CPU、结束一个卡死的程序，都在这里。" },
+        { id:"net",    no:"06", name:"网络命令", desc:"测连通、看 IP、查端口占用、下载文件——服务器断网排查的标准动作组合。" },
+        { id:"apt",    no:"07", name:"软件包管理（apt）", desc:"Debian / Ubuntu 装软件的官方方式。记住顺序：先 update 更新软件源列表，再 install 安装。" },
+        { id:"svc",    no:"08", name:"服务管理（systemd）", desc:"网站、数据库这类长期运行的程序由 systemd 托管。用 systemctl 启停它们，用 journalctl 看它们的日志。" },
+        { id:"zip",    no:"09", name:"压缩与解压", desc:"Linux 世界最常见的压缩包是 .tar.gz。记住一组参数组合，上传下载、备份打包都够用。" },
+        { id:"find",   no:"10", name:"查找与文本处理", desc:"在成百上千个文件里找东西、从日志里筛关键行——grep 和 find 是老手每天敲得最多的命令。" },
+        { id:"tips",   no:"11", name:"终端技巧", desc:"不是单独的命令，而是让终端用起来顺手的习惯：快捷键、历史搜索、别名。学会这些，效率翻倍。" }
+      ];
+
+      // level: "base" 入门 / "mid" 进阶；tip 可选，点开看细节
+      var COMMANDS = [
+        /* ---------- 文件与目录 ---------- */
+        { cat:"files", cmd:"pwd", zh:"显示当前目录", level:"base", desc:"告诉你现在身处哪个目录，迷路时先敲它。", ex:"pwd" },
+        { cat:"files", cmd:"ls", zh:"列出目录内容", level:"base", desc:"查看当前目录里有什么。最常用组合 ls -lah：显示全部文件（含隐藏）、带大小、人类可读单位。", ex:"ls -lah", tip:"以 . 开头的文件是隐藏文件，只有加 -a 才显示，比如 ~/.bashrc。" },
+        { cat:"files", cmd:"cd", zh:"切换目录", level:"base", desc:"cd 后面跟路径进入那个目录；cd ~ 回家目录，cd .. 回上一级，cd - 回到上一个呆过的目录。", ex:"cd /var/log" },
+        { cat:"files", cmd:"mkdir", zh:"新建目录", level:"base", desc:"新建文件夹。加 -p 可以连同不存在的父目录一起创建，路径再深也不报错。", ex:"mkdir -p ~/backup/2026" },
+        { cat:"files", cmd:"touch", zh:"新建空文件", level:"base", desc:"创建一个空文件；如果文件已存在，则更新它的修改时间。", ex:"touch notes.txt" },
+        { cat:"files", cmd:"cp", zh:"复制文件", level:"base", desc:"复制文件或目录。复制目录要加 -r（递归），-v 可以显示复制进度详情。", ex:"cp -r ~/site /var/www/", tip:"cp 文件A 文件B 是把 A 复制一份叫 B；目标是目录时，文件会放进那个目录里。" },
+        { cat:"files", cmd:"mv", zh:"移动 / 重命名", level:"base", desc:"移动文件到另一个目录；当目标就在当前目录时，效果就是重命名。", ex:"mv old.txt new.txt" },
+        { cat:"files", cmd:"rm", zh:"删除文件", level:"base", desc:"删除文件，删目录加 -r。删除后不进回收站、找不回来，动手前务必看清路径。", ex:"rm -rf ~/temp-old", tip:"rm -rf / 是传说中的「删库跑路」命令。删除前先用 ls 看一眼目标内容，心里有数再回车。" },
+
+        /* ---------- 查看与编辑 ---------- */
+        { cat:"view", cmd:"cat", zh:"查看文件全部内容", level:"base", desc:"把文件内容一次性打印到屏幕。适合看短文件，长文件会刷屏而过。", ex:"cat /etc/os-release" },
+        { cat:"view", cmd:"less", zh:"分页查看文件", level:"base", desc:"打开大文件慢慢翻：↑↓ 滚动、/关键词 搜索、q 退出。看日志、看配置都用它。", ex:"less /var/log/syslog" },
+        { cat:"view", cmd:"head / tail", zh:"看开头 / 看结尾", level:"base", desc:"head 看前 10 行，tail 看后 10 行，-n 数字指定行数。", ex:"tail -n 50 app.log" },
+        { cat:"view", cmd:"tail -f", zh:"实时跟踪日志", level:"base", desc:"文件有新内容就立刻显示出来，盯服务日志的标配。Ctrl+C 停止跟踪。", ex:"tail -f /var/log/nginx/access.log" },
+        { cat:"view", cmd:"nano", zh:"终端文本编辑器", level:"base", desc:"最友好的编辑器，打开就能改。底部有快捷键提示：Ctrl+O 保存、Ctrl+X 退出。", ex:"nano ~/.bashrc" },
+        { cat:"view", cmd:"echo", zh:"输出文字", level:"base", desc:"把文字打印出来，常和重定向配合写文件：> 覆盖写入，>> 追加到末尾。", ex:"echo \"hello\" >> notes.txt" },
+
+        /* ---------- 权限与用户 ---------- */
+        { cat:"perm", cmd:"chmod", zh:"修改文件权限", level:"mid", desc:"修改读/写/执行权限。数字法最常用：755 表示所有者全权、其他人可读可执行。", ex:"chmod 755 script.sh", tip:"三位数字分别对应 所有者 / 同组用户 / 其他人，每位是 读(4)+写(2)+执行(1) 的和。" },
+        { cat:"perm", cmd:"chown", zh:"修改文件所有者", level:"mid", desc:"把文件或目录的归属改给某个用户，常需要 sudo。网站目录传错属主时用它修正。", ex:"sudo chown -R www-data:www-data /var/www" },
+        { cat:"perm", cmd:"sudo", zh:"以管理员身份执行", level:"base", desc:"在命令前加 sudo，临时借用 root 权限，会让你输一次自己的密码。改系统设置时离不开它。", ex:"sudo apt update" },
+        { cat:"perm", cmd:"su / sudo -i", zh:"切换到 root", level:"mid", desc:"sudo -i 直接进入 root 的 shell，连续做管理员操作时省得每条都加 sudo。用完 exit 退回。", ex:"sudo -i" },
+        { cat:"perm", cmd:"whoami", zh:"我是谁", level:"base", desc:"显示当前登录用户名。排查权限问题时先确认自己现在的身份。", ex:"whoami" },
+        { cat:"perm", cmd:"passwd", zh:"修改密码", level:"base", desc:"修改当前用户密码；加用户名（需 sudo）可以改别人的。", ex:"passwd" },
+
+        /* ---------- 磁盘与系统信息 ---------- */
+        { cat:"disk", cmd:"df -h", zh:"查看磁盘空间", level:"base", desc:"看每个磁盘分区总共多大、用了多少、还剩多少。磁盘满了第一个敲它。", ex:"df -h", tip:"重点看根分区 / 那一行的使用率，100% 时很多服务会直接罢工。" },
+        { cat:"disk", cmd:"du -sh", zh:"查看目录大小", level:"base", desc:"算某个目录总共占多大空间。找出是谁吃光了磁盘的利器。", ex:"du -sh /var/log/*" },
+        { cat:"disk", cmd:"free -h", zh:"查看内存用量", level:"base", desc:"看内存和交换分区的使用情况。小内存机器判断要不要加内存、查内存泄漏都靠它。", ex:"free -h", tip:"重点看 available（真正可用） 那一列，而不是 free；Linux 会拿空闲内存做缓存，那不是浪费。" },
+        { cat:"disk", cmd:"uname -a", zh:"系统内核信息", level:"base", desc:"显示系统版本、内核版本、架构。装驱动或排查兼容性时要用到。", ex:"uname -a" },
+        { cat:"disk", cmd:"uptime", zh:"运行时间与负载", level:"base", desc:"显示开机多久了、当前在线用户数，以及最近 1/5/15 分钟的系统负载。", ex:"uptime" },
+        { cat:"disk", cmd:"top / htop", zh:"实时进程监控", level:"base", desc:"动态显示谁在吃 CPU 和内存，像任务管理器。top 系统自带；htop 更好看，可鼠标操作，需另外安装。", ex:"htop" },
+
+        /* ---------- 进程管理 ---------- */
+        { cat:"proc", cmd:"ps aux", zh:"列出全部进程", level:"base", desc:"拍下当前所有进程的快照，常与 grep 组合只看某个程序。", ex:"ps aux | grep nginx" },
+        { cat:"proc", cmd:"kill", zh:"结束进程", level:"base", desc:"按进程号（PID）结束一个程序。先用 ps 找到 PID，普通 kill 无效时用 kill -9 强制结束。", ex:"kill 1234", tip:"kill -9 是最后手段，它不给程序收尾的机会，可能留下没写完的文件。先试普通 kill。" },
+        { cat:"proc", cmd:"pkill / killall", zh:"按名字结束进程", level:"mid", desc:"不用查 PID，直接按程序名结束所有同名进程。", ex:"pkill nginx" },
+        { cat:"proc", cmd:"jobs / fg / bg", zh:"后台任务管理", level:"mid", desc:"命令后加 & 可以放后台运行；jobs 看后台任务，fg 把它调回前台，bg 让暂停的任务继续在后台跑。", ex:"jobs" },
+        { cat:"proc", cmd:"Ctrl+C / Ctrl+Z", zh:"中断 / 暂停命令", level:"base", desc:"Ctrl+C 终止正在前台运行的命令；Ctrl+Z 把它暂停（之后可以用 fg 恢复）。终端失控时的救命键。", ex:"Ctrl+C" },
+
+        /* ---------- 网络命令 ---------- */
+        { cat:"net", cmd:"ping", zh:"测试网络连通", level:"base", desc:"向目标主机发包测通不通、延迟多大。-c 4 表示发 4 个包后自动停。", ex:"ping -c 4 1.1.1.1" },
+        { cat:"net", cmd:"ip a", zh:"查看 IP 地址", level:"base", desc:"列出所有网卡和 IP 地址。老命令 ifconfig 的现代替代品。", ex:"ip a" },
+        { cat:"net", cmd:"curl", zh:"请求一个网址", level:"base", desc:"在终端里访问 URL，看返回内容。测网站通不通、调 API 都用它；curl -I 只看响应头。", ex:"curl -I https://example.com" },
+        { cat:"net", cmd:"wget", zh:"下载文件", level:"base", desc:"把网上的文件下载到当前目录，装软件包、拉脚本时常用。", ex:"wget https://example.com/file.zip" },
+        { cat:"net", cmd:"ss -tlnp", zh:"查看端口监听", level:"mid", desc:"列出正在监听的端口及对应程序。「网站打不开」时先确认服务真的在监听对应端口。", ex:"ss -tlnp", tip:"参数含义：t=TCP，l=监听中，n=显示数字端口，p=显示进程。" },
+        { cat:"net", cmd:"ufw", zh:"简易防火墙", level:"mid", desc:"Ubuntu / Debian 上最省心的防火墙。放行端口、查看规则、开启关闭都是一条命令。", ex:"sudo ufw allow 22/tcp", tip:"先放行 SSH 的 22 端口再 enable，否则一开防火墙就把自己锁在门外了。" },
+        { cat:"net", cmd:"ssh", zh:"远程登录服务器", level:"base", desc:"从你的电脑登录到远程 Linux 服务器：ssh 用户名@服务器IP，之后就像坐在服务器面前一样操作。", ex:"ssh root@192.0.2.10" },
+        { cat:"net", cmd:"scp", zh:"远程复制文件", level:"mid", desc:"通过 SSH 在本地和服务器之间传文件，用法和 cp 几乎一样，只是路径带上 用户@IP: 前缀。", ex:"scp file.txt root@192.0.2.10:/root/" },
+
+        /* ---------- apt ---------- */
+        { cat:"apt", cmd:"apt update", zh:"更新软件源列表", level:"base", desc:"从软件仓库拉取最新版本清单。它只更新「菜单」，不真正升级任何软件。装软件前先跑一遍。", ex:"sudo apt update" },
+        { cat:"apt", cmd:"apt upgrade", zh:"升级已装软件", level:"base", desc:"把已安装的软件全部升级到最新版。建议先 update 再 upgrade，连起来写就是常见的更新一条龙。", ex:"sudo apt update && sudo apt upgrade -y" },
+        { cat:"apt", cmd:"apt install", zh:"安装软件", level:"base", desc:"安装一个或多个软件包，依赖会自动处理。-y 是自动确认，省去手动敲 y。", ex:"sudo apt install -y htop curl" },
+        { cat:"apt", cmd:"apt remove", zh:"卸载软件", level:"base", desc:"卸载软件包（保留配置文件）；想连配置一起删干净用 purge。", ex:"sudo apt remove htop" },
+        { cat:"apt", cmd:"apt search", zh:"搜索软件包", level:"base", desc:"按关键词在仓库里找软件，不知道确切包名时先搜一下。", ex:"apt search nginx" },
+        { cat:"apt", cmd:"dpkg -l", zh:"列出已装软件", level:"mid", desc:"列出系统里所有通过包管理安装的软件。配合 grep 查某个包装没装。", ex:"dpkg -l | grep nginx" },
+
+        /* ---------- systemd ---------- */
+        { cat:"svc", cmd:"systemctl status", zh:"查看服务状态", level:"base", desc:"看一个服务是运行中、已停止还是报错了。排查服务起不来时第一个看它。", ex:"systemctl status nginx" },
+        { cat:"svc", cmd:"systemctl start / stop", zh:"启动 / 停止服务", level:"base", desc:"立刻启动或停止一个服务，但不改变它开机时是否自动运行。", ex:"sudo systemctl restart nginx", tip:"restart = 先停再启，改完配置让服务生效最常用；reload 是平滑重载，不断连接。" },
+        { cat:"svc", cmd:"systemctl enable", zh:"设置开机自启", level:"base", desc:"让服务随开机自动启动。enable --now 表示同时立刻启动。服务装好后别忘了这步。", ex:"sudo systemctl enable --now nginx" },
+        { cat:"svc", cmd:"journalctl", zh:"查看服务日志", level:"mid", desc:"systemd 的统一日志。-u 指定服务，-f 实时跟踪，-e 直接跳到最新。服务报错的真相都在这里。", ex:"journalctl -u nginx -e" },
+        { cat:"svc", cmd:"systemctl list-units", zh:"列出所有服务", level:"mid", desc:"列出系统里所有服务单元及状态，配合 --failed 只看启动失败的服务。", ex:"systemctl --failed" },
+
+        /* ---------- 压缩解压 ---------- */
+        { cat:"zip", cmd:"tar -czvf", zh:"打包并压缩", level:"mid", desc:"把一堆文件打包成 .tar.gz。参数：c 创建、z 用 gzip 压缩、v 显示过程、f 指定文件名。", ex:"tar -czvf backup.tar.gz ~/site" },
+        { cat:"zip", cmd:"tar -xzvf", zh:"解压 tar.gz", level:"mid", desc:"解开 .tar.gz 包到当前目录。只把 c 换成 x（解开），其余参数不变，很好记。", ex:"tar -xzvf backup.tar.gz" },
+        { cat:"zip", cmd:"zip / unzip", zh:"ZIP 格式压缩解压", level:"base", desc:"和 Windows 互传文件时用 zip 格式最省事。可能需要先 apt install zip unzip。", ex:"unzip file.zip -d ./out" },
+        { cat:"zip", cmd:"gzip / gunzip", zh:"单文件压缩", level:"mid", desc:"只压缩单个文件（不能打包目录），生成 .gz。大日志文件归档常用。", ex:"gzip access.log.1" },
+
+        /* ---------- 查找与文本 ---------- */
+        { cat:"find", cmd:"grep", zh:"按关键词搜内容", level:"base", desc:"在文件内容里搜关键词。-r 递归搜整个目录，-n 显示行号，-i 忽略大小写。", ex:"grep -rn \"error\" /var/log/", tip:"grep 是管道的黄金搭档：任何命令的输出接上 | grep 关键词，就能只看你关心的行。" },
+        { cat:"find", cmd:"find", zh:"按条件找文件", level:"mid", desc:"按名字、大小、时间找文件。比如找 7 天前的日志、找大于 100M 的文件。", ex:"find / -name \"*.log\" -size +100M", tip:"/ 表示从根目录开始找，范围大速度慢；没事别全盘扫，先把范围缩小到具体目录。" },
+        { cat:"find", cmd:"which / whereis", zh:"命令在哪", level:"base", desc:"显示一个命令的可执行文件路径。确认某个软件装没装、装在哪，用它最快。", ex:"which python3" },
+        { cat:"find", cmd:"wc", zh:"统计行数词数", level:"mid", desc:"数一个文件有多少行、单词、字节。wc -l 只看行数，统计日志条数常用。", ex:"wc -l access.log" },
+        { cat:"find", cmd:"sort / uniq", zh:"排序与去重", level:"mid", desc:"sort 把行排序，uniq 去掉相邻重复行。通常连用并加 -c 统计每行出现次数。", ex:"sort access.log | uniq -c | sort -rn" },
+        { cat:"find", cmd:"sed", zh:"批量替换文本", level:"mid", desc:"流式编辑器，最常用的是替换：sed -i 's/旧/新/g' 直接改文件内容。批量改配置很高效。", ex:"sed -i 's/8080/80/g' config.conf", tip:"-i 表示直接修改原文件。重要文件替换前先 cp 一份备份，出错好回滚。" },
+        { cat:"find", cmd:"awk", zh:"按列处理文本", level:"mid", desc:"把每行按空格切成列，用 $1、$2 取第几列。提取日志里的 IP、统计字段时很顺手。", ex:"awk '{print $1}' access.log | sort | uniq -c" },
+
+        /* ---------- 终端技巧 ---------- */
+        { cat:"tips", cmd:"Tab 补全", zh:"少打一半字", level:"base", desc:"输入命令或路径的前几个字母后按 Tab，终端自动补全；补不全时按两下列出所有候选。", ex:"cd /va<Tab> → /var/" },
+        { cat:"tips", cmd:"history", zh:"命令历史", level:"base", desc:"列出你敲过的所有命令。配合 Ctrl+R 输入关键词，可以反向搜索历史命令直接复用。", ex:"history | grep ssh" },
+        { cat:"tips", cmd:"alias", zh:"给命令起别名", level:"mid", desc:"把一长串常用命令缩成短名字，写进 ~/.bashrc 就能永久生效。用终端久了，人人都有自己的一套。", ex:"alias ll='ls -lah'" },
+        { cat:"tips", cmd:"&& 与 ;", zh:"连着执行多条命令", level:"mid", desc:"&& 表示前一条成功了才执行下一条；; 表示不管成败都接着执行。更新一条龙就是这么写出来的。", ex:"sudo apt update && sudo apt upgrade" },
+        { cat:"tips", cmd:"clear", zh:"清屏", level:"base", desc:"把终端画面清干净（快捷键 Ctrl+L）。历史输出还在，往上滚还能看到，只是眼不见为净。", ex:"clear" },
+        { cat:"tips", cmd:"man", zh:"查看完整手册", level:"base", desc:"man 命令名 打开该命令的完整说明书：空格翻页、q 退出。记不住参数时，这是比搜网页更靠谱的答案。", ex:"man tar" }
+      ];
+
+      /* ================= Render ================= */
+      var main = document.getElementById("main");
+      var nav = document.getElementById("catNav");
+      var activeCat = "all";
+      var keyword = "";
+
+      function esc(s){
+        return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      }
+
+      function cardHTML(c){
+        var tip = c.tip ? '<details><summary>多说一句</summary><p>' + esc(c.tip) + '</p></details>' : "";
+        return '<article class="card" data-cat="' + c.cat + '">' +
+          '<div class="card-top"><div>' +
+            '<div class="cmd-name">' + esc(c.cmd) + '</div>' +
+            '<div class="cmd-zh">' + esc(c.zh) + '</div>' +
+          '</div>' +
+          '<span class="lvl ' + c.level + '">' + (c.level === "base" ? "入门" : "进阶") + '</span></div>' +
+          '<p class="cmd-desc">' + esc(c.desc) + '</p>' +
+          '<div class="code-row"><code><span class="dollar">$ </span>' + esc(c.ex) + '</code>' +
+          '<button class="copy-btn" type="button" data-copy="' + esc(c.ex).replace(/"/g,"&quot;") + '" aria-label="复制命令 ' + esc(c.cmd) + '">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制</button></div>' +
+          tip +
+        '</article>';
+      }
+
+      CATEGORIES.forEach(function(cat){
+        var items = COMMANDS.filter(function(c){ return c.cat === cat.id; });
+        var sec = document.createElement("section");
+        sec.className = "cat-section";
+        sec.id = "sec-" + cat.id;
+        sec.setAttribute("data-cat", cat.id);
+        sec.innerHTML =
+          '<div class="cat-head"><span class="cat-no">' + cat.no + '</span><h2>' + cat.name + '</h2>' +
+          '<span class="cat-count">' + items.length + ' 条命令</span></div>' +
+          '<p class="cat-desc">' + cat.desc + '</p>' +
+          '<div class="grid">' + items.map(cardHTML).join("") + '</div>';
+        main.appendChild(sec);
+      });
+
+      var allBtn = document.createElement("button");
+      allBtn.className = "cat-btn active"; allBtn.type = "button";
+      allBtn.textContent = "全部";
+      allBtn.setAttribute("data-filter", "all");
+      nav.appendChild(allBtn);
+      CATEGORIES.forEach(function(cat){
+        var b = document.createElement("button");
+        b.className = "cat-btn"; b.type = "button";
+        b.textContent = cat.name;
+        b.setAttribute("data-filter", cat.id);
+        nav.appendChild(b);
+      });
+
+      document.getElementById("totalCount").textContent = COMMANDS.length + " 条";
+
+      /* ================= Filter ================= */
+      var visibleEl = document.getElementById("visibleCount");
+      var emptyEl = document.getElementById("emptyState");
+
+      function applyFilter(){
+        var kw = keyword.trim().toLowerCase();
+        var total = 0;
+        var sections = main.querySelectorAll(".cat-section");
+        sections.forEach(function(sec){
+          var catMatch = (activeCat === "all" || sec.getAttribute("data-cat") === activeCat);
+          var shown = 0;
+          sec.querySelectorAll(".card").forEach(function(card){
+            var text = card.textContent.toLowerCase();
+            var ok = catMatch && (!kw || text.indexOf(kw) !== -1);
+            card.style.display = ok ? "" : "none";
+            if (ok) shown++;
+          });
+          sec.style.display = shown > 0 ? "" : "none";
+          var cc = sec.querySelector(".cat-count");
+          if (cc) cc.textContent = shown + " 条命令";
+          total += shown;
+        });
+        visibleEl.textContent = total;
+        emptyEl.classList.toggle("show", total === 0);
+      }
+
+      nav.addEventListener("click", function(e){
+        var btn = e.target.closest(".cat-btn");
+        if (!btn) return;
+        nav.querySelectorAll(".cat-btn").forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        activeCat = btn.getAttribute("data-filter");
+        applyFilter();
+      });
+
+      document.getElementById("searchInput").addEventListener("input", function(e){
+        keyword = e.target.value;
+        applyFilter();
+      });
+
+      applyFilter();
+
+      /* ================= Copy ================= */
+      var toast = document.getElementById("toast");
+      var toastTimer = null;
+      function showToast(msg){
+        toast.textContent = msg;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 1800);
+      }
+      function copyText(text, done){
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text, done); });
+        } else {
+          fallbackCopy(text, done);
+        }
+      }
+      function fallbackCopy(text, done){
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta);
+        done();
+      }
+      main.addEventListener("click", function(e){
+        var btn = e.target.closest(".copy-btn");
+        if (!btn) return;
+        var text = btn.getAttribute("data-copy");
+        copyText(text, function(){
+          var old = btn.innerHTML;
+          btn.classList.add("copied");
+          btn.innerHTML = "已复制 ✓";
+          showToast("已复制：" + text);
+          setTimeout(function(){ btn.classList.remove("copied"); btn.innerHTML = old; }, 1600);
+        });
+      });
+
+      /* ================= Simulated VM terminal (2 vCPU / 4 GB RAM / 20 GB disk) ================= */
+      var termBody = document.getElementById("termBody");
+      var termInput = document.getElementById("termInput");
+      var HOME = "/home/visitor";
+      var cwd = HOME;
+      var prevCwd = HOME;
+      var rootMode = false;
+      var sudoAuthed = false;
+      var awaitPass = false;
+      var pendingSudo = null;
+      var pingTimer = null;
+      var pingInfo = null;
+      var installed = {};
+      var termHistory = [];
+      var histIdx = -1;
+
+      var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      var DAY = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      function pad2(n){ return (n < 10 ? "0" : "") + n; }
+      function dateOut(d){
+        return DAY[d.getDay()] + " " + MON[d.getMonth()] + " " + pad2(d.getDate()) + " " +
+          pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds()) + " CST " + d.getFullYear();
+      }
+      function lsTimeNow(){
+        var d = new Date();
+        return MON[d.getMonth()] + " " + pad2(d.getDate()) + " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+      }
+      function stampNow(){
+        var d = new Date();
+        return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()) + " " +
+          pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
+      }
+
+      /* ---------- Virtual filesystem ---------- */
+      function N(type, perms, owner, size, mtime, content, children){
+        return { t:type, perms:perms, owner:owner, size:size, mtime:mtime,
+                 content:(content === undefined ? null : content), children:children || null };
+      }
+      function D(perms, owner, mtime, children){ return N("dir", perms, owner, 4096, mtime, null, children || {}); }
+      function F(perms, owner, size, mtime, content){ return N("file", perms, owner, size, mtime, content); }
+
+      var OS_RELEASE =
+        "PRETTY_NAME=\"Debian GNU/Linux 12 (bookworm)\"\n" +
+        "NAME=\"Debian GNU/Linux\"\n" +
+        "VERSION_ID=\"12\"\n" +
+        "VERSION=\"12 (bookworm)\"\n" +
+        "VERSION_CODENAME=bookworm\n" +
+        "ID=debian\n" +
+        "HOME_URL=\"https://www.debian.org/\"\n" +
+        "SUPPORT_URL=\"https://www.debian.org/support\"\n" +
+        "BUG_REPORT_URL=\"https://bugs.debian.org/\"";
+      var HOSTS_FILE =
+        "127.0.0.1 localhost\n" +
+        "127.0.1.1 debian-vm\n" +
+        "\n" +
+        "# The following lines are desirable for IPv6 capable hosts\n" +
+        "::1     localhost ip6-localhost ip6-loopback\n" +
+        "ff02::1 ip6-allnodes\n" +
+        "ff02::2 ip6-allrouters";
+      var PASSWD_FILE =
+        "root:x:0:0:root:/root:/bin/bash\n" +
+        "daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\n" +
+        "bin:x:2:2:bin:/bin:/usr/sbin/nologin\n" +
+        "sys:x:3:3:sys:/dev:/usr/sbin/nologin\n" +
+        "sync:x:4:65534:sync:/bin:/bin/sync\n" +
+        "messagebus:x:102:104::/nonexistent:/usr/sbin/nologin\n" +
+        "sshd:x:103:65534::/run/sshd:/usr/sbin/nologin\n" +
+        "visitor:x:1000:1000:visitor,,,:/home/visitor:/bin/bash";
+      var BASHRC =
+        "# ~/.bashrc: executed by bash(1) for non-login shells.\n" +
+        "\n" +
+        "case $- in\n" +
+        "    *i*) ;;\n" +
+        "      *) return;;\n" +
+        "esac\n" +
+        "\n" +
+        "HISTCONTROL=ignoreboth\n" +
+        "shopt -s histappend\n" +
+        "HISTSIZE=1000\n" +
+        "HISTFILESIZE=2000\n" +
+        "\n" +
+        "alias ll='ls -alF'\n" +
+        "alias la='ls -A'\n" +
+        "alias l='ls -CF'";
+      var NOTES =
+        "Linux 学习笔记\n" +
+        "1. 先敲 pwd 确认自己在哪\n" +
+        "2. 删除文件前先 ls 看一眼\n" +
+        "3. 记不住参数就 man 一下\n" +
+        "4. 这台练习机是 2 核 4G，跑服务足够了";
+      var SITE_INDEX =
+        "<!DOCTYPE html>\n<html>\n<head><title>我的第一个站点</title></head>\n" +
+        "<body>\n<h1>我的第一个站点</h1>\n<p>由 nginx 托管在 Debian 上。</p>\n</body>\n</html>";
+
+      var FSROOT = D("drwxr-xr-x", "root", "Oct 20 08:30", {
+        "bin":  D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "boot": D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "dev":  D("drwxr-xr-x", "root", "Oct 22 06:25"),
+        "etc":  D("drwxr-xr-x", "root", "Oct 23 08:41", {
+          "os-release": F("-rw-r--r--", "root", 265, "Feb 25  2025", OS_RELEASE),
+          "hostname":   F("-rw-r--r--", "root", 10, "Oct 20 08:31", "debian-vm"),
+          "hosts":      F("-rw-r--r--", "root", 221, "Oct 20 08:31", HOSTS_FILE),
+          "passwd":     F("-rw-r--r--", "root", 989, "Oct 20 08:33", PASSWD_FILE),
+          "shadow":     F("-rw-r-----", "root", 812, "Oct 20 08:33", null)
+        }),
+        "home": D("drwxr-xr-x", "root", "Oct 20 08:30", {
+          "visitor": D("drwxr-xr-x", "visitor", "Oct 23 09:05", {
+            ".bash_logout": F("-rw-r--r--", "visitor", 220, "Feb 25  2025",
+              "# ~/.bash_logout: executed by bash(1) when login shell exits.\n\n# when leaving the console clear the screen\nif [ \"$SHLVL\" = 1 ]; then\n    [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q\nfi"),
+            ".bashrc":   F("-rw-r--r--", "visitor", 3526, "Feb 25  2025", BASHRC),
+            ".profile":  F("-rw-r--r--", "visitor", 807, "Feb 25  2025",
+              "# ~/.profile: executed by the command interpreter for login shells.\n\nif [ -n \"$BASH_VERSION\" ]; then\n    if [ -f \"$HOME/.bashrc\" ]; then\n        . \"$HOME/.bashrc\"\n    fi\nfi"),
+            "Documents": D("drwxr-xr-x", "visitor", "Oct 21 14:02"),
+            "Downloads": D("drwxr-xr-x", "visitor", "Oct 22 19:47"),
+            "notes.txt": F("-rw-r--r--", "visitor", 168, "Oct 23 09:02", NOTES),
+            "backup.tar.gz": F("-rw-r--r--", "visitor", 128451, "Oct 22 23:15", null),
+            "site": D("drwxr-xr-x", "visitor", "Oct 22 20:13", {
+              "index.html": F("-rw-r--r--", "visitor", 214, "Oct 22 20:13", SITE_INDEX),
+              "style.css":  F("-rw-r--r--", "visitor", 486, "Oct 22 20:10", "body { font-family: sans-serif; margin: 2em; }\nh1 { color: #1f7a37; }"),
+              "app.js":     F("-rw-r--r--", "visitor", 912, "Oct 22 20:11", "console.log('hello from app.js');")
+            })
+          })
+        }),
+        "lib":   D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "media": D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "mnt":   D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "opt":   D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "proc":  D("dr-xr-xr-x", "root", "Oct 20 08:30"),
+        "root":  D("drwx------", "root", "Oct 20 08:34"),
+        "run":   D("drwxr-xr-x", "root", "Oct 23 08:41"),
+        "sbin":  D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "srv":   D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "sys":   D("dr-xr-xr-x", "root", "Oct 20 08:30"),
+        "tmp":   D("drwxrwxrwt", "root", "Oct 23 09:01"),
+        "usr":   D("drwxr-xr-x", "root", "Oct 20 08:30"),
+        "var":   D("drwxr-xr-x", "root", "Oct 20 08:30")
+      });
+
+      function resolvePath(p){
+        if (!p) return cwd;
+        if (p === "~") p = HOME;
+        else if (p.indexOf("~/") === 0) p = HOME + p.slice(1);
+        if (p.charAt(0) !== "/") p = cwd + "/" + p;
+        var parts = p.split("/"), out = [];
+        for (var i = 0; i < parts.length; i++){
+          var seg = parts[i];
+          if (seg === "" || seg === ".") continue;
+          if (seg === "..") out.pop();
+          else out.push(seg);
+        }
+        return "/" + out.join("/");
+      }
+      function getNode(abs){
+        if (abs === "/") return FSROOT;
+        var parts = abs.split("/"), node = FSROOT;
+        for (var i = 0; i < parts.length; i++){
+          if (!parts[i]) continue;
+          if (!node.children || !node.children[parts[i]]) return null;
+          node = node.children[parts[i]];
+        }
+        return node;
+      }
+      function parentOf(abs){
+        var idx = abs.lastIndexOf("/");
+        return { dir: idx <= 0 ? "/" : abs.slice(0, idx), name: abs.slice(idx + 1) };
+      }
+      function baseName(abs){
+        var parts = abs.split("/");
+        return parts[parts.length - 1] || "/";
+      }
+      function dispCwd(){
+        if (cwd === HOME) return "~";
+        if (cwd.indexOf(HOME + "/") === 0) return "~" + cwd.slice(HOME.length);
+        return cwd;
+      }
+      function isWritable(abs){
+        return abs === HOME || abs.indexOf(HOME + "/") === 0 || abs === "/tmp" || abs.indexOf("/tmp/") === 0;
+      }
+      function canRead(node, abs, asRoot){
+        if (asRoot || rootMode) return true;
+        if (abs === "/root" || abs.indexOf("/root/") === 0) return false;
+        if (node.owner !== "visitor" && node.perms.charAt(7) === "-") return false;
+        if (node.perms === "-rw-r-----" && node.owner === "root") return false;
+        return true;
+      }
+
+      /* ---------- Output helpers ---------- */
+      function printOut(text){
+        var d = document.createElement("div");
+        d.className = "out";
+        d.textContent = text;
+        termBody.appendChild(d);
+      }
+      function promptHTML(){
+        if (rootMode)
+          return '<span class="prompt">root@debian-vm<span class="path">:' + dispCwd() + '</span>#</span>';
+        return '<span class="prompt">visitor@debian-vm<span class="path">:' + dispCwd() + '</span>$</span>';
+      }
+      function printEcho(cmd, suffix){
+        var d = document.createElement("div");
+        d.className = "cmd-echo";
+        d.innerHTML = promptHTML() + " " + esc(cmd) + (suffix || "");
+        termBody.appendChild(d);
+      }
+      function syncPrompt(){
+        var p = document.querySelector(".term-input-row .prompt");
+        if (p) p.outerHTML = promptHTML();
+      }
+      function scrollTerm(){ termBody.scrollTop = termBody.scrollHeight; }
+
+      function tokenize(s){
+        var m = s.match(/"[^"]*"|'[^']*'|\S+/g) || [];
+        return m.map(function(t){
+          if (t.length >= 2 && ((t.charAt(0) === '"' && t.charAt(t.length - 1) === '"') ||
+              (t.charAt(0) === "'" && t.charAt(t.length - 1) === "'"))) return t.slice(1, -1);
+          return t;
+        });
+      }
+      function fmtHuman(n){
+        if (n < 1024) return String(n);
+        var k = n / 1024;
+        if (k < 1024) return (k < 10 ? k.toFixed(1) : String(Math.round(k))) + "K";
+        var mb = k / 1024;
+        return (mb < 10 ? mb.toFixed(1) : String(Math.round(mb))) + "M";
+      }
+      function permsFromBits(isDir, bits){
+        var s = isDir ? "d" : "-";
+        var chars = "rwxrwxrwx";
+        for (var i = 0; i < 9; i++) s += (bits & (256 >> i)) ? chars.charAt(i) : "-";
+        return s;
+      }
+      function bitsFromPerms(perms){
+        var bits = 0;
+        for (var i = 0; i < 9; i++) if (perms.charAt(i + 1) !== "-") bits |= (256 >> i);
+        return bits;
+      }
+
+      /* ---------- ls ---------- */
+      function lsLongLine(name, node, human, sizeW){
+        var links = node.t === "dir" ? String(2 + Object.keys(node.children || {}).filter(function(k){
+          return node.children[k].t === "dir";
+        }).length) : "1";
+        while (links.length < 2) links = " " + links;
+        var size = human ? fmtHuman(node.size) : String(node.size);
+        while (size.length < sizeW) size = " " + size;
+        return node.perms + " " + links + " " + node.owner + " " + node.owner + " " + size + " " + node.mtime + " " + name;
+      }
+      function cmdLs(args, asRoot){
+        var showAll = false, showAlmost = false, longFmt = false, human = false;
+        var target = null;
+        for (var i = 0; i < args.length; i++){
+          var a = args[i];
+          if (a.charAt(0) === "-" && a.length > 1){
+            for (var j = 1; j < a.length; j++){
+              var ch = a.charAt(j);
+              if (ch === "a") showAll = true;
+              else if (ch === "A") showAlmost = true;
+              else if (ch === "l") longFmt = true;
+              else if (ch === "h") human = true;
+              else if (ch === "F" || ch === "r" || ch === "t" || ch === "R" || ch === "1") {}
+              else return "ls: invalid option -- '" + ch + "'\nTry 'ls --help' for more information.";
+            }
+          } else target = a;
+        }
+        var abs = resolvePath(target || "");
+        var node = getNode(abs);
+        if (!node) return "ls: cannot access '" + (target || "") + "': No such file or directory";
+        if (!canRead(node, abs, asRoot)) return "ls: cannot open directory '" + (target || abs) + "': Permission denied";
+        if (node.t === "file"){
+          return longFmt ? lsLongLine(baseName(abs), node, human, String(node.size).length) : (target || baseName(abs));
+        }
+        var names = Object.keys(node.children).sort();
+        var entries = [];
+        if (showAll){
+          entries.push({ name: ".", node: node });
+          var par = getNode(parentOf(abs).dir);
+          entries.push({ name: "..", node: par || node });
+        }
+        names.forEach(function(nm){
+          if (!showAll && !showAlmost && nm.charAt(0) === ".") return;
+          entries.push({ name: nm, node: node.children[nm] });
+        });
+        if (!longFmt) return entries.length ? entries.map(function(e){ return e.name; }).join("  ") : "";
+        var sizeW = 0;
+        entries.forEach(function(e){
+          var s = human ? fmtHuman(e.node.size) : String(e.node.size);
+          if (s.length > sizeW) sizeW = s.length;
+        });
+        var total = 0;
+        entries.forEach(function(e){
+          total += e.node.t === "dir" ? 4 : Math.max(4, Math.ceil(e.node.size / 4096) * 4);
+        });
+        var lines = ["total " + total];
+        entries.forEach(function(e){ lines.push(lsLongLine(e.name, e.node, human, sizeW)); });
+        return lines.join("\n");
+      }
+
+      /* ---------- cat / head / tail / wc ---------- */
+      function readFile(cmdName, arg, asRoot){
+        var abs = resolvePath(arg || "");
+        var node = getNode(abs);
+        if (!node) return { err: cmdName + ": " + (arg || "") + ": No such file or directory" };
+        if (node.t === "dir") return { err: cmdName + ": " + (arg || "") + ": Is a directory" };
+        if (!canRead(node, abs, asRoot)) return { err: cmdName + ": " + (arg || "") + ": Permission denied" };
+        if (node.content === null) return { bin: true };
+        return { text: node.content };
+      }
+      function cmdCat(args, asRoot){
+        if (!args.length) return "";
+        var r = readFile("cat", args[0], asRoot);
+        if (r.err) return r.err;
+        if (r.bin) return "�H�\u0007��t�k�O�...(binary data)";
+        return r.text;
+      }
+      function cmdHeadTail(isTail, args, asRoot){
+        var name = isTail ? "tail" : "head";
+        var n = 10, file = null;
+        for (var i = 0; i < args.length; i++){
+          var a = args[i];
+          if (a === "-f") continue;
+          else if (a === "-n" && args[i + 1]) { n = parseInt(args[i + 1], 10) || 10; i++; }
+          else if (/^-\d+$/.test(a)) n = parseInt(a.slice(1), 10);
+          else file = a;
+        }
+        if (!file) return "";
+        var r = readFile(name, file, asRoot);
+        if (r.err) return r.err;
+        if (r.bin) return "";
+        var lines = r.text.split("\n");
+        return (isTail ? lines.slice(-n) : lines.slice(0, n)).join("\n");
+      }
+
+      /* ---------- System info outputs ---------- */
+      var FREE_H =
+        "               total        used        free      shared  buff/cache   available\n" +
+        "Mem:           3.8Gi       612Mi       2.4Gi       8.0Mi       868Mi       3.0Gi\n" +
+        "Swap:             0B          0B          0B";
+      var FREE_M =
+        "               total        used        free      shared  buff/cache   available\n" +
+        "Mem:            3932         612        2451           8         868        3042\n" +
+        "Swap:              0           0           0";
+      var DF_H =
+        "Filesystem      Size  Used Avail Use% Mounted on\n" +
+        "udev            1.9G     0  1.9G   0% /dev\n" +
+        "tmpfs           393M  584K  392M   1% /run\n" +
+        "/dev/sda1        20G  3.4G   16G  19% /\n" +
+        "tmpfs           2.0G     0  2.0G   0% /dev/shm\n" +
+        "tmpfs           5.0M     0  5.0M   0% /run/lock\n" +
+        "/dev/sda15      124M   12M  113M  10% /boot/efi\n" +
+        "tmpfs           393M     0  393M   0% /run/user/1000";
+      var LSCPU =
+        "Architecture:                         x86_64\n" +
+        "  CPU op-mode(s):                     32-bit, 64-bit\n" +
+        "  Address sizes:                      46 bits physical, 48 bits virtual\n" +
+        "  Byte Order:                         Little Endian\n" +
+        "CPU(s):                               2\n" +
+        "  On-line CPU(s) list:                0,1\n" +
+        "Vendor ID:                            GenuineIntel\n" +
+        "  Model name:                         Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz\n" +
+        "    CPU family:                       6\n" +
+        "    Model:                            79\n" +
+        "    Thread(s) per core:               1\n" +
+        "    Core(s) per socket:               2\n" +
+        "    Socket(s):                        1\n" +
+        "    BogoMIPS:                         4600.00\n" +
+        "Virtualization features:\n" +
+        "  Virtualization:                     VT-x\n" +
+        "  Hypervisor vendor:                  KVM\n" +
+        "  Virtualization type:                full";
+      function psAux(){
+        return "USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\n" +
+        "root           1  0.0  0.3 167580 12804 ?        Ss   Oct20   0:04 /sbin/init\n" +
+        "root         214  0.0  0.2  24692  8452 ?        Ss   Oct20   0:01 /lib/systemd/systemd-journald\n" +
+        "root         236  0.0  0.1   6980  4212 ?        Ss   Oct20   0:00 /usr/sbin/cron -f\n" +
+        "message+     238  0.0  0.2   9840  7920 ?        Ss   Oct20   0:00 /usr/bin/dbus-daemon --system --address=systemd:\n" +
+        "root         301  0.0  0.4 386376 17444 ?        Ssl  Oct20   0:12 /usr/sbin/rsyslogd -n\n" +
+        "root         312  0.0  0.3  15436 12108 ?        Ss   Oct20   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups\n" +
+        "visitor     1024  0.0  0.5  21248 19876 pts/0    Ss   09:05   0:00 -bash\n" +
+        "visitor     1150  0.0  0.1  10520  4120 pts/0    R+   " + pad2(new Date().getHours()) + ":" + pad2(new Date().getMinutes()) + "   0:00 ps aux";
+      }
+      function topSnapshot(){
+        var d = new Date();
+        return "top - " + pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds()) +
+          " up 3 days,  2:18,  1 user,  load average: 0.08, 0.03, 0.01\n" +
+          "Tasks:  87 total,   1 running,  86 sleeping,   0 stopped,   0 zombie\n" +
+          "%Cpu(s):  2.0 us,  1.0 sy,  0.0 ni, 96.8 id,  0.2 wa,  0.0 hi,  0.0 si,  0.0 st\n" +
+          "MiB Mem :   3932.4 total,   2451.2 free,    612.8 used,    868.4 buff/cache\n" +
+          "MiB Swap:      0.0 total,      0.0 free,      0.0 used.   3042.1 avail Mem\n" +
+          "\n" +
+          "    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND\n" +
+          "    301 root      20   0  386376  17444   6548 S   0.0   0.4   0:12.44 rsyslogd\n" +
+          "    312 root      20   0   15436  12108   9876 S   0.0   0.3   0:00.87 sshd\n" +
+          "   1024 visitor   20   0   21248  19876   9876 S   0.0   0.5   0:00.12 bash\n" +
+          "   1151 visitor   20   0   19876   7654   4320 R   0.0   0.2   0:00.01 top";
+      }
+      var IP_A =
+        "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n" +
+        "    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n" +
+        "    inet 127.0.0.1/8 scope host lo\n" +
+        "       valid_lft forever preferred_lft forever\n" +
+        "    inet6 ::1/128 scope host noprefixroute\n" +
+        "       valid_lft forever preferred_lft forever\n" +
+        "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000\n" +
+        "    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff\n" +
+        "    altname enp0s3\n" +
+        "    inet 192.168.1.120/24 brd 192.168.1.255 scope global eth0\n" +
+        "       valid_lft forever preferred_lft forever";
+
+      /* ---------- ping (async, like the real thing) ---------- */
+      var DNS = { "localhost": "127.0.0.1", "example.com": "93.184.215.14", "www.example.com": "93.184.215.14",
+                  "debian.org": "151.101.66.132", "www.debian.org": "151.101.66.132", "baidu.com": "110.242.68.66",
+                  "www.baidu.com": "110.242.68.66", "deb.debian.org": "151.101.66.132" };
+      function resolveHost(h){
+        if (/^\d{1,3}(\.\d{1,3}){3}$/.test(h)) return h;
+        return DNS[h] || null;
+      }
+      function stopPing(interrupted){
+        if (!pingTimer) return;
+        clearInterval(pingTimer);
+        pingTimer = null;
+        var p = pingInfo; pingInfo = null;
+        if (!p) return;
+        var lines = [];
+        if (interrupted) lines.push("^C");
+        lines.push("--- " + p.host + " ping statistics ---");
+        lines.push(p.sent + " packets transmitted, " + p.sent + " received, 0% packet loss, time " + (p.sent * 1000 + 3) + "ms");
+        lines.push("rtt min/avg/max/mdev = 11.208/12.044/13.018/0.671 ms");
+        printOut(lines.join("\n"));
+        scrollTerm();
+      }
+      function startPing(host, count){
+        var ip = resolveHost(host);
+        if (!ip){
+          printOut("ping: " + host + ": Name or service not known");
+          scrollTerm();
+          return;
+        }
+        printOut("PING " + host + " (" + ip + ") 56(84) bytes of data.");
+        var times = [12.3, 11.8, 12.6, 11.2, 13.0, 12.1, 11.6, 12.4];
+        var i = 0;
+        pingInfo = { host: host, ip: ip, sent: 0 };
+        var total = (count && count > 0) ? count : Infinity;
+        pingTimer = setInterval(function(){
+          if (i >= total){ stopPing(false); return; }
+          pingInfo.sent++;
+          printOut("64 bytes from " + ip + ": icmp_seq=" + (i + 1) + " ttl=57 time=" + times[i % times.length].toFixed(1) + " ms");
+          scrollTerm();
+          i++;
+          if (i >= total) stopPing(false);
+        }, 650);
+      }
+
+      /* ---------- apt / systemctl ---------- */
+      var APT_PKGS = {
+        "htop":      { ver: "3.2.2-2", get: "142 kB", space: "342 kB" },
+        "vim":       { ver: "2:9.0.1378-2", get: "1,234 kB", space: "3,102 kB" },
+        "nginx":     { ver: "1.22.1-9", get: "987 kB", space: "3,856 kB" },
+        "zip":       { ver: "3.0-13", get: "168 kB", space: "542 kB" },
+        "unzip":     { ver: "6.0-28", get: "164 kB", space: "556 kB" },
+        "git":       { ver: "1:2.39.5-0+deb12u2", get: "3,912 kB", space: "19.4 MB" },
+        "tree":      { ver: "2.1.0-1", get: "48.2 kB", space: "112 kB" },
+        "net-tools": { ver: "2.10-0.1", get: "243 kB", space: "1,024 kB" }
+      };
+      var PREINSTALLED = { "curl": "7.88.1-10+deb12u8", "wget": "1.21.3-1+b2" };
+      function cmdApt(args, asRoot){
+        var verb = args[0] || "";
+        var pkg = args[1] || "";
+        if (verb === "update"){
+          if (!asRoot) return "Hit:1 http://deb.debian.org/debian bookworm InRelease\n" +
+            "Hit:2 http://deb.debian.org/debian bookworm-updates InRelease\n" +
+            "Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease\n" +
+            "Reading package lists... Done\n" +
+            "E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)\n" +
+            "E: Unable to lock directory /var/lib/apt/lists/";
+          return "Hit:1 http://deb.debian.org/debian bookworm InRelease\n" +
+            "Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]\n" +
+            "Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]\n" +
+            "Fetched 103 kB in 1s (148 kB/s)\n" +
+            "Reading package lists... Done\n" +
+            "Building dependency tree... Done\n" +
+            "Reading state information... Done\n" +
+            "All packages are up to date.";
+        }
+        if (verb === "install"){
+          if (!asRoot) return "E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)\n" +
+            "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?";
+          if (!pkg) return "E: Unsupported operation";
+          if (PREINSTALLED[pkg]) return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\n" +
+            pkg + " is already the newest version (" + PREINSTALLED[pkg] + ").\n0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.";
+          if (installed[pkg]) return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\n" +
+            pkg + " is already the newest version (" + APT_PKGS[pkg].ver + ").\n0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.";
+          var info = APT_PKGS[pkg];
+          if (!info) return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\nE: Unable to locate package " + pkg;
+          installed[pkg] = true;
+          return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\n" +
+            "The following NEW packages will be installed:\n  " + pkg + "\n" +
+            "0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.\n" +
+            "Need to get " + info.get + " of archives.\n" +
+            "After this operation, " + info.space + " of additional disk space will be used.\n" +
+            "Get:1 http://deb.debian.org/debian bookworm/main amd64 " + pkg + " amd64 " + info.ver + " [" + info.get + "]\n" +
+            "Fetched " + info.get + " in 0s (512 kB/s)\n" +
+            "Selecting previously unselected package " + pkg + ".\n" +
+            "(Reading database ... 51234 files and directories currently installed.)\n" +
+            "Preparing to unpack .../" + pkg + "_" + info.ver + "_amd64.deb ...\n" +
+            "Unpacking " + pkg + " (" + info.ver + ") ...\n" +
+            "Setting up " + pkg + " (" + info.ver + ") ...\n" +
+            "Processing triggers for man-db (2.11.2-2) ...";
+        }
+        if (verb === "search"){
+          var out = "Sorting... Done\nFull Text Search... Done";
+          if (pkg === "nginx") out += "\nnginx/bookworm 1.22.1-9 amd64\n  small, powerful, scalable web/proxy server";
+          if (pkg === "htop") out += "\nhtop/bookworm 3.2.2-2 amd64\n  interactive processes viewer";
+          return out;
+        }
+        if (verb === "remove"){
+          if (!asRoot) return "E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)\n" +
+            "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?";
+          if (installed[pkg]){
+            delete installed[pkg];
+            return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\n" +
+              "The following packages will be REMOVED:\n  " + pkg + "\n" +
+              "0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.\n" +
+              "(Reading database ... 51401 files and directories currently installed.)\n" +
+              "Removing " + pkg + " (" + APT_PKGS[pkg].ver + ") ...";
+          }
+          return "Reading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\n" +
+            "Package '" + pkg + "' is not installed, so not removed\n0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.";
+        }
+        if (verb === "upgrade"){
+          if (!asRoot) return "E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)\n" +
+            "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?";
+          return "Reading package lists... Done\nBuilding dependency tree... Done\nCalculating upgrade... Done\n0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.";
+        }
+        return "E: Invalid operation " + (verb || "(empty)");
+      }
+      function cmdSystemctl(args, asRoot){
+        var verb = args[0] || "status";
+        var unit = (args[1] || "").replace(/\.service$/, "");
+        function sinceStr(){
+          var d = new Date(Date.now() - (3 * 24 * 3600 + 2 * 3600 + 18 * 60) * 1000);
+          return DAY[d.getDay()] + " " + d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()) +
+            " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds()) + " CST";
+        }
+        if (verb === "status"){
+          if (!unit) return "● debian-vm\n    State: running\n    Units: 238 loaded (incl. aliases)\n     Jobs: 0 queued\n   Failed: 0 units\n    Since: " + sinceStr() + "; 3 days ago";
+          if (unit === "ssh" || unit === "sshd"){
+            return "● ssh.service - OpenBSD Secure Shell server\n" +
+              "     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)\n" +
+              "     Active: active (running) since " + sinceStr() + "; 3 days ago\n" +
+              "       Docs: man:sshd(8)\n" +
+              "   Main PID: 312 (sshd)\n" +
+              "      Tasks: 1 (limit: 4596)\n" +
+              "     Memory: 5.4M\n" +
+              "        CPU: 212ms\n" +
+              "     CGroup: /system.slice/ssh.service\n" +
+              "             └─312 \"sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups\"";
+          }
+          return "Unit " + unit + ".service could not be found.";
+        }
+        if (verb === "start" || verb === "stop" || verb === "restart" || verb === "reload"){
+          if (!asRoot) return "Failed to " + verb + " " + unit + ".service: Interactive authentication required.\nSee system logs and 'systemctl status " + unit + ".service' for details.";
+          if (unit === "ssh" || unit === "sshd") return "";
+          return "Failed to " + verb + " " + unit + ".service: Unit " + unit + ".service not found.";
+        }
+        if (verb === "enable" || verb === "disable"){
+          if (!asRoot) return "Failed to " + verb + " unit: Interactive authentication required.";
+          if (unit === "ssh" || unit === "sshd"){
+            if (verb === "enable") return "Synchronizing state of ssh.service with SysV service script with /lib/systemd/systemd-sysv-install.\nExecuting: /lib/systemd/systemd-sysv-install enable ssh";
+            return "";
+          }
+          return "Failed to " + verb + " " + unit + ".service: Unit file " + unit + ".service does not exist.";
+        }
+        if (verb === "--failed" || verb === "list-units")
+          return "  UNIT          LOAD   ACTIVE SUB    DESCRIPTION\n  0 loaded units listed.";
+        return "Unknown command verb " + verb + ".";
+      }
+
+      var NOT_SIMULATED = ["tar","gzip","gunzip","zip","unzip","sed","awk","find","less","more","nano","vi","vim","emacs",
+        "sort","uniq","kill","pkill","killall","jobs","fg","bg","alias","man","scp","service","su","passwd","useradd"];
+
+      /* ---------- Command execution ---------- */
+      function execSimple(input, asRoot){
+        var tokens = tokenize(input);
+        if (!tokens.length) return "";
+        var base = tokens[0];
+        var args = tokens.slice(1);
+        var effRoot = asRoot || rootMode;
+
+        if (base === "sudo"){
+          if (!args.length) return "usage: sudo command";
+          if (args[0] === "-i" || args[0] === "-s"){
+            rootMode = true; syncPrompt();
+            return "";
+          }
+          return execSimple(args.join(" "), true);
+        }
+
+        switch (base) {
+          case "help":
+            return "本终端模拟一台 Debian 12 虚拟机：2 核 CPU / 4 GB 内存 / 20 GB 磁盘，输出格式与真机一致。\n" +
+              "文件类： ls [-la] [路径] · cd <目录> · pwd · cat <文件> · head / tail [-n 行数] <文件>\n" +
+              "        touch · mkdir · rm [-r] · cp · mv · chmod · chown（都会真实改变这台模拟机）\n" +
+              "系统类： whoami · id · hostname · date · uname -a · nproc · lscpu · uptime\n" +
+              "        free -h · df -h · du -sh <路径> · ps aux · top · ss -tlnp · ip a\n" +
+              "网络类： ping [-c N] <主机> · curl [-I] <网址> · wget <网址>\n" +
+              "管理类： sudo <命令> · apt update / install / remove / search · systemctl status / restart\n" +
+              "其他：   echo · clear · history · env · exit（退出 root 或结束会话）\n" +
+              "支持管道： ps aux | grep ssh 。其余命令请到真机上练习，下方卡片里都有讲解。";
+          case "ls": return cmdLs(args, effRoot);
+          case "pwd": return cwd;
+          case "cd": {
+            var dest = args[0];
+            if (!dest) { prevCwd = cwd; cwd = HOME; syncPrompt(); return ""; }
+            if (dest === "-"){
+              var t = cwd; cwd = prevCwd; prevCwd = t; syncPrompt();
+              return cwd;
+            }
+            var abs = resolvePath(dest);
+            var node = getNode(abs);
+            if (!node) return "bash: cd: " + dest + ": No such file or directory";
+            if (node.t !== "dir") return "bash: cd: " + dest + ": Not a directory";
+            if (!canRead(node, abs, effRoot)) return "bash: cd: " + dest + ": Permission denied";
+            prevCwd = cwd; cwd = abs; syncPrompt();
+            return "";
+          }
+          case "cat": return cmdCat(args, effRoot);
+          case "head": return cmdHeadTail(false, args, effRoot);
+          case "tail": return cmdHeadTail(true, args, effRoot);
+          case "wc": {
+            var wf = args.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+            if (!wf) return "";
+            var wr = readFile("wc", wf, effRoot);
+            if (wr.err) return wr.err;
+            if (wr.bin) return "";
+            var wl = wr.text.split("\n").length;
+            var ww = wr.text.split(/\s+/).filter(Boolean).length;
+            if (args.indexOf("-l") !== -1) return wl + " " + wf;
+            return wl + " " + ww + " " + (wr.text.length + 1) + " " + wf;
+          }
+          case "echo":
+            return args.join(" ");
+          case "touch": case "mkdir": {
+            var isDir = base === "mkdir";
+            var nm = args.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+            if (!nm) return base + ": missing operand\nTry '" + base + " --help' for more information.";
+            var tabs = resolvePath(nm);
+            var tpar = parentOf(tabs);
+            var pnode = getNode(tpar.dir);
+            if (!pnode || pnode.t !== "dir")
+              return base + ": cannot " + (isDir ? "create directory" : "touch") + " '" + nm + "': No such file or directory";
+            if (!isWritable(tpar.dir) && !effRoot)
+              return base + ": cannot " + (isDir ? "create directory" : "touch") + " '" + nm + "': Permission denied";
+            var exist = pnode.children[tpar.name];
+            if (exist){
+              if (isDir) return "mkdir: cannot create directory '" + nm + "': File exists";
+              exist.mtime = lsTimeNow();
+              return "";
+            }
+            pnode.children[tpar.name] = isDir
+              ? D("drwxr-xr-x", effRoot ? "root" : "visitor", lsTimeNow())
+              : F("-rw-r--r--", effRoot ? "root" : "visitor", 0, lsTimeNow(), "");
+            return "";
+          }
+          case "rm": {
+            var rec = args.indexOf("-r") !== -1 || args.indexOf("-rf") !== -1 || args.indexOf("-fr") !== -1;
+            var rt = args.filter(function(a){ return a.charAt(0) !== "-"; })[0];
+            if (!rt) return "rm: missing operand\nTry 'rm --help' for more information.";
+            var rabs = resolvePath(rt);
+            var rnode = getNode(rabs);
+            if (!rnode) return "rm: cannot remove '" + rt + "': No such file or directory";
+            if (rabs === "/" || rabs === HOME) return "rm: it is dangerous to operate recursively on '" + rt + "'\nrm: use --no-preserve-root to override this failsafe";
+            if (!isWritable(parentOf(rabs).dir) && !effRoot) return "rm: cannot remove '" + rt + "': Permission denied";
+            if (rnode.t === "dir" && !rec) return "rm: cannot remove '" + rt + "': Is a directory";
+            var rp = parentOf(rabs);
+            delete getNode(rp.dir).children[rp.name];
+            return "";
+          }
+          case "cp": case "mv": {
+            var operands = args.filter(function(a){ return a.charAt(0) !== "-"; });
+            var recursive = args.indexOf("-r") !== -1 || args.indexOf("-R") !== -1;
+            if (operands.length < 2) return base + ": missing file operand\nTry '" + base + " --help' for more information.";
+            var srcT = operands[0], dstT = operands[operands.length - 1];
+            var sAbs = resolvePath(srcT), dAbs = resolvePath(dstT);
+            var sNode = getNode(sAbs);
+            if (!sNode) return base + ": cannot stat '" + srcT + "': No such file or directory";
+            if (base === "cp" && sNode.t === "dir" && !recursive)
+              return "cp: -r not specified; omitting directory '" + srcT + "'";
+            var dNode = getNode(dAbs);
+            var targetAbs = (dNode && dNode.t === "dir") ? (dAbs === "/" ? "" : dAbs) + "/" + baseName(sAbs) : dAbs;
+            var tp = parentOf(targetAbs);
+            var tpNode = getNode(tp.dir);
+            if (!tpNode) return base + ": cannot " + (base === "cp" ? "create" : "move") + " '" + dstT + "': No such file or directory";
+            if (!isWritable(tp.dir) && !effRoot)
+              return base + ": cannot " + (base === "cp" ? "create regular file" : "move") + " '" + dstT + "': Permission denied";
+            var clone = JSON.parse(JSON.stringify(base === "cp" ? sNode : sNode));
+            tpNode.children[tp.name] = clone;
+            if (base === "mv"){
+              var sp = parentOf(sAbs);
+              if (!(sp.dir === tp.dir && sp.name === tp.name)) delete getNode(sp.dir).children[sp.name];
+            }
+            return "";
+          }
+          case "chmod": {
+            var mode = args[0], cf = args[1];
+            if (!mode || !cf) return "chmod: missing operand\nTry 'chmod --help' for more information.";
+            var cabs = resolvePath(cf);
+            var cnode = getNode(cabs);
+            if (!cnode) return "chmod: cannot access '" + cf + "': No such file or directory";
+            if (cnode.owner !== "visitor" && !effRoot)
+              return "chmod: changing permissions of '" + cf + "': Operation not permitted";
+            var bits;
+            if (/^[0-7]{3,4}$/.test(mode)) bits = parseInt(mode, 8) & 511;
+            else if (/^[ugoa]*[+-=][rwxX]+$/.test(mode)){
+              bits = bitsFromPerms(cnode.perms);
+              var sign = mode.indexOf("+") !== -1 ? "+" : (mode.indexOf("-") !== -1 ? "-" : "=");
+              var letters = mode.replace(/^[ugoa]*/, "").slice(1);
+              var mask = 0;
+              for (var li = 0; li < letters.length; li++){
+                if (letters.charAt(li) === "r") mask |= 292;
+                if (letters.charAt(li) === "w") mask |= 146;
+                if (letters.charAt(li) === "x" || letters.charAt(li) === "X") mask |= 73;
+              }
+              bits = sign === "+" ? (bits | mask) : sign === "-" ? (bits & ~mask) : mask;
+            } else return "chmod: invalid mode: '" + mode + "'\nTry 'chmod --help' for more information.";
+            cnode.perms = permsFromBits(cnode.t === "dir", bits);
+            return "";
+          }
+          case "chown": {
+            var own = args[0], of = args[1];
+            if (!own || !of) return "chown: missing operand\nTry 'chown --help' for more information.";
+            var oabs = resolvePath(of);
+            var onode = getNode(oabs);
+            if (!onode) return "chown: cannot access '" + of + "': No such file or directory";
+            if (!effRoot) return "chown: changing ownership of '" + of + "': Operation not permitted";
+            onode.owner = own.split(":")[0];
+            return "";
+          }
+          case "clear": return "\u0001CLEAR";
+          case "history":
+            return termHistory.map(function(h, i){ return "  " + (i + 1) + "  " + h; }).join("\n");
+          case "whoami": return effRoot ? "root" : "visitor";
+          case "id":
+            return effRoot
+              ? "uid=0(root) gid=0(root) groups=0(root)"
+              : "uid=1000(visitor) gid=1000(visitor) groups=1000(visitor),27(sudo)";
+          case "groups": return effRoot ? "root" : "visitor sudo";
+          case "hostname":
+            return args[0] === "-I" ? "192.168.1.120" : "debian-vm";
+          case "date": return dateOut(new Date());
+          case "uname": {
+            if (args.indexOf("-a") !== -1 || args.indexOf("--all") !== -1)
+              return "Linux debian-vm 6.1.0-25-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.106-3 (2024-08-26) x86_64 GNU/Linux";
+            if (args.indexOf("-r") !== -1) return "6.1.0-25-amd64";
+            if (args.indexOf("-m") !== -1) return "x86_64";
+            if (args.indexOf("-n") !== -1) return "debian-vm";
+            if (args.indexOf("-s") !== -1 || !args.length) return "Linux";
+            return "Linux";
+          }
+          case "nproc": return "2";
+          case "lscpu": return LSCPU;
+          case "free": return args.indexOf("-m") !== -1 ? FREE_M : FREE_H;
+          case "df": return DF_H;
+          case "du": {
+            var dt = args.filter(function(a){ return a.charAt(0) !== "-"; })[0] || ".";
+            var dabs = resolvePath(dt);
+            var dnode = getNode(dabs);
+            if (!dnode) return "du: cannot access '" + dt + "': No such file or directory";
+            var sum = 0;
+            (function walk(n){ sum += n.t === "dir" ? 4096 : Math.max(4096, Math.ceil(n.size / 4096) * 4096);
+              if (n.children) Object.keys(n.children).forEach(function(k){ walk(n.children[k]); }); })(dnode);
+            return fmtHuman(sum) + "\t" + dt;
+          }
+          case "uptime": {
+            var now = new Date();
+            return " " + pad2(now.getHours()) + ":" + pad2(now.getMinutes()) + ":" + pad2(now.getSeconds()) +
+              " up 3 days,  2:18,  1 user,  load average: 0.08, 0.03, 0.01";
+          }
+          case "ps":
+            if (!args.length) return "    PID TTY          TIME CMD\n   1024 pts/0    00:00:00 bash\n   1150 pts/0    00:00:00 ps";
+            return psAux();
+          case "top": return topSnapshot();
+          case "htop":
+            if (!installed["htop"]) return "bash: htop: command not found";
+            return topSnapshot() + "\n（htop 已装好：真机上它可以鼠标点击、按 F9 结束进程，这里以快照展示一次）";
+          case "ss": {
+            var rows = "State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process";
+            var proc = effRoot ? " users:((\"sshd\",pid=312,fd=3))" : "";
+            var proc6 = effRoot ? " users:((\"sshd\",pid=312,fd=4))" : "";
+            rows += "\nLISTEN 0      128          0.0.0.0:22        0.0.0.0:*" + proc;
+            rows += "\nLISTEN 0      128             [::]:22           [::]:*" + proc6;
+            return rows;
+          }
+          case "ip":
+            return IP_A;
+          case "ping": {
+            var phost = null, pcount = 0;
+            for (var pi = 0; pi < args.length; pi++){
+              var pa = args[pi];
+              if (pa === "-c" && args[pi + 1]){ pcount = parseInt(args[pi + 1], 10) || 0; pi++; }
+              else if (/^-c\d+$/.test(pa)) pcount = parseInt(pa.slice(2), 10) || 0;
+              else if (pa.charAt(0) === "-") continue;
+              else if (!phost) phost = pa;
+            }
+            if (!phost) return "ping: usage error: Destination address required";
+            startPing(phost, pcount);
+            return "";
+          }
+          case "curl": {
+            var curlI = args.indexOf("-I") !== -1 || args.indexOf("--head") !== -1;
+            var curlUrl = args.filter(function(a){ return a.charAt(0) !== "-"; })[0] || "";
+            var curlHost = curlUrl.replace(/^https?:\/\//, "").split("/")[0];
+            if (!curlUrl) return "curl: no URL specified!\ncurl: try 'curl --help' for more information";
+            if (!resolveHost(curlHost)) return "curl: (6) Could not resolve host: " + curlHost;
+            if (curlI) return "HTTP/2 200\n" +
+              "date: " + new Date().toUTCString() + "\n" +
+              "content-type: text/html; charset=UTF-8\n" +
+              "server: cloudflare\n" +
+              "cf-cache-status: HIT";
+            return "<!doctype html>\n<html>\n<head><title>Example Domain</title></head>\n<body>\n" +
+              "<h1>Example Domain</h1>\n" +
+              "<p>This domain is for use in documentation examples without needing permission.</p>\n" +
+              "</body>\n</html>";
+          }
+          case "wget": {
+            var wUrl = args.filter(function(a){ return a.charAt(0) !== "-"; })[0] || "";
+            var wHost = wUrl.replace(/^https?:\/\//, "").split("/")[0];
+            if (!wUrl) return "Usage: wget [OPTION]... [URL]...\nTry 'wget --help' for more options.";
+            if (!resolveHost(wHost)) return "--" + stampNow() + "--  " + wUrl + "\nResolving " + wHost + " (" + wHost + ")... failed: Name or service not known.\nwget: unable to resolve host address '" + wHost + "'";
+            if (wUrl.replace(/^https?:\/\//, "").indexOf("/") !== -1 && wUrl.split("/").pop() !== ""){
+              return "--" + stampNow() + "--  " + wUrl + "\n" +
+                "Resolving " + wHost + " (" + wHost + ")... " + resolveHost(wHost) + "\n" +
+                "Connecting to " + wHost + " (" + wHost + ")|" + resolveHost(wHost) + "|:443... connected.\n" +
+                "HTTP request sent, awaiting response... 404 Not Found\n" +
+                stampNow().slice(0, 10) + " " + stampNow().slice(11) + " ERROR 404: Not Found.";
+            }
+            return "--" + stampNow() + "--  " + wUrl + "\n" +
+              "Resolving " + wHost + " (" + wHost + ")... " + resolveHost(wHost) + "\n" +
+              "Connecting to " + wHost + " (" + wHost + ")|" + resolveHost(wHost) + "|:443... connected.\n" +
+              "HTTP request sent, awaiting response... 200 OK\n" +
+              "Length: 1256 (1.2K) [text/html]\n" +
+              "Saving to: 'index.html'\n\n" +
+              "index.html        100%[===================>]   1.23K  --.-KB/s    in 0s\n\n" +
+              stampNow() + " (12.3 MB/s) - 'index.html' saved [1256/1256]";
+          }
+          case "ssh": {
+            if (!args.length) return "usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-c cipher_spec]\n           [-D [bind_address:]port] [-E log_file] [-e escape_char] [-F configfile]\n           [-I pkcs11] [-i identity_file] [-J [user@]host[:port]] [-L address]\n           [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port]\n           [-Q query_option] [-R address] [-S ctl_path] [-W host:port]\n           [-w local_tun[:remote_tun]] destination [command [argument ...]]";
+            var sshDest = args.filter(function(a){ return a.charAt(0) !== "-"; })[0] || "";
+            var sshHost = sshDest.indexOf("@") !== -1 ? sshDest.split("@")[1] : sshDest;
+            if (!resolveHost(sshHost)) return "ssh: Could not resolve hostname " + sshHost + ": Name or service not known";
+            return "ssh: connect to host " + sshHost + " port 22: Connection refused";
+          }
+          case "apt": case "apt-get": return cmdApt(args, effRoot);
+          case "systemctl": return cmdSystemctl(args, effRoot);
+          case "journalctl": {
+            var dd = new Date();
+            var dp = MON[dd.getMonth()] + " " + pad2(dd.getDate());
+            return dp + " 08:41:02 debian-vm systemd[1]: Started ssh.service - OpenBSD Secure Shell server.\n" +
+              dp + " 09:05:11 debian-vm sshd[312]: Accepted password for visitor from 192.168.1.100 port 51234 ssh2\n" +
+              dp + " 09:05:11 debian-vm systemd[1]: Started session-3.scope - Session 3 of User visitor.\n" +
+              dp + " 09:12:44 debian-vm CRON[1187]: (root) CMD (  cd / && run-parts --report /etc/cron.hourly)\n" +
+              dp + " 09:17:01 debian-vm systemd[1]: Starting sysstat-collect.service - System activity accounting tool...";
+          }
+          case "dpkg": {
+            if (args.indexOf("-l") !== -1) return "Desired=Unknown/Install/Remove/Purge/Hold\n" +
+              "| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend\n" +
+              "|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n" +
+              "||/ Name                  Version                Architecture Description\n" +
+              "+++-=====================-======================-============-================================================\n" +
+              "ii  apt                   2.6.1                  amd64        commandline package manager\n" +
+              "ii  bash                  5.2.15-2+b2            amd64        GNU Bourne Again SHell\n" +
+              "ii  coreutils             9.1-1                  amd64        GNU core utilities\n" +
+              "ii  curl                  7.88.1-10+deb12u8      amd64        command line tool for transferring data with URL syntax\n" +
+              "ii  openssh-server        1:9.2p1-2+deb12u3      amd64        secure shell (SSH) server\n" +
+              "ii  systemd               252.30-1~deb12u2       amd64        system and service manager";
+            return "";
+          }
+          case "env":
+            return "SHELL=/bin/bash\nPWD=" + cwd + "\nLOGNAME=visitor\nHOME=/home/visitor\nLANG=C.UTF-8\nUSER=visitor\nTERM=xterm-256color\nPATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games";
+          case "exit": case "logout":
+            if (rootMode){ rootMode = false; syncPrompt(); return "exit"; }
+            return "logout\n（模拟终端不会真的关掉——想继续练习，输入 help 就行）";
+          case "bash": case "sh": return "";
+          default:
+            if (NOT_SIMULATED.indexOf(base) !== -1)
+              return "提示：这台模拟机没有内置 " + base + " 的模拟输出，它在真机上完全可用；输入 help 查看已支持的命令。";
+            return "bash: " + base + ": command not found";
+        }
+      }
+
+      function execLine(input, asRoot){
+        var segs = input.split("|");
+        if (segs.length > 1){
+          var out = execSimple(segs[0].trim(), asRoot);
+          if (out === "\u0001CLEAR") out = "";
+          for (var i = 1; i < segs.length; i++){
+            var gt = tokenize(segs[i].trim());
+            if (!gt.length) continue;
+            if (gt[0] !== "grep") return "bash: " + gt[0] + ": command not found";
+            var flags = "", pattern = "";
+            gt.slice(1).forEach(function(t){
+              if (t.charAt(0) === "-") flags += t.slice(1);
+              else pattern = t;
+            });
+            var ic = flags.indexOf("i") !== -1, inv = flags.indexOf("v") !== -1, num = flags.indexOf("n") !== -1;
+            var src = out ? out.split("\n") : [];
+            var kept = [];
+            src.forEach(function(line, idx){
+              var hay = ic ? line.toLowerCase() : line;
+              var needle = ic ? pattern.toLowerCase() : pattern;
+              var hit = hay.indexOf(needle) !== -1;
+              if (inv) hit = !hit;
+              if (hit) kept.push(num ? (idx + 1) + ":" + line : line);
+            });
+            out = kept.join("\n");
+          }
+          return out;
+        }
+        return execSimple(input, asRoot);
+      }
+
+      /* ---------- Submit / keys ---------- */
+      function submitLine(){
+        var raw = termInput.value;
+        termInput.value = "";
+        if (awaitPass){
+          awaitPass = false;
+          sudoAuthed = true;
+          var pending = pendingSudo;
+          pendingSudo = null;
+          if (pending){
+            var pout = execLine(pending, true);
+            if (pout === "\u0001CLEAR") termBody.innerHTML = "";
+            else if (pout) printOut(pout);
+          }
+          scrollTerm();
+          return;
+        }
+        printEcho(raw);
+        var cmd = raw.trim();
+        if (!cmd){ scrollTerm(); return; }
+        termHistory.push(cmd);
+        histIdx = termHistory.length;
+        var sm = cmd.match(/^sudo\s+(.+)$/);
+        if (sm && !sudoAuthed && !rootMode){
+          pendingSudo = sm[1];
+          awaitPass = true;
+          printOut("[sudo] password for visitor: ");
+          scrollTerm();
+          return;
+        }
+        if (cmd === "sudo" && !rootMode){
+          printOut("usage: sudo command\n（sudo 后面要跟一条命令，比如 sudo apt update）");
+          scrollTerm();
+          return;
+        }
+        var out = execLine(cmd, false);
+        if (out === "\u0001CLEAR") termBody.innerHTML = "";
+        else if (out) printOut(out);
+        scrollTerm();
+      }
+
+      var QUICK = ["help", "ls -la", "cat /etc/os-release", "free -h", "nproc", "df -h", "ps aux | grep ssh", "sudo apt update"];
+      var chipsBox = document.getElementById("termChips");
+      QUICK.forEach(function(q){
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = q;
+        b.addEventListener("click", function(){
+          if (awaitPass) return;
+          termInput.value = q;
+          submitLine();
+          termInput.focus();
+        });
+        chipsBox.appendChild(b);
+      });
+
+      var lastLogin = new Date(Date.now() - 86 * 60000);
+      printOut("Linux debian-vm 6.1.0-25-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.106-3 (2024-08-26) x86_64\n\n" +
+        "The programs included with the Debian GNU/Linux system are free software;\n" +
+        "the exact distribution terms for each program are described in the\n" +
+        "individual files in /usr/share/doc/*/copyright.\n\n" +
+        "Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent\n" +
+        "permitted by applicable law.\n" +
+        "Last login: " + dateOut(lastLogin) + " from 192.168.1.100");
+      printOut("这是一台模拟的虚拟机：2 核 CPU / 4 GB 内存 / 20 GB 磁盘。游戏模式：完成左侧任务单上的任务就能过关攒经验。放心乱敲，不会弄坏任何东西——输入 help 查看支持的命令。");
+      syncPrompt();
+      scrollTerm();
+
+      document.getElementById("termBox").addEventListener("click", function(e){
+        if (e.target.tagName !== "BUTTON") termInput.focus();
+      });
+      termInput.addEventListener("keydown", function(e){
+        if (e.key === "Enter"){
+          submitLine();
+        } else if (e.key === "c" && e.ctrlKey){
+          e.preventDefault();
+          if (pingTimer) stopPing(true);
+          if (awaitPass){ awaitPass = false; pendingSudo = null; }
+          printEcho(termInput.value, "^C");
+          termInput.value = "";
+          scrollTerm();
+        } else if (e.key === "l" && e.ctrlKey){
+          e.preventDefault();
+          termBody.innerHTML = "";
+        } else if (e.key === "Tab"){
+          e.preventDefault();
+          var val = termInput.value;
+          var toks = val.split(/\s+/);
+          var last = toks[toks.length - 1];
+          if (!last) return;
+          var cands = [];
+          if (toks.length === 1){
+            cands = ["ls","cd","cat","pwd","echo","clear","help","whoami","date","free","df","ps","top","uname","nproc","lscpu","ping","curl","sudo","apt","systemctl","history","touch","mkdir","rm","ip","ss","du","head","tail"]
+              .filter(function(c){ return c.indexOf(last) === 0; });
+          } else {
+            var node = getNode(cwd);
+            if (node && node.children){
+              cands = Object.keys(node.children).filter(function(nm){ return nm.indexOf(last) === 0; });
+            }
+          }
+          if (cands.length === 1){
+            toks[toks.length - 1] = cands[0];
+            termInput.value = toks.join(" ");
+          } else if (cands.length > 1){
+            printEcho(val);
+            printOut(cands.join("  "));
+            scrollTerm();
+          }
+        } else if (e.key === "ArrowUp"){
+          e.preventDefault();
+          if (histIdx > 0){ histIdx--; termInput.value = termHistory[histIdx] || ""; }
+        } else if (e.key === "ArrowDown"){
+          e.preventDefault();
+          if (histIdx < termHistory.length){ histIdx++; termInput.value = termHistory[histIdx] || ""; }
+        }
+      });
+
+      /* ================= Game mode: missions / XP / levels ================= */
+      var G_CHAPTERS = ["初入终端", "文件功夫", "系统侦察", "网络探索", "管理员之路"];
+      var G_CN = "一二三四五";
+      var G_LEVELS = [
+        { xp: 0,   name: "终端新手" },
+        { xp: 60,  name: "命令学徒" },
+        { xp: 120, name: "文件管家" },
+        { xp: 195, name: "系统侦察员" },
+        { xp: 275, name: "网络领航员" },
+        { xp: 400, name: "Linux 大师" }
+      ];
+      function findInHome(name){
+        var found = null;
+        (function walk(node, path){
+          if (found || !node || !node.children) return;
+          var keys = Object.keys(node.children);
+          for (var i = 0; i < keys.length; i++){
+            if (found) return;
+            var p = path + "/" + keys[i];
+            if (keys[i] === name){ found = p; return; }
+            walk(node.children[keys[i]], p);
+          }
+        })(getNode(HOME), HOME);
+        return found;
+      }
+      function isLsDetail(c){
+        var t = c.split(/\s+/);
+        if (t[0] !== "ls") return false;
+        for (var i = 1; i < t.length; i++){
+          if (t[i].charAt(0) === "-" && /[la]/.test(t[i])) return true;
+        }
+        return false;
+      }
+
+      // cmd(c, out): 按敲入的命令判定；state(): 按模拟机当前状态判定（文件建好、目录切换成功等）
+      var MISSIONS = [
+        { ch:0, title:"定位自己", story:"你刚通过 SSH 登录这台 Debian 服务器，屏幕一黑，先搞清楚自己站在哪。", goal:"查看当前所在的目录", hint:"pwd", xp:10,
+          cmd:function(c){ return /^pwd$/.test(c); } },
+        { ch:0, title:"环顾四周", story:"四周一片漆黑？那是还没开灯。列一下当前目录，看看这里都放了什么。", goal:"列出当前目录的内容", hint:"ls", xp:10,
+          cmd:function(c){ return /^ls$/.test(c); } },
+        { ch:0, title:"火眼金睛", story:"普通的 ls 只给你看表面。加上参数，连藏起来的文件和详细信息都无所遁形。", goal:"用带参数的 ls 显示全部文件（含隐藏）和详细信息", hint:"ls -la", xp:10,
+          cmd:function(c){ return isLsDetail(c); } },
+        { ch:0, title:"进站点看看", story:"家目录里有个 site 文件夹，放着一个小网站。进去看看。", goal:"进入 site 文件夹", hint:"cd site", xp:10,
+          state:function(){ return cwd === HOME + "/site"; } },
+        { ch:0, title:"网页长啥样", story:"文件夹里有 index.html、style.css 和 app.js。先打开主页文件，看看它写了什么。", goal:"查看 index.html 的内容", hint:"cat index.html", xp:10,
+          cmd:function(c){ return /^cat\s+(\S+\/)?index\.html$/.test(c); } },
+        { ch:0, title:"回家", story:"看完了就回根据地——你的家目录。", goal:"回到家目录", hint:"cd ~", xp:10,
+          state:function(){ return cwd === HOME; } },
+        { ch:1, title:"读笔记", story:"前任运维在 notes.txt 里留了学习笔记，先拜读一下。", goal:"查看 notes.txt 的内容", hint:"cat notes.txt", xp:10,
+          cmd:function(c){ return /^cat\s+(\S+\/)?notes\.txt$/.test(c); } },
+        { ch:1, title:"写日记", story:"从今天起记运维日记。先在家目录里新建一个空文件 diary.txt 占位。", goal:"新建文件 diary.txt", hint:"touch diary.txt", xp:10,
+          state:function(){ return !!findInHome("diary.txt"); } },
+        { ch:1, title:"建项目夹", story:"东西越攒越多，得有个项目文件夹归置。新建一个 projects 文件夹。", goal:"新建文件夹 projects", hint:"mkdir projects", xp:10,
+          state:function(){ var p = findInHome("projects"); return !!p && getNode(p).t === "dir"; } },
+        { ch:1, title:"留个备份", story:"notes.txt 是重要资料。复制一份副本，命名为 notes.bak，以防手滑。", goal:"把 notes.txt 复制为 notes.bak", hint:"cp notes.txt notes.bak", xp:10,
+          state:function(){ return !!findInHome("notes.bak"); } },
+        { ch:1, title:"归档日记", story:"diary.txt 散在家目录不好看，把它移进 projects 文件夹归档。", goal:"把 diary.txt 移动到 projects 里", hint:"mv diary.txt projects/", xp:10,
+          state:function(){ var p = findInHome("diary.txt"); return !!p && p.indexOf("/projects/") !== -1; } },
+        { ch:1, title:"清理旧备份", story:"家目录里的 backup.tar.gz 是去年的旧备份，占着地方，删掉它。", goal:"删除 backup.tar.gz", hint:"rm backup.tar.gz", xp:10,
+          state:function(){ return !getNode(HOME + "/backup.tar.gz"); } },
+        { ch:2, title:"内存体检", story:"接手新机器先做体检。第一项查内存：这台号称 4G，看看实际用了多少。", goal:"查看内存使用情况", hint:"free -h", xp:15,
+          cmd:function(c){ return /^free(\s+-[a-z]+)?$/.test(c); } },
+        { ch:2, title:"数核心", story:"商家说这台是 2 核。用一条命令当场验货。", goal:"查看 CPU 核心数", hint:"nproc", xp:15,
+          cmd:function(c){ return /^nproc$/.test(c); } },
+        { ch:2, title:"磁盘余量", story:"磁盘是 20G。查一下根分区还剩多少空间，别等满了才发现。", goal:"查看磁盘空间", hint:"df -h", xp:15,
+          cmd:function(c){ return /^df(\s+-[a-z]+)?$/.test(c); } },
+        { ch:2, title:"系统身份证", story:"给这台机器建个档案：系统版本、内核、架构，一次看全。", goal:"显示完整的系统信息", hint:"uname -a", xp:15,
+          cmd:function(c){ return /^uname\s+-a$/.test(c); } },
+        { ch:2, title:"进程大点兵", story:"机器上都跑着哪些程序？把全部进程列出来点一遍名。", goal:"列出全部进程", hint:"ps aux", xp:15,
+          cmd:function(c){ return /^ps\s+aux(\s*\|.*)?$/.test(c); } },
+        { ch:3, title:"连通测试", story:"怀疑网络不通？ping 一下百度试试——记得用 -c 只发 4 个包，不然它会一直发下去（Ctrl+C 也能停）。", goal:"ping baidu.com 并只发送 4 个包", hint:"ping -c 4 baidu.com", xp:20,
+          cmd:function(c, o){ return /^ping\s/.test(c) && (/-c\s*\d+/.test(c) || o.indexOf("bytes from") !== -1); } },
+        { ch:3, title:"我的 IP", story:"要让别人连上这台机器，先得知道它自己的 IP 地址是多少。", goal:"查看本机 IP 地址", hint:"ip a", xp:20,
+          cmd:function(c){ return /^ip\s+a/.test(c); } },
+        { ch:3, title:"网站响应头", story:"example.com 打不打开先不说，让 curl 只取它的响应头，看看服务器怎么回话。", goal:"用 curl -I 查看 example.com 的响应头", hint:"curl -I https://example.com", xp:20,
+          cmd:function(c, o){ return /^curl\s/.test(c) && o.indexOf("HTTP") !== -1; } },
+        { ch:3, title:"端口巡查", story:"最后一项网络巡查：这台机器对外开着哪些端口在监听？", goal:"查看正在监听的端口", hint:"ss -tlnp", xp:20,
+          cmd:function(c, o){ return /^ss\s/.test(c) && o.indexOf(":22") !== -1; } },
+        { ch:4, title:"拿到管理员权限", story:"动真格了。先以管理员身份刷新一遍软件源列表——执行 sudo 时它会让你输密码，在这台练习机上随便输几个字符回车就行。", goal:"用 sudo 执行 apt update", hint:"sudo apt update", xp:25,
+          cmd:function(c){ return /^sudo\s+apt\s+update$/.test(c); } },
+        { ch:4, title:"装个监视器", story:"系统自带的 top 太素了。用 apt 装上更好用的进程监视器 htop。", goal:"用 apt 安装 htop", hint:"sudo apt install htop", xp:25,
+          state:function(){ return !!installed["htop"]; } },
+        { ch:4, title:"打开 htop", story:"装好了就打开看看：实时刷新的进程榜单，这才是管服务器的样子。", goal:"运行 htop", hint:"htop", xp:25,
+          cmd:function(c, o){ return /^htop$/.test(c) && o.indexOf("command not found") === -1; } },
+        { ch:4, title:"服务巡查", story:"远程登录靠的是 SSH 服务。检查一下它是不是好好地在运行。", goal:"查看 ssh 服务的状态", hint:"systemctl status ssh", xp:25,
+          cmd:function(c){ return /^systemctl\s+status\s+ssh(\.service)?$/.test(c); } },
+        { ch:4, title:"日志侦探", story:"毕业考：打开 systemd 的系统日志，看看这台机器最近都发生过什么。", goal:"查看系统日志", hint:"journalctl", xp:25,
+          cmd:function(c){ return /^journalctl(\s|$)/.test(c); } }
+      ];
+
+      var gIdx = 0, gXp = 0, gStatus = [], gCmdOk = false, gProcessed = 0, gHintOn = false, gFinished = false;
+      for (var gi = 0; gi < MISSIONS.length; gi++) gStatus.push("todo");
+
+      var elChapter = document.getElementById("mpChapter");
+      var elCount = document.getElementById("mpCount");
+      var elTitle = document.getElementById("mpTitle");
+      var elStory = document.getElementById("mpStory");
+      var elGoal = document.getElementById("mpGoal");
+      var elGoalWrap = document.getElementById("mpGoalWrap");
+      var elHint = document.getElementById("mpHint");
+      var elHintCmd = document.getElementById("mpHintCmd");
+      var elActions = document.getElementById("mpActions");
+      var elList = document.getElementById("mpList");
+
+      function latestOut(){
+        var outs = termBody.querySelectorAll(".out");
+        return outs.length ? outs[outs.length - 1].textContent : "";
+      }
+      function printGame(text, cls){
+        var d = document.createElement("div");
+        d.className = "out " + (cls || "game-win");
+        d.textContent = text;
+        termBody.appendChild(d);
+        scrollTerm();
+      }
+      function levelOf(xp){
+        var lv = 0;
+        for (var i = 0; i < G_LEVELS.length; i++) if (xp >= G_LEVELS[i].xp) lv = i;
+        return lv;
+      }
+      function renderGame(){
+        var passed = 0;
+        gStatus.forEach(function(s){ if (s !== "todo") passed++; });
+        var lv = levelOf(gXp);
+        document.getElementById("hudLv").textContent = "Lv." + (lv + 1);
+        document.getElementById("hudLvName").textContent = G_LEVELS[lv].name;
+        document.getElementById("hudXp").textContent = gXp;
+        document.getElementById("hudFill").style.width = Math.round(gXp / 400 * 100) + "%";
+        document.getElementById("hudDone").textContent = passed + " / " + MISSIONS.length;
+        var stars = "";
+        for (var c = 0; c < G_CHAPTERS.length; c++){
+          var allDone = true;
+          MISSIONS.forEach(function(m, i){ if (m.ch === c && gStatus[i] !== "done") allDone = false; });
+          stars += allDone ? "★" : "☆";
+        }
+        document.getElementById("hudStars").textContent = stars;
+
+        var html = "";
+        G_CHAPTERS.forEach(function(chName, c){
+          html += '<div class="mp-ch"><div class="mp-ch-name">第' + G_CN.charAt(c) + "章 · " + chName + "</div>";
+          MISSIONS.forEach(function(m, i){
+            if (m.ch !== c) return;
+            var st = gStatus[i];
+            var mark = st === "done" ? "✓" : st === "skipped" ? "↷" : (i === gIdx && !gFinished ? "▶" : "·");
+            var cls = st === "done" ? "done" : st === "skipped" ? "skipped" : (i === gIdx && !gFinished ? "current" : "todo");
+            html += '<div class="mp-item ' + cls + '"><span class="mp-mark">' + mark + '</span><span class="mp-name">' + esc(m.title) + '</span><span class="mp-xp">+' + m.xp + " XP</span></div>";
+          });
+          html += "</div>";
+        });
+        elList.innerHTML = html;
+
+        if (gFinished){
+          elChapter.textContent = "全部通关";
+          elCount.textContent = "任务 " + MISSIONS.length + " / " + MISSIONS.length;
+          elTitle.textContent = "通关！你已是 Linux 大师";
+          elStory.textContent = "26 个任务全部走完：从 pwd 到 journalctl，你已经完整经历了一台 Debian 服务器的日常管理。想复习哪条命令，下面的手册随时可查；想再玩一遍，刷新页面即可重新开局。";
+          elGoalWrap.style.display = "none";
+          elHint.hidden = true;
+          elActions.style.display = "none";
+        } else {
+          var m = MISSIONS[gIdx];
+          elChapter.textContent = "第" + G_CN.charAt(m.ch) + "章 · " + G_CHAPTERS[m.ch];
+          elCount.textContent = "任务 " + (gIdx + 1) + " / " + MISSIONS.length;
+          elTitle.textContent = m.title;
+          elStory.textContent = m.story;
+          elGoal.textContent = m.goal;
+        }
+      }
+      function activateMission(){
+        gCmdOk = false;
+        gProcessed = termHistory.length;
+        gHintOn = false;
+        elHint.hidden = true;
+        document.getElementById("mpHintBtn").textContent = "查看提示";
+        var m = MISSIONS[gIdx];
+        printGame("▶ 任务 " + (gIdx + 1) + "/" + MISSIONS.length + " · " + m.title + " —— " + m.goal, "game-task");
+      }
+      function completeMission(skipped){
+        var m = MISSIONS[gIdx];
+        gStatus[gIdx] = skipped ? "skipped" : "done";
+        if (!skipped){
+          var lvBefore = levelOf(gXp);
+          gXp += m.xp;
+          printGame("★ 任务完成：" + m.title + "　+" + m.xp + " XP（当前 " + gXp + " XP）");
+          var lvAfter = levelOf(gXp);
+          if (lvAfter > lvBefore) printGame("等级提升！你现在是 Lv." + (lvAfter + 1) + " · " + G_LEVELS[lvAfter].name);
+        } else {
+          printGame("已跳过任务：" + m.title + "（没有获得经验，可以在下方手册里补学这一条）", "game-task");
+        }
+        gIdx++;
+        if (gIdx >= MISSIONS.length){
+          gFinished = true;
+          printGame("★★★ 全部任务通关！从第一次敲 pwd 到查服务日志，你已经能独立管好一台 Debian 服务器了。");
+        } else {
+          var nm = MISSIONS[gIdx];
+          if (nm.ch !== m.ch) printGame("—— 第" + G_CN.charAt(nm.ch) + "章 · " + G_CHAPTERS[nm.ch] + " ——", "game-task");
+          activateMission();
+        }
+        renderGame();
+      }
+
+      document.getElementById("mpHintBtn").addEventListener("click", function(){
+        if (gFinished) return;
+        gHintOn = !gHintOn;
+        elHint.hidden = !gHintOn;
+        if (gHintOn) elHintCmd.textContent = MISSIONS[gIdx].hint;
+        this.textContent = gHintOn ? "收起提示" : "查看提示";
+        termInput.focus();
+      });
+      document.getElementById("mpSkipBtn").addEventListener("click", function(){
+        if (gFinished) return;
+        completeMission(true);
+        termInput.focus();
+      });
+
+      setInterval(function(){
+        if (gFinished) return;
+        var m = MISSIONS[gIdx];
+        if (!m) return;
+        while (gProcessed < termHistory.length){
+          var c = termHistory[gProcessed].trim();
+          gProcessed++;
+          if (m.cmd && m.cmd(c, latestOut())) gCmdOk = true;
+        }
+        var cmdOk = !m.cmd || gCmdOk;
+        var stateOk = !m.state || m.state();
+        if (cmdOk && stateOk) completeMission(false);
+      }, 250);
+
+      renderGame();
+      printGame("游戏模式已开启：看左侧任务单，在终端里敲对命令即可过关。第一关很简单——", "game-task");
+      activateMission();
+
+    </script>
+  </body>
+</html>
